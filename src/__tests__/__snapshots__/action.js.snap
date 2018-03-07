@@ -1,0 +1,261 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`autoMetricsAction args format (paramsOrArgs, meta) takes the namespace/operation value in meta first if available 1`] = `
+Array [
+  Array [
+    "service.foo.callFunction.start",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "service.foo.callFunction.success",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction args format (paramsOrArgs, meta) takes the namespace/operation value in paramsOrArgs if not available in meta 1`] = `
+Array [
+  Array [
+    "service.foo.callFunction.start",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "service.foo.callFunction.success",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction args format (paramsOrArgs, meta) uses default namespace "action" and undefined operation if not available in args 1`] = `
+Array [
+  Array [
+    "service.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "service.action.callFunction.success",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction enhance async function should invoke callFunction correctly 1`] = `
+Array [
+  Array [
+    Object {
+      "test": "a",
+    },
+    Object {
+      "meta": "b",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsAction enhance async function should log callFunction failure correctly and throw the original exception 1`] = `
+Array [
+  Array [
+    "service.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "service.action.callFunction.failure.status.undefined",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.failure.status.undefined",
+    1,
+  ],
+  Array [
+    "service.action.callFunction.failure.type.undefined",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.failure.type.undefined",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction enhance async function should log callFunction success correctly 1`] = `
+Array [
+  Array [
+    "service.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "service.action.callFunction.success",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction non-async function should invoke callFunction correctly 1`] = `
+Array [
+  Array [
+    Object {
+      "test": "a",
+    },
+    Object {
+      "meta": "b",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsAction non-async function should log callFunction failure correctly and throw the original exception 1`] = `
+Array [
+  Array [
+    "service.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "service.action.callFunction.failure.status.undefined",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.failure.status.undefined",
+    1,
+  ],
+  Array [
+    "service.action.callFunction.failure.type.undefined",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.failure.type.undefined",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction non-async function should log callFunction success correctly 1`] = `
+Array [
+  Array [
+    "service.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.start",
+    1,
+  ],
+  Array [
+    "service.action.callFunction.success",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction should throw error if metrics was not initialised 1`] = `"auto metrics instance needs to be initialised first"`;
+
+exports[`autoMetricsAction should throw error namespace has space 1`] = `"action metrics namespace needs to be string without spaces, at function callFunction"`;
+
+exports[`autoMetricsAction should throw error namespace is not string 1`] = `"action metrics namespace needs to be string without spaces, at function callFunction"`;
+
+exports[`autoMetricsActions decorate each method correctly 1`] = `
+Array [
+  Array [
+    Object {
+      "test": "a",
+    },
+    Object {
+      "namespace": "mock-service",
+      "operation": "mock-operation",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions decorate each method correctly 2`] = `
+Array [
+  Array [
+    Object {
+      "test": "b",
+    },
+    Object {
+      "namespace": "mock-service",
+      "operation": "mock-operation",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions decorate each method correctly 3`] = `
+Array [
+  Array [
+    "service.mock-service.mockConstructor.start",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.mockConstructor.start",
+    1,
+  ],
+  Array [
+    "service.mock-service.mockConstructor.success",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.mockConstructor.success",
+    1,
+  ],
+  Array [
+    "service.mock-service.mockConstructor.start",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.mockConstructor.start",
+    1,
+  ],
+  Array [
+    "service.mock-service.mockConstructor.success",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.mockConstructor.success",
+    1,
+  ],
+]
+`;
