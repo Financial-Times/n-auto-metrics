@@ -3,11 +3,11 @@
 exports[`autoMetricsOp logs correctly operation failure of async function 1`] = `
 Array [
   Array [
-    "operation.operationFunction.segment.undefined.start",
+    "operation.operation.segment.undefined.state.start",
     1,
   ],
   Array [
-    "operation.operationFunction.segment.undefined.failure.undefined",
+    "operation.operation.segment.undefined.state.failure.category.CUSTOM_ERROR.type.MOCK_ERROR_TYPE",
     1,
   ],
 ]
@@ -16,7 +16,12 @@ Array [
 exports[`autoMetricsOp logs correctly operation failure of async function 2`] = `
 Array [
   Array [
-    [TypeError: Cannot read property 'namespace' of null],
+    Object {
+      "category": "CUSTOM_ERROR",
+      "message": "foo",
+      "status": 500,
+      "type": "MOCK_ERROR_TYPE",
+    },
   ],
 ]
 `;
@@ -24,11 +29,11 @@ Array [
 exports[`autoMetricsOp logs correctly operation failure of non-async function 1`] = `
 Array [
   Array [
-    "operation.operationFunction.segment.undefined.start",
+    "operation.operation.segment.undefined.state.start",
     1,
   ],
   Array [
-    "operation.operationFunction.segment.undefined.failure.undefined",
+    "operation.operation.segment.undefined.state.failure.category.CUSTOM_ERROR.type.MOCK_ERROR_TYPE",
     1,
   ],
 ]
@@ -37,78 +42,104 @@ Array [
 exports[`autoMetricsOp logs correctly operation failure of non-async function 2`] = `
 Array [
   Array [
-    [TypeError: Cannot read property 'namespace' of null],
+    Object {
+      "category": "CUSTOM_ERROR",
+      "message": "foo",
+      "status": 500,
+      "type": "MOCK_ERROR_TYPE",
+    },
   ],
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation success of async function with async sub actions 1`] = `
+exports[`autoMetricsOp logs correctly operation success of async function with autoMetricsAction sub action 1`] = `
 Array [
   Array [
-    "operation.operationFunction.segment.undefined.start",
+    "operation.operationFunction.segment.undefined.state.start",
     1,
   ],
   Array [
-    "operation.operationFunction.segment.undefined.failure.undefined",
+    "service.undefined.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.success",
     1,
   ],
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation success of non-async function with non async sub actions 1`] = `
+exports[`autoMetricsOp logs correctly operation success of non-async function with autoMetricsAction sub action 1`] = `
 Array [
   Array [
-    "operation.operationFunction.segment.undefined.start",
+    "operation.operationFunction.segment.undefined.state.start",
     1,
   ],
   Array [
-    "operation.operationFunction.segment.undefined.failure.undefined",
+    "service.undefined.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.success",
     1,
   ],
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation success of req.meta from previous middlewares 1`] = `
-Object {
-  "operation": "operationFunction",
-  "transactionId": "xxxx-xxxx",
-}
-`;
-
-exports[`autoMetricsOp logs correctly operation success of req.meta from previous middlewares 2`] = `
+exports[`autoMetricsOp logs correctly operation success of req.metrics.segment from previous middlewares 1`] = `
 Array [
   Array [
-    "operation.operationFunction.segment.undefined.start",
+    "operation.operationFunction.segment.MOCK_USER_TYPE.state.start",
     1,
   ],
   Array [
-    "operation.operationFunction.segment.undefined.success",
+    "operation.operationFunction.segment.MOCK_USER_TYPE.state.success",
     1,
   ],
 ]
 `;
 
-exports[`autoMetricsOps decorate each method correctly 1`] = `
-Object {
-  "operation": "operationFunctionA",
-}
-`;
-
-exports[`autoMetricsOps decorate each method correctly 2`] = `
+exports[`autoMetricsOps and toMiddlewares enhance and convert each method correctly 1`] = `
 Array [
   Array [
-    "operation.operationFunctionA.segment.undefined.start",
+    "operation.methodA.segment.undefined.state.start",
     1,
   ],
   Array [
-    "operation.operationFunctionA.segment.undefined.success",
+    "operation.methodA.segment.undefined.state.success",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.success",
     1,
   ],
 ]
-`;
-
-exports[`autoMetricsOps decorate each method correctly 3`] = `
-Object {
-  "operation": "operationFunctionB",
-}
 `;

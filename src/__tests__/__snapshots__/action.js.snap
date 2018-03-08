@@ -1,63 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`autoMetricsAction args format (paramsOrArgs, meta) takes the namespace/operation value in meta first if available 1`] = `
+exports[`autoMetricsAction args format (paramsOrArgs, meta) takes the service name/operation value in meta first if available 1`] = `
 Array [
   Array [
-    "service.foo.callFunction.start",
+    "service.foo.action.callFunction.state.start",
     1,
   ],
   Array [
-    "operation.bar.action.callFunction.start",
+    "operation.bar.action.callFunction.state.start",
     1,
   ],
   Array [
-    "service.foo.callFunction.success",
+    "service.foo.action.callFunction.state.success",
     1,
   ],
   Array [
-    "operation.bar.action.callFunction.success",
+    "operation.bar.action.callFunction.state.success",
     1,
   ],
 ]
 `;
 
-exports[`autoMetricsAction args format (paramsOrArgs, meta) takes the namespace/operation value in paramsOrArgs if not available in meta 1`] = `
+exports[`autoMetricsAction args format (paramsOrArgs, meta) takes the service name/operation value in paramsOrArgs if not available in meta 1`] = `
 Array [
   Array [
-    "service.foo.callFunction.start",
+    "service.foo.action.callFunction.state.start",
     1,
   ],
   Array [
-    "operation.bar.action.callFunction.start",
+    "operation.bar.action.callFunction.state.start",
     1,
   ],
   Array [
-    "service.foo.callFunction.success",
+    "service.foo.action.callFunction.state.success",
     1,
   ],
   Array [
-    "operation.bar.action.callFunction.success",
+    "operation.bar.action.callFunction.state.success",
     1,
   ],
 ]
 `;
 
-exports[`autoMetricsAction args format (paramsOrArgs, meta) uses default namespace "action" and undefined operation if not available in args 1`] = `
+exports[`autoMetricsAction args format (paramsOrArgs, meta) uses default service name "undefined" and undefined operation if not available in args 1`] = `
 Array [
   Array [
-    "service.action.callFunction.start",
+    "service.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.start",
+    "operation.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "service.action.callFunction.success",
+    "service.undefined.action.callFunction.state.success",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.success",
+    "operation.undefined.action.callFunction.state.success",
     1,
   ],
 ]
@@ -76,57 +76,57 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction enhance async function should log callFunction failure correctly and throw the original exception 1`] = `
+exports[`autoMetricsAction enhance async function should record callFunction failure correctly and throw the original exception 1`] = `
 Array [
   Array [
-    "service.action.callFunction.start",
+    "service.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.start",
+    "operation.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "service.action.callFunction.failure.status.undefined",
+    "service.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.undefined",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.failure.status.undefined",
+    "operation.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.undefined",
     1,
   ],
   Array [
-    "service.action.callFunction.failure.type.undefined",
+    "service.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.failure.type.undefined",
+    "operation.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
     1,
   ],
 ]
 `;
 
-exports[`autoMetricsAction enhance async function should log callFunction success correctly 1`] = `
+exports[`autoMetricsAction enhance async function should record callFunction success correctly 1`] = `
 Array [
   Array [
-    "service.action.callFunction.start",
+    "service.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.start",
+    "operation.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "service.action.callFunction.success",
+    "service.undefined.action.callFunction.state.success",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.success",
+    "operation.undefined.action.callFunction.state.success",
     1,
   ],
 ]
 `;
 
-exports[`autoMetricsAction non-async function should invoke callFunction correctly 1`] = `
+exports[`autoMetricsAction enhance non-async function should invoke callFunction correctly 1`] = `
 Array [
   Array [
     Object {
@@ -139,51 +139,72 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction non-async function should log callFunction failure correctly and throw the original exception 1`] = `
+exports[`autoMetricsAction enhance non-async function should record callFunction failure correctly and throw the original exception 1`] = `
 Array [
   Array [
-    "service.action.callFunction.start",
+    "service.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.start",
+    "operation.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "service.action.callFunction.failure.status.undefined",
+    "service.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.undefined",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.failure.status.undefined",
+    "operation.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.undefined",
     1,
   ],
   Array [
-    "service.action.callFunction.failure.type.undefined",
+    "service.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.failure.type.undefined",
+    "operation.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
     1,
   ],
 ]
 `;
 
-exports[`autoMetricsAction non-async function should log callFunction success correctly 1`] = `
+exports[`autoMetricsAction enhance non-async function should record callFunction success correctly 1`] = `
 Array [
   Array [
-    "service.action.callFunction.start",
+    "service.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.start",
+    "operation.undefined.action.callFunction.state.start",
     1,
   ],
   Array [
-    "service.action.callFunction.success",
+    "service.undefined.action.callFunction.state.success",
     1,
   ],
   Array [
-    "operation.undefined.action.callFunction.success",
+    "operation.undefined.action.callFunction.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction record callFunction name as action name 1`] = `
+Array [
+  Array [
+    "service.undefined.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.undefined.action.callFunction.state.success",
     1,
   ],
 ]
@@ -191,9 +212,219 @@ Array [
 
 exports[`autoMetricsAction should throw error if metrics was not initialised 1`] = `"auto metrics instance needs to be initialised first"`;
 
-exports[`autoMetricsAction should throw error namespace has space 1`] = `"action metrics namespace needs to be string without spaces, at function callFunction"`;
+exports[`autoMetricsAction should throw error service name has space 1`] = `"action metrics service name needs to be string without spaces, at function callFunction"`;
 
-exports[`autoMetricsAction should throw error namespace is not string 1`] = `"action metrics namespace needs to be string without spaces, at function callFunction"`;
+exports[`autoMetricsAction should throw error service name is not string 1`] = `"action metrics service name needs to be string without spaces, at function callFunction"`;
+
+exports[`autoMetricsAction used after autoLogAction from n-auto-logger log and record metrics correctly in callFunction failure 1`] = `
+Array [
+  Array [
+    "service.foo.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.foo.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "service.foo.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction used after autoLogAction from n-auto-logger log and record metrics correctly in callFunction failure 2`] = `
+Array [
+  Array [
+    Object {
+      "a": "test",
+      "action": "callFunction",
+      "operation": "bar",
+      "service": "foo",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsAction used after autoLogAction from n-auto-logger log and record metrics correctly in callFunction failure 3`] = `
+Array [
+  Array [
+    Object {
+      "a": "test",
+      "action": "callFunction",
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "bar",
+      "result": "failure",
+      "service": "foo",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsAction used after autoLogAction from n-auto-logger log and record metrics correctly in callFunction failure 4`] = `Array []`;
+
+exports[`autoMetricsAction used after autoLogAction from n-auto-logger log and record metrics correctly in callFunction success 1`] = `
+Array [
+  Array [
+    "service.foo.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.foo.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction used after autoLogAction from n-auto-logger log and record metrics correctly in callFunction success 2`] = `
+Array [
+  Array [
+    Object {
+      "a": "test",
+      "action": "callFunction",
+      "operation": "bar",
+      "service": "foo",
+    },
+  ],
+  Array [
+    Object {
+      "a": "test",
+      "action": "callFunction",
+      "operation": "bar",
+      "result": "success",
+      "service": "foo",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsAction used before autoLogAction from n-auto-logger log and record metrics correctly in callFunction failure 1`] = `
+Array [
+  Array [
+    "service.foo.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.foo.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "service.foo.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction used before autoLogAction from n-auto-logger log and record metrics correctly in callFunction failure 2`] = `
+Array [
+  Array [
+    Object {
+      "a": "test",
+      "action": "callFunction",
+      "operation": "bar",
+      "service": "foo",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsAction used before autoLogAction from n-auto-logger log and record metrics correctly in callFunction failure 3`] = `
+Array [
+  Array [
+    Object {
+      "a": "test",
+      "action": "callFunction",
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "bar",
+      "result": "failure",
+      "service": "foo",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsAction used before autoLogAction from n-auto-logger log and record metrics correctly in callFunction failure 4`] = `Array []`;
+
+exports[`autoMetricsAction used before autoLogAction from n-auto-logger log and record metrics correctly in callFunction success 1`] = `
+Array [
+  Array [
+    "service.foo.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.foo.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsAction used before autoLogAction from n-auto-logger log and record metrics correctly in callFunction success 2`] = `
+Array [
+  Array [
+    Object {
+      "a": "test",
+      "action": "callFunction",
+      "operation": "bar",
+      "service": "foo",
+    },
+  ],
+  Array [
+    Object {
+      "a": "test",
+      "action": "callFunction",
+      "operation": "bar",
+      "result": "success",
+      "service": "foo",
+    },
+  ],
+]
+`;
 
 exports[`autoMetricsActions decorate each method correctly 1`] = `
 Array [
@@ -202,8 +433,8 @@ Array [
       "test": "a",
     },
     Object {
-      "namespace": "mock-service",
       "operation": "mock-operation",
+      "service": "mock-service",
     },
   ],
 ]
@@ -216,8 +447,8 @@ Array [
       "test": "b",
     },
     Object {
-      "namespace": "mock-service",
       "operation": "mock-operation",
+      "service": "mock-service",
     },
   ],
 ]
@@ -226,36 +457,362 @@ Array [
 exports[`autoMetricsActions decorate each method correctly 3`] = `
 Array [
   Array [
-    "service.mock-service.mockConstructor.start",
+    "service.mock-service.action.mockConstructor.state.start",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.start",
+    "operation.mock-operation.action.mockConstructor.state.start",
     1,
   ],
   Array [
-    "service.mock-service.mockConstructor.success",
+    "service.mock-service.action.mockConstructor.state.success",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.success",
+    "operation.mock-operation.action.mockConstructor.state.success",
     1,
   ],
   Array [
-    "service.mock-service.mockConstructor.start",
+    "service.mock-service.action.mockConstructor.state.start",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.start",
+    "operation.mock-operation.action.mockConstructor.state.start",
     1,
   ],
   Array [
-    "service.mock-service.mockConstructor.success",
+    "service.mock-service.action.mockConstructor.state.success",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.success",
+    "operation.mock-operation.action.mockConstructor.state.success",
     1,
+  ],
+]
+`;
+
+exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction failure 1`] = `
+Array [
+  Array [
+    "service.mock-service.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction failure 2`] = `
+Array [
+  Array [
+    Object {
+      "action": "callFunction",
+      "operation": "mock-operation",
+      "service": "mock-service",
+      "test": "a",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction failure 3`] = `
+Array [
+  Array [
+    Object {
+      "action": "callFunction",
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "mock-operation",
+      "result": "failure",
+      "service": "mock-service",
+      "status": 404,
+      "test": "a",
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction failure 4`] = `Array []`;
+
+exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction success 1`] = `
+Array [
+  Array [
+    Object {
+      "test": "a",
+    },
+    Object {
+      "operation": "mock-operation",
+      "service": "mock-service",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction success 2`] = `
+Array [
+  Array [
+    Object {
+      "test": "b",
+    },
+    Object {
+      "operation": "mock-operation",
+      "service": "mock-service",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction success 3`] = `
+Array [
+  Array [
+    "service.mock-service.action.callFunctionA.state.start",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunctionA.state.start",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.callFunctionA.state.success",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunctionA.state.success",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.callFunctionB.state.start",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunctionB.state.start",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.callFunctionB.state.success",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunctionB.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction success 4`] = `
+Array [
+  Array [
+    Object {
+      "action": "mockConstructor",
+      "operation": "mock-operation",
+      "service": "mock-service",
+      "test": "a",
+    },
+  ],
+  Array [
+    Object {
+      "action": "mockConstructor",
+      "operation": "mock-operation",
+      "result": "success",
+      "service": "mock-service",
+      "test": "a",
+    },
+  ],
+  Array [
+    Object {
+      "action": "mockConstructor",
+      "operation": "mock-operation",
+      "service": "mock-service",
+      "test": "b",
+    },
+  ],
+  Array [
+    Object {
+      "action": "mockConstructor",
+      "operation": "mock-operation",
+      "result": "success",
+      "service": "mock-service",
+      "test": "b",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction failure 1`] = `
+Array [
+  Array [
+    "service.mock-service.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction failure 2`] = `
+Array [
+  Array [
+    Object {
+      "action": "callFunction",
+      "operation": "mock-operation",
+      "test": "a",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction failure 3`] = `
+Array [
+  Array [
+    Object {
+      "action": "callFunction",
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "mock-operation",
+      "result": "failure",
+      "status": 404,
+      "test": "a",
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction failure 4`] = `Array []`;
+
+exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction success  1`] = `
+Array [
+  Array [
+    Object {
+      "test": "a",
+    },
+    Object {
+      "operation": "mock-operation",
+      "service": "mock-service",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction success  2`] = `
+Array [
+  Array [
+    Object {
+      "test": "b",
+    },
+    Object {
+      "operation": "mock-operation",
+      "service": "mock-service",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction success  3`] = `
+Array [
+  Array [
+    "service.mock-service.action.mockConstructor.state.start",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.mockConstructor.state.start",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.mockConstructor.state.success",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.mockConstructor.state.success",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.mockConstructor.state.start",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.mockConstructor.state.start",
+    1,
+  ],
+  Array [
+    "service.mock-service.action.mockConstructor.state.success",
+    1,
+  ],
+  Array [
+    "operation.mock-operation.action.mockConstructor.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction success  4`] = `
+Array [
+  Array [
+    Object {
+      "action": "callFunctionA",
+      "operation": "mock-operation",
+      "test": "a",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunctionA",
+      "operation": "mock-operation",
+      "result": "success",
+      "test": "a",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunctionB",
+      "operation": "mock-operation",
+      "test": "b",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunctionB",
+      "operation": "mock-operation",
+      "result": "success",
+      "test": "b",
+    },
   ],
 ]
 `;

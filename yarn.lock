@@ -62,6 +62,22 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@financial-times/n-auto-logger@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-0.4.4.tgz#fc3e9f7ea07bceb85b1c3a05ee0fc6a133c7d2d0"
+  dependencies:
+    "@financial-times/n-error" "^0.2.3"
+    "@financial-times/n-logger" "^5.5.11"
+    node-fetch "^2.0.0"
+
+"@financial-times/n-error@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-error/-/n-error-0.2.3.tgz#053cb46ed2a1c11f63ebc2c85846341faa2392d4"
+  dependencies:
+    camelcase "^4.1.0"
+    isomorphic-fetch "^2.2.1"
+    node-fetch "^2.0.0"
+
 "@financial-times/n-fetch@^1.0.0-beta.4":
   version "1.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/@financial-times/n-fetch/-/n-fetch-1.0.0-beta.4.tgz#b6acb0b3c2a81f3a17be1265516946e13caa1698"
@@ -87,6 +103,14 @@
     stylelint-order "^0.8.0"
     stylelint-scss "^2.2.0"
     yargs "^10.0.3"
+
+"@financial-times/n-logger@^5.5.11":
+  version "5.6.2"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-logger/-/n-logger-5.6.2.tgz#dc042c1436f7e8d486aebdccfc207a95449e220c"
+  dependencies:
+    isomorphic-fetch "^2.2.1"
+    request "^2.83.0"
+    winston "^2.4.0"
 
 "@financial-times/n-logger@^5.5.3":
   version "5.5.11"
@@ -233,6 +257,10 @@ argparse@^1.0.7:
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.9.tgz#73d83bc263f86e97f8cc4f6bae1b0e90a7d22c86"
   dependencies:
     sprintf-js "~1.0.2"
+
+arity-n@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/arity-n/-/arity-n-1.0.4.tgz#d9e76b11733e08569c0847ae7b39b2860b30b745"
 
 arr-diff@^2.0.0:
   version "2.0.0"
@@ -1311,6 +1339,12 @@ commander@~2.2.0:
 component-emitter@^1.2.0, component-emitter@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.2.1.tgz#137918d6d78283f7df7a6b7c5a63e140e69425e6"
+
+compose-function@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/compose-function/-/compose-function-3.0.3.tgz#9ed675f13cc54501d30950a486ff6a7ba3ab185f"
+  dependencies:
+    arity-n "^1.0.4"
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -2992,6 +3026,13 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
+isomorphic-fetch@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
+  dependencies:
+    node-fetch "^1.0.1"
+    whatwg-fetch ">=0.10.0"
+
 isstream@0.1.x, isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -3866,12 +3907,16 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-node-fetch@^1.6.3:
+node-fetch@^1.0.1, node-fetch@^1.6.3:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-fetch@^2.0.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.1.tgz#369ca70b82f50c86496104a6c776d274f4e4a2d4"
 
 node-int64@^0.4.0:
   version "0.4.0"
@@ -5806,6 +5851,10 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   resolved "https://registry.yarnpkg.com/whatwg-encoding/-/whatwg-encoding-1.0.3.tgz#57c235bc8657e914d24e1a397d3c82daee0a6ba3"
   dependencies:
     iconv-lite "0.4.19"
+
+whatwg-fetch@>=0.10.0:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
 
 whatwg-url@^6.4.0:
   version "6.4.0"
