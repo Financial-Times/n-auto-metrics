@@ -71,9 +71,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@financial-times/n-auto-logger@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-1.0.1.tgz#a0b605d267a463358add49c2c31976e22cffef65"
+"@financial-times/n-auto-logger@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-1.1.2.tgz#43d120bf1d3a69c134e041ca306b51d6d0eb9694"
   dependencies:
     "@financial-times/n-error" "^0.2.3"
     "@financial-times/n-logger" "^5.5.11"

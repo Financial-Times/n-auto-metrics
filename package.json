@@ -16,7 +16,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@financial-times/n-auto-logger": "^1.0.1",
+    "@financial-times/n-auto-logger": "^1.1.2",
     "@financial-times/n-gage": "^1.19.3",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.1",
