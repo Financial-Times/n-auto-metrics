@@ -1,6 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`autoMetricsOp logs correctly operation failure of async function 1`] = `
+exports[`autoMetricsOp autoMetricsOp returns an enhanced operation function for async operation throwing error 1`] = `
+Array [
+  Array [
+    Object {
+      "message": "Not Found",
+      "status": 404,
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp autoMetricsOp returns an enhanced operation function for non-async middoperationleware throwing error 1`] = `
+Array [
+  Array [
+    Object {
+      "message": "Not Found",
+      "status": 404,
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp record metrics correctly operation failure of async function 1`] = `
 Array [
   Array [
     "operation.operation.segment.undefined.state.start",
@@ -13,7 +35,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation failure of async function 2`] = `
+exports[`autoMetricsOp record metrics correctly operation failure of async function 2`] = `
 Array [
   Array [
     Object {
@@ -26,7 +48,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation failure of non-async function 1`] = `
+exports[`autoMetricsOp record metrics correctly operation failure of non-async function 1`] = `
 Array [
   Array [
     "operation.operation.segment.undefined.state.start",
@@ -39,7 +61,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation failure of non-async function 2`] = `
+exports[`autoMetricsOp record metrics correctly operation failure of non-async function 2`] = `
 Array [
   Array [
     Object {
@@ -52,7 +74,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation success of async function with autoMetricsAction sub action 1`] = `
+exports[`autoMetricsOp record metrics correctly operation success of async function with autoMetricsAction sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -81,7 +103,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation success of non-async function with autoMetricsAction sub action 1`] = `
+exports[`autoMetricsOp record metrics correctly operation success of non-async function with autoMetricsAction sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -110,7 +132,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp logs correctly operation success of req.metrics.segment from previous middlewares 1`] = `
+exports[`autoMetricsOp record metrics correctly operation success of req.metrics.segment from previous middlewares 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.MOCK_USER_TYPE.state.start",
@@ -122,6 +144,292 @@ Array [
   ],
 ]
 `;
+
+exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunction",
+      "operation": "operationFunction",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 3`] = `
+Array [
+  Array [
+    Object {
+      "action": "callFunction",
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "operationFunction",
+      "result": "failure",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+  Array [
+    Object {
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "operationFunction",
+      "result": "failure",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 4`] = `Array []`;
+
+exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunction",
+      "operation": "operationFunction",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunction",
+      "operation": "operationFunction",
+      "result": "success",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "operationFunction",
+      "result": "success",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 3`] = `Array []`;
+
+exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 4`] = `Array []`;
+
+exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.status.404",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunction",
+      "operation": "operationFunction",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 3`] = `
+Array [
+  Array [
+    Object {
+      "action": "callFunction",
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "operationFunction",
+      "result": "failure",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+  Array [
+    Object {
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "operationFunction",
+      "result": "failure",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 4`] = `Array []`;
+
+exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.undefined.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunction",
+      "operation": "operationFunction",
+    },
+  ],
+  Array [
+    Object {
+      "action": "callFunction",
+      "operation": "operationFunction",
+      "result": "success",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "operationFunction",
+      "result": "success",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 3`] = `Array []`;
+
+exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 4`] = `Array []`;
 
 exports[`autoMetricsOps and toMiddlewares enhance and convert each method correctly 1`] = `
 Array [
@@ -143,3 +451,187 @@ Array [
   ],
 ]
 `;
+
+exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction failure 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction failure 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction failure 3`] = `
+Array [
+  Array [
+    Object {
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "operationFunction",
+      "result": "failure",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction failure 4`] = `Array []`;
+
+exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction success 1`] = `
+Array [
+  Array [
+    "operation.methodA.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodA.segment.undefined.state.success",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction success 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "methodA",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodA",
+      "result": "success",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodB",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodB",
+      "result": "success",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction success 3`] = `Array []`;
+
+exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction success 4`] = `Array []`;
+
+exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction failure 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction failure 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction failure 3`] = `
+Array [
+  Array [
+    Object {
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "operationFunction",
+      "result": "failure",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction failure 4`] = `Array []`;
+
+exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction success 1`] = `
+Array [
+  Array [
+    "operation.methodA.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodA.segment.undefined.state.success",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction success 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "methodA",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodA",
+      "result": "success",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodB",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodB",
+      "result": "success",
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction success 3`] = `Array []`;
+
+exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction success 4`] = `Array []`;
