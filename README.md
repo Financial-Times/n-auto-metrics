@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics.svg)](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics) [![CircleCI](https://circleci.com/gh/Financial-Times/n-auto-metrics.svg?style=shield)](https://circleci.com/gh/Financial-Times/n-auto-metrics) [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-auto-metrics/badge.svg?branch=master)](https://coveralls.io/github/Financial-Times/n-auto-metrics?branch=master) 
 [![Known Vulnerabilities](https://snyk.io/test/github/Financial-Times/n-auto-metrics/badge.svg)](https://snyk.io/test/github/Financial-Times/n-auto-metrics) [![Dependencies](https://david-dm.org/Financial-Times/n-auto-metrics.svg)](https://david-dm.org/Financial-Times/n-auto-metrics) [![devDependencies](https://david-dm.org/Financial-Times/n-auto-metrics/dev-status.svg)](https://david-dm.org/Financial-Times/n-auto-metrics?type=dev)
 
-auto log function calls in operation/action model with a single line of code, based on [n-logger](https://github.com/Financial-Times/n-logger)
+auto record metrics of function calls in operation/action model with a single line of code
 
 <br>
 
@@ -11,13 +11,9 @@ auto log function calls in operation/action model with a single line of code, ba
 - [install](#install)
 - [usage](#usage)
    * [action function signature](#action-function-signature)
-   * [operation function error handling](#operation-function-error-handling)
-   * [filter user/handler field](#filter-userhandler-field)
-   * [reserved filed override](#reserved-field-override)
-   * [test stub](#test-stub)
-- [built-in](#built-in)
-   * [out-of-box error parsing support](#out-of-box-error-parsing-support)
-   * [clean up log object](#clean-up-log-object)
+   * [operation function format](#operation-function-format)
+   * [use with other enhancers](#use-with-other-enhancers)
+   * [reserved fields](#default-filtered-fields)
 - [example](#example)
 - [development](#development)
 - [todos](#todos)
@@ -27,23 +23,43 @@ auto log function calls in operation/action model with a single line of code, ba
 ## quickstart
 ```js
 import { 
+  initAutoMetrics,
   autoMetricsAction, 
   autoMetricsActions, 
   autoMetricsOp,
   autoMetricsOps,
-  loggerEvent,
+  toMiddleware,
+  toMiddlewares,
 } from '@financial-times/n-auto-metrics';
 ```
 
 ```js
-// auto log a function of its start, success/failure state with function name as `action`
+// app.js
+
+initAutoMetrics(metrics); // you can use the metrics instance from n-express or any other sources
+
+// use enhanced middleware
+```
+
+```js
+// auto metrics function of its start, success/failure state
 const result = autoMetricsAction(someFunction)(args: Object, meta?: Object);
+
+// metrics example, someFunction.name would be taken as `action`
+// `operation.${operation}.action.${action}.state.start //operation can be specified in args or meta
+// `operation.${operation}.action.${action}.state.success`
+// `operation.${operation}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
+// `operation.${operation}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
+
+// `service.${service}.action.${action}.state.start //service can be specified in args or meta
+// ...similar success and failure metrics
 ```
 > more details on [action function signature](#action-function-signature)
 
 ```js
-// auto log multiple functions wrapped in an object
-const APIService = autoMetricsActions({ methodA, methodB, methodC });
+// auto metrics multiple functions wrapped in an object
+// `service` would need to be specified as the group namespace, passed to meta
+const APIService = autoMetricsActions('api-service-name')({ methodA, methodB, methodC });
 ```
 
 ```js
@@ -57,42 +73,30 @@ const operationFunction = (meta, req, res, next) => {
     throw e; // remember to throw in catch block so that failure can be logged correctly
   }
 };
-export autoMetricsOp(operationFunction);
+export toMiddleware(autoMetricsOp(operationFunction));
 ```
 > more details on [operation function error handling](#operation-function-error-handling)
 
 ```js
 // auto log multiple operation functions wrapped in an object as controller
-const someController = autoMetricsOps({ operationFunctionA, operationFuncitonB });
+const someController = toMiddlewares(autoMetricsOps({ operationFunctionA, operationFuncitonB }));
 ```
 
 ```js
-// log both operation and actions together
+// autoMetricsOp and autoMetricsAction/autoMetricsActions
 const operationFunction = async (meta, req, res, next) => {
-  const data = await APIService.methodA(params, meta); // from autoMetricsActions
-  next();
+  try {
+    const data = await APIService.methodA(params, meta); // from autoMetricsActions
+    next();
+  } catch(e) {
+    next(e);
+    throw e;
+  }
 };
-export autoMetricsOp(operationFunction);
+
+export toMiddleware(autoMetricsOp(operationFunction));
 
 app.use(someMiddleware)
-```
-
-```js
-// log operation and adhoc actions, autoMetricsAction(someFunction) is recommended
-const event = loggerEvent(meta);
-
-try {
-    event.action('someAction').success();
-    event.success();
-} catch(e) {
-    event.failure(e);
-}
-```
-
-
-```js
-// set key names of fields to be muted in .env to reduce log for development or filter fields in production
-LOGGER_MUTE_FIELDS=transactionId, userId
 ```
 
 ## install
@@ -104,7 +108,7 @@ npm install @financial-times/n-auto-metrics
 
 ### action function signature
 
-`n-auto-metrics` allows two objects as the args of the autoMetricsged function so that values can be logged with corresponding key names.
+`n-auto-metrics` allows two objects as the args of the autoMetricsAction function so that values can be recorded with corresponding key names.
 ```js
 // you can auto log the call with meta, even if it is not mandatory to the function
 const someFunction = ({ argsA, argsB }) => {};
@@ -123,76 +127,54 @@ const someFunction = (mandatory: Object, optional?: Object ={}) => {
 
 > The package would throw Errors if function signature is incorrect for `autoMetricsAction`.
 
-### operation function error handling
+### operation function format
 
-### filter user/handler field
+The operation function use the pattern of `try-catch-next-throw`:
+
 ```js
-// data under `user` field in meta wouldn't be logged, sensitive personal data could be put here
-const meta = { operation, user: { id, email } };
-const event = eventLogger(meta);
-
-// data under `user` field in error wouldn't be logged, message to be rendered on UI could be put here
-const error = { status, message, user: { message } };
-event.failure(error);
-
-// both the above filter built-in
-const someFunction = (args, { metaA, user }) => {
-  try {
-    //...
-    someCall(user);
-    //...
-  } catch (e) {
-    e.user = { message: 'some message to be displayed on UI' };
-    throw e;
+const operationFunction = (meta, req, res, next) => {
+  try{
+    // main code
+    // functions that can potentially throw errors
+    // without the try-catch-next-throw pattern those errors may not be next to error handler
+  } catch(e) {
+      // ensure the error would be handled by the error handler, 
+      // or you can write the error handling code in the catch block
+      next(e);
+      // further throw the error to the higher order enhancer function
+      // error caught in the enhancer function would then be parsed and logged
+      throw(e);
   }
 }
-autoMetricsAction(someFunction)(args, meta);
-````
-```js
-// .handler field wouldn't be recorded in logger, as it is only useful for error handler
-  try {
-    throw nError({
-      status: 404,
-      handler: 'REDIRECT_TO_INDEX',
-    });
-  } catch (e) {
-    event.failure(e);
-    next(e);
-  }
-````
-
-### reserved field override
-`n-auto-metrics` will append values to following reserved fields automatically, the values would be overriden by the key value of the same name in your `args/params/meta` or error object, be cautious not to override them unintentionally.
-* `operation` default to `operationFunction.name`
-* `action` default to `callFunction.name`
-* `category` default to `FETCH_RESPONSE_ERROR/FETCH_NETWORK_ERROR/NODE_SYSTEM_ERROR/CUSTOM_ERROR`
-* `result` default to `success/failure`
-
-### test stub
-
-```js
-import logger from '@financial-times/n-auto-metrics'; // the underlying logger instance (`n-logger`)
-
-sandbox.stub(logger);
 ```
 
-## built-in
+### use with other enhancers
 
-### out-of-box error parsing support
+`autoMetricsOp` would return an operation function, so that other enhancers can be further chained before `toMiddleware`
 
-`n-auto-metrics` would parse different forms of the following error objects to logger-suitable format automatically([detail](src/failure.js)), while it still logs plain object and string message.
-* Fetch Response Error `content-type`:`application/json`,`text/plain`,`text/html`
-* Fetch (Network) Error
-* Node native Error objects
-* Custom objects extends native Error object
-* [NError](https://github.com/Financial-Times/n-error)
+```js
+export default compose(toMiddleware, autoMetricsOp, autoLogOp)(operationFunction);
+```
 
-### clean up log object
+```js
+export default compose(toMiddlewares, autoMetricsOps, autoLogOps)(operationBundle);
+```
 
-`n-auto-metrics` would trim any empty fields and method fields in the input meta or error objects automatically to concise log ([detail](src/index.js)), you shouldn't be concerned about passing excessive meta fields or extend Error object with methods.
+```js
+export default compose(autoMetricsAction, autoLogAction)(callFunction);
+```
+
+```js
+export default compose(autoMetricsActions, autoLogActions)(callFunctionBundle);
+```
+
+### reserved fields
+
+* `category` [NError](https://github.com/financial-times/n-error) category would be recorded in metrics
+* `type` is used by convention to record custom error type names for monitoring and debugging
+
 
 ## example
-[before/after](example/EXAMPLE.md)
 
 [enhanced api service example](https://github.com/Financial-Times/newspaper-mma/blob/master/server/apis/newspaper-info-svc.js)
 
