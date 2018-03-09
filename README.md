@@ -62,14 +62,12 @@ const operationFunction = (meta, req, res, next) => {
     throw e; // remember to throw in catch block so that failure can be logged correctly
   }
 };
-export toMiddleware(autoMetricsOp(operationFunction));
-```
-> more details on [operation function error handling](#operation-function-error-handling)
+export default toMiddleware(autoMetricsOp(operationFunction));
 
-```js
 // auto log multiple operation functions wrapped in an object as controller
 const someController = toMiddlewares(autoMetricsOps({ operationFunctionA, operationFuncitonB }));
 ```
+> more details on [operation function error handling](#operation-function-error-handling)
 
 ```js
 // auto metrics operation and action together
