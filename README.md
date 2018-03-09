@@ -154,18 +154,9 @@ const operationFunction = (meta, req, res, next) => {
 
 ```js
 export default compose(toMiddleware, autoMetricsOp, autoLogOp)(operationFunction);
-```
-
-```js
 export default compose(toMiddlewares, autoMetricsOps, autoLogOps)(operationBundle);
-```
-
-```js
 export default compose(autoMetricsAction, autoLogAction)(callFunction);
-```
-
-```js
-export default compose(autoMetricsActions, autoLogActions)(callFunctionBundle);
+export default compose(autoMetricsActions, autoLogActions('service-name'))(callFunctionBundle);
 ```
 
 ### reserved fields
