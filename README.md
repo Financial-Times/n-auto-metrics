@@ -33,11 +33,10 @@ import {
 ```
 
 ```js
-// app.js
+/* app.js */
+import { metrics } from 'n-express'; // or any other source has the `next-metrics` instance
 
-initAutoMetrics(metrics); // you can use the metrics instance from n-express or any other sources
-
-// use enhanced middleware
+initAutoMetrics(metrics); // do this before app.use() any enhanced middleware/controller
 ```
 
 ```js
@@ -51,16 +50,12 @@ const APIService = autoMetricsActions('api-service-name')({ methodA, methodB, me
 > more details on [action function signature](#action-function-signature)
 
 > metrics example, callFunction.name would be taken as `action`, `operation` can be specified in args or meta
-
-```js
-`operation.${operation}.action.${action}.state.start`
-`operation.${operation}.action.${action}.state.success`
-`operation.${operation}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
-`operation.${operation}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
-
-`service.${service}.action.${action}.state.start
-// ...similar success and failure metrics
-```
+>
+> `operation.${operation}.action.${action}.state.start`
+> `operation.${operation}.action.${action}.state.success`
+> `operation.${operation}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
+> `operation.${operation}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
+> `service.${service}.action.${action}.state.start` `// ...similar success and failure metrics`
 
 
 ```js
