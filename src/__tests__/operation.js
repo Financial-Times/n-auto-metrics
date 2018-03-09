@@ -24,6 +24,12 @@ const metrics = {
 	count: jest.fn(),
 };
 
+/* eslint-disable no-unused-vars */
+const commonErrorHanlder = (err, req, res, next) => {
+	res.status(err.status).send(err);
+};
+/* eslint-enable no-unused-vars */
+
 describe('autoMetricsOp', () => {
 	beforeAll(() => {
 		initAutoMetrics(metrics);
@@ -68,14 +74,9 @@ describe('autoMetricsOp', () => {
 					next(e);
 					throw e;
 				};
-				/* eslint-disable no-unused-vars */
-				const errorHanlder = (err, req, res, next) => {
-					res.status(err.status).send(err);
-				};
-				/* eslint-enable no-unused-vars */
 				const middleware = toMiddleware(operation);
 				const app = express();
-				app.use('/', middleware, errorHanlder);
+				app.use('/', middleware, commonErrorHanlder);
 				const res = await request(app).get('/');
 				expect(res.statusCode).toBe(404);
 				expect(res.body.message).toBe('Not Found');
@@ -88,14 +89,9 @@ describe('autoMetricsOp', () => {
 					next(e);
 					throw e;
 				};
-				/* eslint-disable no-unused-vars */
-				const errorHanlder = (err, req, res, next) => {
-					res.status(err.status).send(err);
-				};
-				/* eslint-enable no-unused-vars */
 				const middleware = toMiddleware(operation);
 				const app = express();
-				app.use('/', middleware, errorHanlder);
+				app.use('/', middleware, commonErrorHanlder);
 				const res = await request(app).get('/');
 				expect(res.statusCode).toBe(404);
 				expect(res.body.message).toBe('Not Found');
@@ -136,14 +132,9 @@ describe('autoMetricsOp', () => {
 					next(e);
 					throw e;
 				};
-				/* eslint-disable no-unused-vars */
-				const errorHanlder = (err, req, res, next) => {
-					res.status(err.status).send(err);
-				};
-				/* eslint-enable no-unused-vars */
 				const middleware = compose(toMiddleware, autoMetricsOp)(operation);
 				const app = express();
-				app.use('/', middleware, errorHanlder);
+				app.use('/', middleware, commonErrorHanlder);
 				const res = await request(app).get('/');
 				expect(res.statusCode).toBe(404);
 				expect(res.body.message).toBe('Not Found');
@@ -156,14 +147,9 @@ describe('autoMetricsOp', () => {
 					next(e);
 					throw e;
 				};
-				/* eslint-disable no-unused-vars */
-				const errorHanlder = (err, req, res, next) => {
-					res.status(err.status).send(err);
-				};
-				/* eslint-enable no-unused-vars */
 				const middleware = compose(toMiddleware, autoMetricsOp)(operation);
 				const app = express();
-				app.use('/', middleware, errorHanlder);
+				app.use('/', middleware, commonErrorHanlder);
 				const res = await request(app).get('/');
 				expect(res.statusCode).toBe(404);
 				expect(res.body.message).toBe('Not Found');
@@ -519,13 +505,8 @@ describe('autoMetricsOps and toMiddlewares', () => {
 			)({
 				operationFunction,
 			});
-			/* eslint-disable no-unused-vars */
-			const errorHanlder = (err, req, res, next) => {
-				res.status(err.status).send(err);
-			};
-			/* eslint-enable no-unused-vars */
 			const app = express();
-			app.use('/', enhancedController.operationFunction, errorHanlder);
+			app.use('/', enhancedController.operationFunction, commonErrorHanlder);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(errorInstance.status);
 			expect(res.body.message).toEqual(errorInstance.message);
@@ -587,13 +568,8 @@ describe('autoMetricsOps and toMiddlewares', () => {
 			)({
 				operationFunction,
 			});
-			/* eslint-disable no-unused-vars */
-			const errorHanlder = (err, req, res, next) => {
-				res.status(err.status).send(err);
-			};
-			/* eslint-enable no-unused-vars */
 			const app = express();
-			app.use('/', enhancedController.operationFunction, errorHanlder);
+			app.use('/', enhancedController.operationFunction, commonErrorHanlder);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(errorInstance.status);
 			expect(res.body.message).toEqual(errorInstance.message);

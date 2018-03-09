@@ -5,6 +5,8 @@ import {
 	autoMetricsActions,
 	autoMetricsOp,
 	autoMetricsOps,
+	toMiddleware,
+	toMiddlewares,
 } from '../index';
 
 describe('n-auto-metrics exports', () => {
@@ -30,5 +32,13 @@ describe('n-auto-metrics exports', () => {
 
 	it('autoMetricsOps', () => {
 		expect(typeof autoMetricsOps).toBe('function');
+	});
+
+	it('toMiddleware', () => {
+		expect(typeof toMiddleware).toBe('function');
+	});
+
+	it('toMiddlewares', () => {
+		expect(typeof toMiddlewares).toBe('function');
 	});
 });
