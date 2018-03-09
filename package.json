@@ -1,8 +1,8 @@
 {
-  "name": "@financial-times/n-auto-logger",
+  "name": "@financial-times/n-auto-metrics",
   "version": "1.0.0",
   "license": "MIT",
-  "repository": "https://github.com/Financial-Times/n-auto-logger.git",
+  "repository": "https://github.com/Financial-Times/n-auto-metrics.git",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint src",
