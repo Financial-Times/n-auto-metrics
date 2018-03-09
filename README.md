@@ -14,6 +14,7 @@ auto record metrics of function calls in operation/action model with a single li
    * [operation function format](#operation-function-format)
    * [use with other enhancers](#use-with-other-enhancers)
    * [reserved fields](#reserved-fields)
+   * [metrics format](#metrics-format)
 - [example](#example)
 - [development](#development)
 
@@ -48,14 +49,6 @@ const result = autoMetricsAction(someFunction)(args: Object, meta?: Object);
 const APIService = autoMetricsActions('api-service-name')({ methodA, methodB, methodC });
 ```
 > more details on [action function signature](#action-function-signature)
-
-> metrics example, callFunction.name would be taken as `action`, `operation` can be specified in args or meta
->
-> `operation.${operation}.action.${action}.state.start`
-> `operation.${operation}.action.${action}.state.success`
-> `operation.${operation}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
-> `operation.${operation}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
-> `service.${service}.action.${action}.state.start` `// ...similar success and failure metrics`
 
 
 ```js
@@ -151,6 +144,20 @@ export default compose(autoMetricsActions, autoLogActions('service-name'))(callF
 * `category` [NError](https://github.com/financial-times/n-error) category would be recorded in metrics
 * `type` is used by convention to record custom error type names for monitoring and debugging
 * `status` in error object would be recorded for service action call failure
+
+### metrics format
+
+> `operation.${operation}.segment.${segment}.state.start`
+> `operation.${operation}.action.${action}.state.start`
+> `operation.${operation}.action.${action}.state.success`
+> `operation.${operation}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
+> `operation.${operation}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
+> `operation.${operation}.segment.${segment}.state.success`
+> `operation.${operation}.segment.${segment}.state.failure.category.${e.category}.type.${e.type}`
+> `service.${service}.action.${action}.state.start`
+> `service.${service}.action.${action}.state.success`
+> `service.${service}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
+> `service.${service}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
 
 
 ## example
