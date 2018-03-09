@@ -13,10 +13,9 @@ auto record metrics of function calls in operation/action model with a single li
    * [action function signature](#action-function-signature)
    * [operation function format](#operation-function-format)
    * [use with other enhancers](#use-with-other-enhancers)
-   * [reserved fields](#default-filtered-fields)
+   * [reserved fields](#reserved-fields)
 - [example](#example)
 - [development](#development)
-- [todos](#todos)
 
 <br>
 
@@ -45,22 +44,24 @@ initAutoMetrics(metrics); // you can use the metrics instance from n-express or 
 // auto metrics function of its start, success/failure state
 const result = autoMetricsAction(someFunction)(args: Object, meta?: Object);
 
-// metrics example, someFunction.name would be taken as `action`
-// `operation.${operation}.action.${action}.state.start //operation can be specified in args or meta
-// `operation.${operation}.action.${action}.state.success`
-// `operation.${operation}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
-// `operation.${operation}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
-
-// `service.${service}.action.${action}.state.start //service can be specified in args or meta
-// ...similar success and failure metrics
-```
-> more details on [action function signature](#action-function-signature)
-
-```js
 // auto metrics multiple functions wrapped in an object
 // `service` would need to be specified as the group namespace, passed to meta
 const APIService = autoMetricsActions('api-service-name')({ methodA, methodB, methodC });
 ```
+> more details on [action function signature](#action-function-signature)
+
+> metrics example, callFunction.name would be taken as `action`, `operation` can be specified in args or meta
+
+```js
+`operation.${operation}.action.${action}.state.start`
+`operation.${operation}.action.${action}.state.success`
+`operation.${operation}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
+`operation.${operation}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
+
+`service.${service}.action.${action}.state.start
+// ...similar success and failure metrics
+```
+
 
 ```js
 // auto log success/failure express middleware/controller as an operation function 
@@ -83,7 +84,7 @@ const someController = toMiddlewares(autoMetricsOps({ operationFunctionA, operat
 ```
 
 ```js
-// autoMetricsOp and autoMetricsAction/autoMetricsActions
+// auto metrics operation and action together
 const operationFunction = async (meta, req, res, next) => {
   try {
     const data = await APIService.methodA(params, meta); // from autoMetricsActions
@@ -94,9 +95,7 @@ const operationFunction = async (meta, req, res, next) => {
   }
 };
 
-export toMiddleware(autoMetricsOp(operationFunction));
-
-app.use(someMiddleware)
+export default toMiddleware(autoMetricsOp(operationFunction));
 ```
 
 ## install
@@ -108,24 +107,14 @@ npm install @financial-times/n-auto-metrics
 
 ### action function signature
 
-`n-auto-metrics` allows two objects as the args of the autoMetricsAction function so that values can be recorded with corresponding key names.
+`n-auto-metrics` allows two objects as the args of the autoMetricsAction function so that values can be recorded with corresponding key names. It is relatively more relaxed than `n-auto-logger`.
 ```js
-// you can auto log the call with meta, even if it is not mandatory to the function
-const someFunction = ({ argsA, argsB }) => {};
-autoMetricsAction(someFunction)(args, meta);
-autoMetricsAction(someFunction)(argsAndMeta);
+// it would search for .service field in `meta` or `paramsOrArgs`
+// servie default to `undefined`
+const someFunction = (paramsOrArgs: Object, meta: ?Object) => {};
 
-// if you need to pass certain meta in the function call
-const someFunction = ({ paramsA, paramsB }, { metaA, metaB }) => {};
-
-// if you need to do input params validation (e.g. before an API call)
-const someFunction = (mandatory: Object, optional?: Object ={}) => {
-  validate(mandatory);
-  // ...
-};
+autoMetricsAction(someFunction)(paramsOrArgs, meta);
 ```
-
-> The package would throw Errors if function signature is incorrect for `autoMetricsAction`.
 
 ### operation function format
 
@@ -161,21 +150,21 @@ export default compose(autoMetricsActions, autoLogActions('service-name'))(callF
 
 ### reserved fields
 
+* `operation` default to `operationFunction.name`
+* `action` default to `callFunction.name`
+* `service` default to `undefined`, can be specified in `paramsOrArgs` or `meta`(`autoLogActions('service-name')`)
 * `category` [NError](https://github.com/financial-times/n-error) category would be recorded in metrics
 * `type` is used by convention to record custom error type names for monitoring and debugging
+* `status` in error object would be recorded for service action call failure
 
 
 ## example
 
 [enhanced api service example](https://github.com/Financial-Times/newspaper-mma/blob/master/server/apis/newspaper-info-svc.js)
 
-[controller example](https://github.com/Financial-Times/newspaper-mma/blob/master/server/routes/delivery-address/controller.js)
+[enhanced controller example](https://github.com/Financial-Times/newspaper-mma/blob/master/server/routes/delivery-address/controller.js)
 
 ## development
 * `make install` or `yarn`
 * `yarn test --watch` to automatically run test on changing src
 * `yarn watch` to automatically correct code format on saving src
-
-## todos
-* minified output with webpack/uglify/prepack with dist/index.min.js tested, [bundlesize badge](https://unpkg.com/#/)
-* logger coverage measurement in test
