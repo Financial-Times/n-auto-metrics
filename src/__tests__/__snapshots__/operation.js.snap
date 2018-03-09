@@ -1,27 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`autoMetricsOp autoMetricsOp returns an enhanced operation function for async operation throwing error 1`] = `
-Array [
-  Array [
-    Object {
-      "message": "Not Found",
-      "status": 404,
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOp autoMetricsOp returns an enhanced operation function for non-async middoperationleware throwing error 1`] = `
-Array [
-  Array [
-    Object {
-      "message": "Not Found",
-      "status": 404,
-    },
-  ],
-]
-`;
-
 exports[`autoMetricsOp record metrics correctly operation failure of async function 1`] = `
 Array [
   Array [
@@ -132,6 +110,19 @@ Array [
 ]
 `;
 
+exports[`autoMetricsOp record metrics correctly operation success of req.meta.segment from previous middlewares if not set req.metrics 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.MOCK_USER_TYPE.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.MOCK_USER_TYPE.state.success",
+    1,
+  ],
+]
+`;
+
 exports[`autoMetricsOp record metrics correctly operation success of req.metrics.segment from previous middlewares 1`] = `
 Array [
   Array [
@@ -144,6 +135,30 @@ Array [
   ],
 ]
 `;
+
+exports[`autoMetricsOp returns an enhanced operation function for async operation throwing error 1`] = `
+Array [
+  Array [
+    Object {
+      "message": "Not Found",
+      "status": 404,
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp returns an enhanced operation function for non-async middoperationleware throwing error 1`] = `
+Array [
+  Array [
+    Object {
+      "message": "Not Found",
+      "status": 404,
+    },
+  ],
+]
+`;
+
+exports[`autoMetricsOp throw Error if metrics instance was not set 1`] = `[Error: auto metrics instance needs to be initialised]`;
 
 exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 1`] = `
 Array [

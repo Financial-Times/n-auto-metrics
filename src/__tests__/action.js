@@ -263,6 +263,10 @@ describe('autoMetricsActions', () => {
 		expect(metrics.count.mock.calls).toMatchSnapshot();
 	});
 
+	it('throw Error if service name has space', async () => {
+		expect(autoMetricsActions('mock service')).toThrowErrorMatchingSnapshot();
+	});
+
 	describe('used after autoLogActions', () => {
 		it('log and record metrics correctly when callFunction success', async () => {
 			const callFunctionA = jest.fn();

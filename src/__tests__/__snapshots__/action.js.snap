@@ -491,6 +491,8 @@ Array [
 ]
 `;
 
+exports[`autoMetricsActions throw Error if service name has space 1`] = `"service name for metrics needs to be string without spaces"`;
+
 exports[`autoMetricsActions used after autoLogActions log and record metrics correctly when callFunction failure 1`] = `
 Array [
   Array [
