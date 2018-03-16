@@ -137,11 +137,13 @@ export default compose(autoMetricsActions, autoLogActions('service-name'))(callF
 ### reserved fields
 
 * `operation` default to `operationFunction.name`
-* `action` default to `callFunction.name`
 * `service` default to `undefined`, can be specified in `paramsOrArgs` or `meta`(`autoLogActions('service-name')`)
+* `action` default to `callFunction.name`
 * `category` [NError](https://github.com/financial-times/n-error) category would be recorded in metrics
 * `type` is used by convention to record custom error type names for monitoring and debugging
 * `status` in error object would be recorded for service action call failure
+* `stack` used in Error or NError to store the stack trace
+* `result` default to `success/failure`
 
 ### metrics format
 
