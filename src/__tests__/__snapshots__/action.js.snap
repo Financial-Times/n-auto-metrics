@@ -457,35 +457,35 @@ Array [
 exports[`autoMetricsActions decorate each method correctly 3`] = `
 Array [
   Array [
-    "service.mock-service.action.mockConstructor.state.start",
+    "service.mock-service.action.callFunctionA.state.start",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.state.start",
+    "operation.mock-operation.action.callFunctionA.state.start",
     1,
   ],
   Array [
-    "service.mock-service.action.mockConstructor.state.success",
+    "service.mock-service.action.callFunctionA.state.success",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.state.success",
+    "operation.mock-operation.action.callFunctionA.state.success",
     1,
   ],
   Array [
-    "service.mock-service.action.mockConstructor.state.start",
+    "service.mock-service.action.callFunctionB.state.start",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.state.start",
+    "operation.mock-operation.action.callFunctionB.state.start",
     1,
   ],
   Array [
-    "service.mock-service.action.mockConstructor.state.success",
+    "service.mock-service.action.callFunctionB.state.success",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.state.success",
+    "operation.mock-operation.action.callFunctionB.state.success",
     1,
   ],
 ]
@@ -750,35 +750,35 @@ Array [
 exports[`autoMetricsActions used before autoLogActions log and record metrics correctly when callFunction success  3`] = `
 Array [
   Array [
-    "service.mock-service.action.mockConstructor.state.start",
+    "service.mock-service.action.callFunctionA.state.start",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.state.start",
+    "operation.mock-operation.action.callFunctionA.state.start",
     1,
   ],
   Array [
-    "service.mock-service.action.mockConstructor.state.success",
+    "service.mock-service.action.callFunctionA.state.success",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.state.success",
+    "operation.mock-operation.action.callFunctionA.state.success",
     1,
   ],
   Array [
-    "service.mock-service.action.mockConstructor.state.start",
+    "service.mock-service.action.callFunctionB.state.start",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.state.start",
+    "operation.mock-operation.action.callFunctionB.state.start",
     1,
   ],
   Array [
-    "service.mock-service.action.mockConstructor.state.success",
+    "service.mock-service.action.callFunctionB.state.success",
     1,
   ],
   Array [
-    "operation.mock-operation.action.mockConstructor.state.success",
+    "operation.mock-operation.action.callFunctionB.state.success",
     1,
   ],
 ]

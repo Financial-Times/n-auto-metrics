@@ -80,6 +80,10 @@ export const autoMetricsActions = service => actionBundle => {
 				...meta,
 				service,
 			});
+		Object.defineProperty(actionBundle[methodName], 'name', {
+			value: methodName,
+			configurable: true,
+		});
 		Object.defineProperty(enhancedMethod, 'name', {
 			value: methodName,
 			configurable: true,
