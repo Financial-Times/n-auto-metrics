@@ -16,7 +16,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@financial-times/n-auto-logger": "^1.1.5",
+    "@financial-times/n-auto-logger": "^1.1.7",
     "@financial-times/n-gage": "^1.19.3",
     "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.4",

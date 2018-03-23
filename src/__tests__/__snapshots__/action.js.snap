@@ -624,7 +624,7 @@ exports[`autoMetricsActions used after autoLogActions log and record metrics cor
 Array [
   Array [
     Object {
-      "action": "mockConstructor",
+      "action": "callFunctionA",
       "operation": "mock-operation",
       "service": "mock-service",
       "test": "a",
@@ -632,7 +632,7 @@ Array [
   ],
   Array [
     Object {
-      "action": "mockConstructor",
+      "action": "callFunctionA",
       "operation": "mock-operation",
       "result": "success",
       "service": "mock-service",
@@ -641,7 +641,7 @@ Array [
   ],
   Array [
     Object {
-      "action": "mockConstructor",
+      "action": "callFunctionB",
       "operation": "mock-operation",
       "service": "mock-service",
       "test": "b",
@@ -649,7 +649,7 @@ Array [
   ],
   Array [
     Object {
-      "action": "mockConstructor",
+      "action": "callFunctionB",
       "operation": "mock-operation",
       "result": "success",
       "service": "mock-service",

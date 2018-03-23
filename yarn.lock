@@ -71,18 +71,18 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@financial-times/n-auto-logger@^1.1.5":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-1.1.6.tgz#6ca36e3b45fab9f2f2c17d36f107dba8b3cbe7a5"
+"@financial-times/n-auto-logger@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-1.1.7.tgz#3996987914546c5d81f954b1f0ad3492d1e551eb"
   dependencies:
-    "@financial-times/n-error" "^1.0.3"
+    "@financial-times/n-error" "^1.0.4"
     "@financial-times/n-logger" "^5.5.11"
     "@financial-times/n-utils" "^0.1.0"
     node-fetch "^2.0.0"
 
-"@financial-times/n-error@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@financial-times/n-error/-/n-error-1.0.3.tgz#81d04f29eefad091c44cf8036468a99a7f4bdfb6"
+"@financial-times/n-error@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-error/-/n-error-1.0.4.tgz#bad2b6d55c11e5c739c0de0639cbf03e6b6aa231"
   dependencies:
     "@financial-times/n-utils" "^0.0.2"
     camelcase "^4.1.0"
