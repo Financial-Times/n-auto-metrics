@@ -20,6 +20,8 @@ example/
 .eslintrc.yml
 .gitattributes
 .gitignore
+.npmignore
+nodemon.json
 ft.yml
 Makefile
 secret-squirrel.js

@@ -14,12 +14,11 @@
     "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg",
     "prepush": "make lint unit-test && make verify -j3"
   },
-  "dependencies": {
-    "babel-cli": "^6.26.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@financial-times/n-auto-logger": "^1.1.8",
     "@financial-times/n-gage": "^1.19.3",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
