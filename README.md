@@ -1,7 +1,6 @@
 # n-auto-metrics
 
 [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics.svg)](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics)
-![gzip size](http://img.badgesize.io/https://unpkg.com/@financial-times/n-auto-metrics?compression=gzip)
 ![npm download](https://img.shields.io/npm/dm/@financial-times/n-auto-metrics.svg)
 ![node version](https://img.shields.io/node/v/@financial-times/n-auto-metrics.svg)
 
