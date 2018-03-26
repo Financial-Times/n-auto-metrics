@@ -59,6 +59,10 @@ export const autoMetricsOps = operationBundle => {
 	const enhanced = {};
 	Object.keys(operationBundle).forEach(methodName => {
 		const enhancedMethod = autoMetricsOp(operationBundle[methodName]);
+		Object.defineProperty(operationBundle[methodName], 'name', {
+			value: methodName,
+			configurable: true,
+		});
 		Object.defineProperty(enhancedMethod, 'name', {
 			value: methodName,
 			configurable: true,

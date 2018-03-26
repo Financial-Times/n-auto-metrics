@@ -11,10 +11,10 @@ build: $(shell find src -type f)
 
 unit-test:
 	@echo 'Unit Testing…'
-	@jest
+	@RELEASE_TEST=true jest
 
 unit-test-cover:
-	@jest --coverage
+	@RELEASE_TEST=true jest --coverage
 
 lint:
 	@echo 'linting…'
