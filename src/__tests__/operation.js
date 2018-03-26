@@ -492,7 +492,70 @@ describe('autoMetricsOps and toMiddlewares', () => {
 		expect(metrics.count.mock.calls).toMatchSnapshot();
 	});
 
+	it('set anonymous function names as per property name correctly', async () => {
+		const createOperationFunction = () => (meta, req, res) => {
+			res.status(200).send(meta);
+		};
+		const operationFunctionA = createOperationFunction();
+		const operationFunctionB = createOperationFunction();
+		const enhancedController = compose(toMiddlewares, autoMetricsOps)({
+			operationFunctionA,
+			operationFunctionB,
+		});
+		expect(enhancedController.operationFunctionA.name).toBe(
+			'operationFunctionA',
+		);
+		expect(enhancedController.operationFunctionB.name).toBe(
+			'operationFunctionB',
+		);
+		const app = express();
+		app.use('/a', enhancedController.operationFunctionA);
+		app.use('/b', enhancedController.operationFunctionB);
+		const resA = await request(app).get('/a');
+		expect(resA.statusCode).toBe(200);
+		expect(resA.body).toMatchSnapshot();
+		const resB = await request(app).get('/b');
+		expect(resB.statusCode).toBe(200);
+		expect(resB.body).toMatchSnapshot();
+		expect(metrics.count.mock.calls).toMatchSnapshot();
+	});
+
 	describe('used after autoLogOps', () => {
+		it('set anonymous function names as per property name correctly', async () => {
+			const createOperationFunction = () => (meta, req, res) => {
+				res.status(200).send(meta);
+			};
+			const operationFunctionA = createOperationFunction();
+			const operationFunctionB = createOperationFunction();
+			const enhancedController = compose(
+				toMiddlewares,
+				autoMetricsOps,
+				autoLogOps,
+			)({
+				operationFunctionA,
+				operationFunctionB,
+			});
+			expect(enhancedController.operationFunctionA.name).toBe(
+				'operationFunctionA',
+			);
+			expect(enhancedController.operationFunctionB.name).toBe(
+				'operationFunctionB',
+			);
+			const app = express();
+			app.use('/a', enhancedController.operationFunctionA);
+			app.use('/b', enhancedController.operationFunctionB);
+			const resA = await request(app).get('/a');
+			expect(resA.statusCode).toBe(200);
+			expect(resA.body).toMatchSnapshot();
+			const resB = await request(app).get('/b');
+			expect(resB.statusCode).toBe(200);
+			expect(resB.body).toMatchSnapshot();
+			expect(metrics.count.mock.calls).toMatchSnapshot();
+			expect(logger.info.mock.calls).toMatchSnapshot();
+			expect(logger.warn.mock.calls).toMatchSnapshot();
+			expect(logger.error.mock.calls).toMatchSnapshot();
+		});
+
 		it('log and record metrics correctly when callFunction success', async () => {
 			const content = { foo: 'bar' };
 			const methodA = (meta, req, res) => {
@@ -556,6 +619,41 @@ describe('autoMetricsOps and toMiddlewares', () => {
 	});
 
 	describe('used before autoLogOps', () => {
+		it('set anonymous function names as per property name correctly', async () => {
+			const createOperationFunction = () => (meta, req, res) => {
+				res.status(200).send(meta);
+			};
+			const operationFunctionA = createOperationFunction();
+			const operationFunctionB = createOperationFunction();
+			const enhancedController = compose(
+				toMiddlewares,
+				autoLogOps,
+				autoMetricsOps,
+			)({
+				operationFunctionA,
+				operationFunctionB,
+			});
+			expect(enhancedController.operationFunctionA.name).toBe(
+				'operationFunctionA',
+			);
+			expect(enhancedController.operationFunctionB.name).toBe(
+				'operationFunctionB',
+			);
+			const app = express();
+			app.use('/a', enhancedController.operationFunctionA);
+			app.use('/b', enhancedController.operationFunctionB);
+			const resA = await request(app).get('/a');
+			expect(resA.statusCode).toBe(200);
+			expect(resA.body).toMatchSnapshot();
+			const resB = await request(app).get('/b');
+			expect(resB.statusCode).toBe(200);
+			expect(resB.body).toMatchSnapshot();
+			expect(metrics.count.mock.calls).toMatchSnapshot();
+			expect(logger.info.mock.calls).toMatchSnapshot();
+			expect(logger.warn.mock.calls).toMatchSnapshot();
+			expect(logger.error.mock.calls).toMatchSnapshot();
+		});
+
 		it('log and record metrics correctly when callFunction success', async () => {
 			const content = { foo: 'bar' };
 			const methodA = (meta, req, res) => {
