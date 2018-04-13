@@ -1,7 +1,7 @@
 import { getMetricsInstance } from './init';
 
 export const autoMetricsOp = operationFunction => {
-	const enhancedFunction = async (meta, req, res, next) => {
+	const enhancedFunction = async (meta, req, res) => {
 		const metrics = getMetricsInstance();
 		if (metrics === undefined) {
 			throw Error('auto metrics instance needs to be initialised');
@@ -17,13 +17,11 @@ export const autoMetricsOp = operationFunction => {
 		const m = {
 			operation,
 			...meta,
-			...(req && Object.prototype.hasOwnProperty.call(req, 'meta')
-				? req.meta
-				: {}),
+			...(req && req.meta ? req.meta : {}),
 		};
 
 		try {
-			await operationFunction(m, req, res, next);
+			await operationFunction(m, req, res);
 			metrics.count(`${operationRoot}.state.success`, 1);
 		} catch (e) {
 			metrics.count(
@@ -43,9 +41,14 @@ export const autoMetricsOp = operationFunction => {
 export const toMiddleware = operationFunction => {
 	const convertedFunction = async (req, res, next) => {
 		try {
-			await operationFunction({}, req, res, next);
+			await operationFunction({}, req, res);
+			if (!res.headersSent) {
+				next();
+			}
 		} catch (e) {
-			// do nothing
+			if (!res.headersSent) {
+				next(e);
+			}
 		}
 	};
 	Object.defineProperty(convertedFunction, 'name', {

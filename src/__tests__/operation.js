@@ -31,6 +31,10 @@ const commonErrorHanlder = (err, req, res, next) => {
 	res.status(err.status).send(err);
 };
 /* eslint-enable no-unused-vars */
+const commonErrorInstance = { status: 404, message: 'Not Found' };
+const errorOperationFunction = () => {
+	throw commonErrorInstance;
+};
 
 describe('toMiddleware', () => {
 	afterEach(() => {
@@ -66,9 +70,8 @@ describe('toMiddleware', () => {
 
 		it('non-async operation function throwing error', async () => {
 			const errorInstance = { status: 404, message: 'Not Found' };
-			const operation = (meta, req, res, next) => {
+			const operation = () => {
 				const e = errorInstance;
-				next(e);
 				throw e;
 			};
 			const middleware = toMiddleware(operation);
@@ -81,9 +84,8 @@ describe('toMiddleware', () => {
 
 		it('async operation function throwing error', async () => {
 			const errorInstance = { status: 404, message: 'Not Found' };
-			const operation = async (meta, req, res, next) => {
+			const operation = async () => {
 				const e = errorInstance;
-				next(e);
 				throw e;
 			};
 			const middleware = toMiddleware(operation);
@@ -124,9 +126,8 @@ describe('toMiddleware', () => {
 
 		it('non-async operaiton function throwing error', async () => {
 			const errorInstance = { status: 404, message: 'Not Found' };
-			const operation = (meta, req, res, next) => {
+			const operation = () => {
 				const e = errorInstance;
-				next(e);
 				throw e;
 			};
 			const middleware = compose(toMiddleware, autoMetricsOp)(operation);
@@ -139,9 +140,8 @@ describe('toMiddleware', () => {
 
 		it('async operation function throwing error', async () => {
 			const errorInstance = { status: 404, message: 'Not Found' };
-			const operation = async (meta, req, res, next) => {
+			const operation = async () => {
 				const e = errorInstance;
-				next(e);
 				throw e;
 			};
 			const middleware = compose(toMiddleware, autoMetricsOp)(operation);
@@ -170,66 +170,38 @@ describe('autoMetricsOp', () => {
 		initAutoMetrics(metrics);
 	});
 
-	describe('returns an enhanced operation function', () => {
-		it('for non-async operation', async () => {
-			const content = { foo: 'bar' };
-			const operationFunction = (meta, req, res, next) => {
-				next(content);
-			};
-			const enhancedOperation = autoMetricsOp(operationFunction);
-			const next = jest.fn();
-			await enhancedOperation(null, null, null, next);
-			expect(enhancedOperation.name).toBe('operationFunction');
-			expect(enhancedOperation).toHaveLength(4);
-			expect(next.mock.calls).toHaveLength(1);
-			expect(next.mock.calls[0][0]).toEqual(content);
+	describe('returns a valid operation function', () => {
+		it('with the original funciton name', () => {
+			const operationFunction = () => {};
+			const enhanced = autoMetricsOp(operationFunction);
+			expect(enhanced.name).toBe(operationFunction.name);
 		});
 
-		it('for async operation', async () => {
-			const content = { foo: 'bar' };
-			const operationFunction = async (meta, req, res, next) => {
-				next(content);
-			};
-			const enhancedOperation = autoMetricsOp(operationFunction);
-			const next = jest.fn();
-			await enhancedOperation(null, null, null, next);
-			expect(enhancedOperation.name).toBe('operationFunction');
-			expect(enhancedOperation).toHaveLength(4);
-			expect(next.mock.calls).toHaveLength(1);
-			expect(next.mock.calls[0][0]).toEqual(content);
+		it('the standard argument length', () => {
+			const operationFunction = () => {};
+			const enhanced = autoMetricsOp(operationFunction);
+			expect(enhanced).toHaveLength(3);
 		});
 
-		it('for non-async middoperationleware throwing error', async () => {
-			const errorInstance = { status: 404, message: 'Not Found' };
-			const operationFunction = (meta, req, res, next) => {
-				const e = errorInstance;
-				next(e);
-				throw e;
+		it('executes correctly', () => {
+			const callFunction = jest.fn();
+			const operationFunction = () => {
+				callFunction();
 			};
-			const enhancedOperation = autoMetricsOp(operationFunction);
-			const next = jest.fn();
+			const enhanced = autoMetricsOp(operationFunction);
+			enhanced();
+			expect(callFunction.mock.calls).toHaveLength(1);
+			enhanced();
+			expect(callFunction.mock.calls).toHaveLength(2);
+		});
+
+		it('throws error correctly', async () => {
+			const operationFunction = errorOperationFunction;
+			const enhanced = autoMetricsOp(operationFunction);
 			try {
-				await enhancedOperation(null, null, null, next);
+				await enhanced();
 			} catch (e) {
-				expect(e).toBe(errorInstance);
-				expect(next.mock.calls).toMatchSnapshot();
-			}
-		});
-
-		it('for async operation throwing error', async () => {
-			const errorInstance = { status: 404, message: 'Not Found' };
-			const operationFunction = async (meta, req, res, next) => {
-				const e = errorInstance;
-				next(e);
-				throw e;
-			};
-			const enhancedOperation = autoMetricsOp(operationFunction);
-			const next = jest.fn();
-			try {
-				await enhancedOperation(null, null, null, next);
-			} catch (e) {
-				expect(e).toBe(errorInstance);
-				expect(next.mock.calls).toMatchSnapshot();
+				expect(e).toBe(commonErrorInstance);
 			}
 		});
 	});
@@ -241,7 +213,7 @@ describe('autoMetricsOp', () => {
 				const operationFunction = async meta => {
 					await autoMetricsAction(callFunction)(undefined, meta);
 				};
-				await compose(toMiddleware, autoMetricsOp)(operationFunction)();
+				await autoMetricsOp(operationFunction)();
 				expect(metrics.count.mock.calls).toMatchSnapshot();
 			});
 
@@ -250,7 +222,7 @@ describe('autoMetricsOp', () => {
 				const operationFunction = meta => {
 					autoMetricsAction(callFunction)(undefined, meta);
 				};
-				await compose(toMiddleware, autoMetricsOp)(operationFunction)();
+				await autoMetricsOp(operationFunction)();
 				expect(metrics.count.mock.calls).toMatchSnapshot();
 			});
 
@@ -313,21 +285,14 @@ describe('autoMetricsOp', () => {
 					category: 'CUSTOM_ERROR',
 					type: 'MOCK_ERROR_TYPE',
 				};
-				const operation = (meta, req, res, next) => {
-					try {
-						throw errorInstance;
-					} catch (e) {
-						next(e);
-						throw e;
-					}
+				const operation = () => {
+					throw errorInstance;
 				};
-				const next = jest.fn();
 				try {
-					await autoMetricsOp(operation)(null, null, null, next);
+					await autoMetricsOp(operation)();
 				} catch (e) {
 					expect(e).toBe(errorInstance);
 					expect(metrics.count.mock.calls).toMatchSnapshot();
-					expect(next.mock.calls).toMatchSnapshot();
 				}
 			});
 
@@ -338,21 +303,14 @@ describe('autoMetricsOp', () => {
 					category: 'CUSTOM_ERROR',
 					type: 'MOCK_ERROR_TYPE',
 				};
-				const operation = async (meta, req, res, next) => {
-					try {
-						throw errorInstance;
-					} catch (e) {
-						next(e);
-						throw e;
-					}
+				const operation = async () => {
+					throw errorInstance;
 				};
-				const next = jest.fn();
 				try {
-					await autoMetricsOp(operation)(null, null, null, next);
+					await autoMetricsOp(operation)();
 				} catch (e) {
 					expect(e).toBe(errorInstance);
 					expect(metrics.count.mock.calls).toMatchSnapshot();
-					expect(next.mock.calls).toMatchSnapshot();
 				}
 			});
 		});
@@ -594,10 +552,8 @@ describe('autoMetricsOps and toMiddlewares', () => {
 				type: 'SESSION_NOT_FOUND',
 				message: 'bar',
 			};
-			const operationFunction = (meta, req, res, next) => {
-				const e = errorInstance;
-				next(e);
-				throw e;
+			const operationFunction = () => {
+				throw errorInstance;
 			};
 			const enhancedController = compose(
 				toMiddlewares,
@@ -692,10 +648,8 @@ describe('autoMetricsOps and toMiddlewares', () => {
 				type: 'SESSION_NOT_FOUND',
 				message: 'bar',
 			};
-			const operationFunction = (meta, req, res, next) => {
-				const e = errorInstance;
-				next(e);
-				throw e;
+			const operationFunction = () => {
+				throw errorInstance;
 			};
 			const enhancedController = compose(
 				toMiddlewares,

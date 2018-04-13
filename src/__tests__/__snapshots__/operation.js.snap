@@ -13,19 +13,6 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp record metrics correctly operation failure of async function 2`] = `
-Array [
-  Array [
-    Object {
-      "category": "CUSTOM_ERROR",
-      "message": "foo",
-      "status": 500,
-      "type": "MOCK_ERROR_TYPE",
-    },
-  ],
-]
-`;
-
 exports[`autoMetricsOp record metrics correctly operation failure of non-async function 1`] = `
 Array [
   Array [
@@ -35,19 +22,6 @@ Array [
   Array [
     "operation.operation.segment.undefined.state.failure.category.CUSTOM_ERROR.type.MOCK_ERROR_TYPE",
     1,
-  ],
-]
-`;
-
-exports[`autoMetricsOp record metrics correctly operation failure of non-async function 2`] = `
-Array [
-  Array [
-    Object {
-      "category": "CUSTOM_ERROR",
-      "message": "foo",
-      "status": 500,
-      "type": "MOCK_ERROR_TYPE",
-    },
   ],
 ]
 `;
@@ -132,28 +106,6 @@ Array [
   Array [
     "operation.operationFunction.segment.MOCK_USER_TYPE.state.success",
     1,
-  ],
-]
-`;
-
-exports[`autoMetricsOp returns an enhanced operation function for async operation throwing error 1`] = `
-Array [
-  Array [
-    Object {
-      "message": "Not Found",
-      "status": 404,
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOp returns an enhanced operation function for non-async middoperationleware throwing error 1`] = `
-Array [
-  Array [
-    Object {
-      "message": "Not Found",
-      "status": 404,
-    },
   ],
 ]
 `;
