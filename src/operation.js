@@ -42,11 +42,11 @@ export const toMiddleware = operationFunction => {
 	const convertedFunction = async (req, res, next) => {
 		try {
 			await operationFunction({}, req, res);
-			if (!res.headersSent) {
+			if (!res.headersSent && !res.rendered) {
 				next();
 			}
 		} catch (e) {
-			if (!res.headersSent) {
+			if (!res.headersSent && !res.rendered) {
 				next(e);
 			}
 		}

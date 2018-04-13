@@ -44,26 +44,34 @@ describe('toMiddleware', () => {
 	describe('converts operation function to a valid express middleware when input', () => {
 		it('non-async function', async () => {
 			const operationFunction = (meta, req, res) => {
-				res.status(200).send(meta);
+				res.status(200).end();
 			};
-			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
+			const middleware = toMiddleware(operationFunction);
 			const app = express();
 			app.use('/', middleware);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(200);
-			expect(res.body).toEqual({ operation: 'operationFunction' });
 		});
 
 		it('async function', async () => {
 			const operationFunction = async (meta, req, res) => {
-				res.status(200).send(meta);
+				res.status(200).end();
 			};
-			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
+			const middleware = toMiddleware(operationFunction);
 			const app = express();
 			app.use('/', middleware);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(200);
-			expect(res.body).toEqual({ operation: 'operationFunction' });
+		});
+
+		it('function set res.rendered', async () => {
+			const operationFunction = (meta, req, res) => {
+				res.rendered = true;
+			};
+			const middleware = toMiddleware(operationFunction);
+			const next = jest.fn();
+			await middleware({}, {}, next);
+			expect(next.mock.calls).toHaveLength(0);
 		});
 	});
 
