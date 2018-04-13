@@ -27,7 +27,7 @@ const metrics = {
 initAutoMetrics(metrics);
 
 /* eslint-disable no-unused-vars */
-const commonErrorHanlder = (err, req, res, next) => {
+const commonErrorHandler = (err, req, res, next) => {
 	res.status(err.status).send(err);
 };
 /* eslint-enable no-unused-vars */
@@ -41,59 +41,111 @@ describe('toMiddleware', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('converts a plain', () => {
-		it('non-async operation function', async () => {
-			const content = { foo: 'bar' };
-			const operation = (meta, req, res) => {
-				res.status(200).send(content);
+	describe('converts operation function to a valid express middleware when input', () => {
+		it('non-async function', async () => {
+			const operationFunction = (meta, req, res) => {
+				res.status(200).send(meta);
 			};
-			const middleware = toMiddleware(operation);
+			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
 			const app = express();
 			app.use('/', middleware);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(200);
-			expect(res.body).toEqual(content);
+			expect(res.body).toEqual({ operation: 'operationFunction' });
 		});
 
-		it('async operation function', async () => {
-			const content = { foo: 'bar' };
-			const operation = async (meta, req, res) => {
-				res.status(200).send(content);
+		it('async function', async () => {
+			const operationFunction = async (meta, req, res) => {
+				res.status(200).send(meta);
 			};
-			const middleware = toMiddleware(operation);
+			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
 			const app = express();
 			app.use('/', middleware);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(200);
-			expect(res.body).toEqual(content);
+			expect(res.body).toEqual({ operation: 'operationFunction' });
+		});
+	});
+
+	describe('handle the thrown error correctly of', () => {
+		it('non-async function not calling res', async () => {
+			const operationFunction = () => {
+				throw commonErrorInstance;
+			};
+			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
+			const res = { headersSent: false };
+			const next = jest.fn();
+			await middleware(null, res, next);
+			expect(next.mock.calls).toMatchSnapshot();
+			const app = express();
+			app.use('/', middleware, commonErrorHandler);
+			const response = await request(app).get('/');
+			expect(response.statusCode).toBe(404);
+			expect(response.body.message).toBe('Not Found');
 		});
 
-		it('non-async operation function throwing error', async () => {
-			const errorInstance = { status: 404, message: 'Not Found' };
-			const operation = () => {
-				const e = errorInstance;
-				throw e;
+		it('non-async function calling res', async () => {
+			const operationFunction = (meta, req, res) => {
+				try {
+					throw commonErrorInstance;
+				} catch (e) {
+					res.status(500).send('internal server error');
+				}
 			};
-			const middleware = toMiddleware(operation);
+			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
+			const res = {
+				status: () => {},
+				send: () => {},
+				headersSent: true,
+			};
+			const next = jest.fn();
+			await middleware(null, res, next);
+			expect(next.mock.calls).toHaveLength(0);
 			const app = express();
-			app.use('/', middleware, commonErrorHanlder);
-			const res = await request(app).get('/');
-			expect(res.statusCode).toBe(404);
-			expect(res.body.message).toBe('Not Found');
+			app.use('/', middleware, commonErrorHandler);
+			const response = await request(app).get('/');
+			expect(response.statusCode).toBe(500);
+			expect(response.text).toBe('internal server error');
 		});
 
-		it('async operation function throwing error', async () => {
-			const errorInstance = { status: 404, message: 'Not Found' };
-			const operation = async () => {
-				const e = errorInstance;
-				throw e;
+		it('async function not calling res', async () => {
+			const operationFunction = async () => {
+				throw commonErrorInstance;
 			};
-			const middleware = toMiddleware(operation);
+			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
+			const res = { headersSent: false };
+			const next = jest.fn();
+			await middleware(null, res, next);
+			expect(next.mock.calls).toMatchSnapshot();
 			const app = express();
-			app.use('/', middleware, commonErrorHanlder);
-			const res = await request(app).get('/');
-			expect(res.statusCode).toBe(404);
-			expect(res.body.message).toBe('Not Found');
+			app.use('/', middleware, commonErrorHandler);
+			const response = await request(app).get('/');
+			expect(response.statusCode).toBe(404);
+			expect(response.body.message).toBe('Not Found');
+		});
+
+		it('async function calling res', async () => {
+			const operationFunction = async (meta, req, res) => {
+				try {
+					throw commonErrorInstance;
+				} catch (e) {
+					res.status(500).send('internal server error');
+				}
+			};
+			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
+			const res = {
+				status: () => {},
+				send: () => {},
+				headersSent: true,
+			};
+			const next = jest.fn();
+			await middleware(null, res, next);
+			expect(next.mock.calls).toHaveLength(0);
+			const app = express();
+			app.use('/', middleware, commonErrorHandler);
+			const response = await request(app).get('/');
+			expect(response.statusCode).toBe(500);
+			expect(response.text).toBe('internal server error');
 		});
 	});
 
@@ -132,7 +184,7 @@ describe('toMiddleware', () => {
 			};
 			const middleware = compose(toMiddleware, autoMetricsOp)(operation);
 			const app = express();
-			app.use('/', middleware, commonErrorHanlder);
+			app.use('/', middleware, commonErrorHandler);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(404);
 			expect(res.body.message).toBe('Not Found');
@@ -146,7 +198,7 @@ describe('toMiddleware', () => {
 			};
 			const middleware = compose(toMiddleware, autoMetricsOp)(operation);
 			const app = express();
-			app.use('/', middleware, commonErrorHanlder);
+			app.use('/', middleware, commonErrorHandler);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(404);
 			expect(res.body.message).toBe('Not Found');
@@ -563,7 +615,7 @@ describe('autoMetricsOps and toMiddlewares', () => {
 				operationFunction,
 			});
 			const app = express();
-			app.use('/', enhancedController.operationFunction, commonErrorHanlder);
+			app.use('/', enhancedController.operationFunction, commonErrorHandler);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(errorInstance.status);
 			expect(res.body.message).toEqual(errorInstance.message);
@@ -659,7 +711,7 @@ describe('autoMetricsOps and toMiddlewares', () => {
 				operationFunction,
 			});
 			const app = express();
-			app.use('/', enhancedController.operationFunction, commonErrorHanlder);
+			app.use('/', enhancedController.operationFunction, commonErrorHandler);
 			const res = await request(app).get('/');
 			expect(res.statusCode).toBe(errorInstance.status);
 			expect(res.body.message).toEqual(errorInstance.message);

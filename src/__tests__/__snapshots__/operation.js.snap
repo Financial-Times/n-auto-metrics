@@ -763,3 +763,25 @@ Array [
 exports[`autoMetricsOps and toMiddlewares used before autoLogOps set anonymous function names as per property name correctly 5`] = `Array []`;
 
 exports[`autoMetricsOps and toMiddlewares used before autoLogOps set anonymous function names as per property name correctly 6`] = `Array []`;
+
+exports[`toMiddleware handle the thrown error correctly of async function not calling res 1`] = `
+Array [
+  Array [
+    Object {
+      "message": "Not Found",
+      "status": 404,
+    },
+  ],
+]
+`;
+
+exports[`toMiddleware handle the thrown error correctly of non-async function not calling res 1`] = `
+Array [
+  Array [
+    Object {
+      "message": "Not Found",
+      "status": 404,
+    },
+  ],
+]
+`;
