@@ -62,35 +62,13 @@ const APIService = autoMetricsActions('api-service-name')({ methodA, methodB, me
 ```js
 // auto log success/failure express middleware/controller as an operation function 
 // function name would be logged as `operation`, and available in meta
-const operationFunction = (meta, req, res, next) => {
-  try {
-    next();
-  } catch(e) {
-    next(e);
-    throw e; // remember to throw in catch block so that failure can be logged correctly
-  }
-};
+const operationFunction = (meta, req, res) => { /* try-catch-throw */ };
 export default toMiddleware(autoMetricsOp(operationFunction));
 
 // auto log multiple operation functions wrapped in an object as controller
 const someController = toMiddlewares(autoMetricsOps({ operationFunctionA, operationFuncitonB }));
 ```
 > more details on [operation function error handling](#operation-function-error-handling)
-
-```js
-// auto metrics operation and action together
-const operationFunction = async (meta, req, res, next) => {
-  try {
-    const data = await APIService.methodA(params, meta); // from autoMetricsActions
-    next();
-  } catch(e) {
-    next(e);
-    throw e;
-  }
-};
-
-export default toMiddleware(autoMetricsOp(operationFunction));
-```
 
 ## install
 ```shell
@@ -112,23 +90,19 @@ autoMetricsAction(someFunction)(paramsOrArgs, meta);
 
 ### operation function format
 
-The operation function use the pattern of `try-catch-next-throw`:
+`(meta, req, res) => {}`
 
 ```js
-const operationFunction = (meta, req, res, next) => {
-  try{
-    // main code
-    // functions that can potentially throw errors
-    // without the try-catch-next-throw pattern those errors may not be next to error handler
+// auto metrics operation and action together
+const operationFunction = async (meta, req, res) => {
+  try {
+    await autoMetricsAction(callFunction)(params, meta); // pass in the `meta`
   } catch(e) {
-      // ensure the error would be handled by the error handler, 
-      // or you can write the error handling code in the catch block
-      next(e);
-      // further throw the error to the higher order enhancer function
-      // error caught in the enhancer function would then be parsed and logged
-      throw(e);
+    throw e;
   }
-}
+};
+
+export default toMiddleware(autoMetricsOp(operationFunction));
 ```
 
 ### use with other enhancers
