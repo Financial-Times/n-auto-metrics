@@ -14,7 +14,9 @@
     "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg",
     "prepush": "make lint unit-test && make verify -j3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@financial-times/n-express-enhancer": "^1.2.1"
+  },
   "devDependencies": {
     "@financial-times/n-auto-logger": "^2.1.0",
     "@financial-times/n-gage": "^2.0.0",

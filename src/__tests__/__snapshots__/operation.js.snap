@@ -1,6 +1,339 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`autoMetricsOp record metrics correctly operation failure of async function 1`] = `
+exports[`metricsOperation and toMiddleware enhance and convert each method correctly 1`] = `
+Array [
+  Array [
+    "operation.methodA.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodA.segment.undefined.state.success",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps log and record metrics correctly when callFunction failure 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps log and record metrics correctly when callFunction failure 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps log and record metrics correctly when callFunction failure 3`] = `
+Array [
+  Array [
+    Object {
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "operationFunction",
+      "result": "failure",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps log and record metrics correctly when callFunction failure 4`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps log and record metrics correctly when callFunction success 1`] = `
+Array [
+  Array [
+    "operation.methodA.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodA.segment.undefined.state.success",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps log and record metrics correctly when callFunction success 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "methodA",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodA",
+      "result": "success",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodB",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodB",
+      "result": "success",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps log and record metrics correctly when callFunction success 3`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps log and record metrics correctly when callFunction success 4`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps set anonymous function names as per property name correctly 1`] = `
+Object {
+  "operation": "operationFunctionA",
+}
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps set anonymous function names as per property name correctly 2`] = `
+Object {
+  "operation": "operationFunctionB",
+}
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps set anonymous function names as per property name correctly 3`] = `
+Array [
+  Array [
+    "operation.operationFunctionA.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunctionA.segment.undefined.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunctionB.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunctionB.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps set anonymous function names as per property name correctly 4`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunctionA",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "operationFunctionA",
+      "result": "success",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "operationFunctionB",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "operationFunctionB",
+      "result": "success",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps set anonymous function names as per property name correctly 5`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used after autoLogOps set anonymous function names as per property name correctly 6`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps log and record metrics correctly when callFunction failure 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps log and record metrics correctly when callFunction failure 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps log and record metrics correctly when callFunction failure 3`] = `
+Array [
+  Array [
+    Object {
+      "category": "FETCH_RESPONSE_ERROR",
+      "message": "bar",
+      "operation": "operationFunction",
+      "result": "failure",
+      "status": 404,
+      "type": "SESSION_NOT_FOUND",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps log and record metrics correctly when callFunction failure 4`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps log and record metrics correctly when callFunction success 1`] = `
+Array [
+  Array [
+    "operation.methodA.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodA.segment.undefined.state.success",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.methodB.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps log and record metrics correctly when callFunction success 2`] = `
+Array [
+  Array [
+    Object {
+      "operation": "methodA",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodA",
+      "result": "success",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodB",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "methodB",
+      "result": "success",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps log and record metrics correctly when callFunction success 3`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps log and record metrics correctly when callFunction success 4`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps set anonymous function names as per property name correctly 1`] = `
+Object {
+  "operation": "operationFunctionA",
+}
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps set anonymous function names as per property name correctly 2`] = `
+Object {
+  "operation": "operationFunctionB",
+}
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps set anonymous function names as per property name correctly 3`] = `
+Array [
+  Array [
+    "operation.operationFunctionA.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunctionA.segment.undefined.state.success",
+    1,
+  ],
+  Array [
+    "operation.operationFunctionB.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunctionB.segment.undefined.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps set anonymous function names as per property name correctly 4`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunctionA",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "operationFunctionA",
+      "result": "success",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "operationFunctionB",
+    },
+  ],
+  Array [
+    Object {
+      "operation": "operationFunctionB",
+      "result": "success",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps set anonymous function names as per property name correctly 5`] = `Array []`;
+
+exports[`metricsOperation and toMiddleware used before autoLogOps set anonymous function names as per property name correctly 6`] = `Array []`;
+
+exports[`metricsOperation record metrics correctly operation failure of async function 1`] = `
 Array [
   Array [
     "operation.operation.segment.undefined.state.start",
@@ -13,7 +346,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp record metrics correctly operation failure of non-async function 1`] = `
+exports[`metricsOperation record metrics correctly operation failure of non-async function 1`] = `
 Array [
   Array [
     "operation.operation.segment.undefined.state.start",
@@ -26,7 +359,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp record metrics correctly operation success of async function with autoMetricsAction sub action 1`] = `
+exports[`metricsOperation record metrics correctly operation success of async function with autoMetricsAction sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -55,7 +388,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp record metrics correctly operation success of non-async function with autoMetricsAction sub action 1`] = `
+exports[`metricsOperation record metrics correctly operation success of non-async function with autoMetricsAction sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -84,7 +417,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp record metrics correctly operation success of req.meta.segment from previous middlewares if not set req.metrics 1`] = `
+exports[`metricsOperation record metrics correctly operation success of req.meta.segment from previous middlewares if not set req.metrics 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.MOCK_USER_TYPE.state.start",
@@ -97,7 +430,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp record metrics correctly operation success of req.metrics.segment from previous middlewares 1`] = `
+exports[`metricsOperation record metrics correctly operation success of req.metrics.segment from previous middlewares 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.MOCK_USER_TYPE.state.start",
@@ -110,9 +443,9 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp throw Error if metrics instance was not set 1`] = `[Error: auto metrics instance needs to be initialised]`;
+exports[`metricsOperation throw Error if metrics instance was not set 1`] = `[Error: auto metrics instance needs to be initialised]`;
 
-exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 1`] = `
+exports[`metricsOperation used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -149,7 +482,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 2`] = `
+exports[`metricsOperation used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 2`] = `
 Array [
   Array [
     Object {
@@ -165,7 +498,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 3`] = `
+exports[`metricsOperation used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 3`] = `
 Array [
   Array [
     Object {
@@ -191,9 +524,9 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 4`] = `Array []`;
+exports[`metricsOperation used after autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 4`] = `Array []`;
 
-exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 1`] = `
+exports[`metricsOperation used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -222,7 +555,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 2`] = `
+exports[`metricsOperation used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 2`] = `
 Array [
   Array [
     Object {
@@ -251,11 +584,11 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 3`] = `Array []`;
+exports[`metricsOperation used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 3`] = `Array []`;
 
-exports[`autoMetricsOp used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 4`] = `Array []`;
+exports[`metricsOperation used after autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 4`] = `Array []`;
 
-exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 1`] = `
+exports[`metricsOperation used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -292,7 +625,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 2`] = `
+exports[`metricsOperation used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 2`] = `
 Array [
   Array [
     Object {
@@ -308,7 +641,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 3`] = `
+exports[`metricsOperation used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 3`] = `
 Array [
   Array [
     Object {
@@ -334,9 +667,9 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 4`] = `Array []`;
+exports[`metricsOperation used before autoLogOp from n-auto-logger record correctly in operation failure with enhanced sub action 4`] = `Array []`;
 
-exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 1`] = `
+exports[`metricsOperation used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -365,7 +698,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 2`] = `
+exports[`metricsOperation used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 2`] = `
 Array [
   Array [
     Object {
@@ -394,394 +727,6 @@ Array [
 ]
 `;
 
-exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 3`] = `Array []`;
+exports[`metricsOperation used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 3`] = `Array []`;
 
-exports[`autoMetricsOp used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 4`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares enhance and convert each method correctly 1`] = `
-Array [
-  Array [
-    "operation.methodA.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.methodA.segment.undefined.state.success",
-    1,
-  ],
-  Array [
-    "operation.methodB.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.methodB.segment.undefined.state.success",
-    1,
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares set anonymous function names as per property name correctly 1`] = `
-Object {
-  "operation": "operationFunctionA",
-}
-`;
-
-exports[`autoMetricsOps and toMiddlewares set anonymous function names as per property name correctly 2`] = `
-Object {
-  "operation": "operationFunctionB",
-}
-`;
-
-exports[`autoMetricsOps and toMiddlewares set anonymous function names as per property name correctly 3`] = `
-Array [
-  Array [
-    "operation.operationFunctionA.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionA.segment.undefined.state.success",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionB.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionB.segment.undefined.state.success",
-    1,
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction failure 1`] = `
-Array [
-  Array [
-    "operation.operationFunction.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunction.segment.undefined.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
-    1,
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction failure 2`] = `
-Array [
-  Array [
-    Object {
-      "operation": "operationFunction",
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction failure 3`] = `
-Array [
-  Array [
-    Object {
-      "category": "FETCH_RESPONSE_ERROR",
-      "message": "bar",
-      "operation": "operationFunction",
-      "result": "failure",
-      "status": 404,
-      "type": "SESSION_NOT_FOUND",
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction failure 4`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction success 1`] = `
-Array [
-  Array [
-    "operation.methodA.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.methodA.segment.undefined.state.success",
-    1,
-  ],
-  Array [
-    "operation.methodB.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.methodB.segment.undefined.state.success",
-    1,
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction success 2`] = `
-Array [
-  Array [
-    Object {
-      "operation": "methodA",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "methodA",
-      "result": "success",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "methodB",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "methodB",
-      "result": "success",
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction success 3`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps log and record metrics correctly when callFunction success 4`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps set anonymous function names as per property name correctly 1`] = `
-Object {
-  "operation": "operationFunctionA",
-}
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps set anonymous function names as per property name correctly 2`] = `
-Object {
-  "operation": "operationFunctionB",
-}
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps set anonymous function names as per property name correctly 3`] = `
-Array [
-  Array [
-    "operation.operationFunctionA.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionA.segment.undefined.state.success",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionB.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionB.segment.undefined.state.success",
-    1,
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps set anonymous function names as per property name correctly 4`] = `
-Array [
-  Array [
-    Object {
-      "operation": "operationFunctionA",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "operationFunctionA",
-      "result": "success",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "operationFunctionB",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "operationFunctionB",
-      "result": "success",
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps set anonymous function names as per property name correctly 5`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used after autoLogOps set anonymous function names as per property name correctly 6`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction failure 1`] = `
-Array [
-  Array [
-    "operation.operationFunction.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunction.segment.undefined.state.failure.category.FETCH_RESPONSE_ERROR.type.SESSION_NOT_FOUND",
-    1,
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction failure 2`] = `
-Array [
-  Array [
-    Object {
-      "operation": "operationFunction",
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction failure 3`] = `
-Array [
-  Array [
-    Object {
-      "category": "FETCH_RESPONSE_ERROR",
-      "message": "bar",
-      "operation": "operationFunction",
-      "result": "failure",
-      "status": 404,
-      "type": "SESSION_NOT_FOUND",
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction failure 4`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction success 1`] = `
-Array [
-  Array [
-    "operation.methodA.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.methodA.segment.undefined.state.success",
-    1,
-  ],
-  Array [
-    "operation.methodB.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.methodB.segment.undefined.state.success",
-    1,
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction success 2`] = `
-Array [
-  Array [
-    Object {
-      "operation": "methodA",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "methodA",
-      "result": "success",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "methodB",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "methodB",
-      "result": "success",
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction success 3`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps log and record metrics correctly when callFunction success 4`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps set anonymous function names as per property name correctly 1`] = `
-Object {
-  "operation": "operationFunctionA",
-}
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps set anonymous function names as per property name correctly 2`] = `
-Object {
-  "operation": "operationFunctionB",
-}
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps set anonymous function names as per property name correctly 3`] = `
-Array [
-  Array [
-    "operation.operationFunctionA.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionA.segment.undefined.state.success",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionB.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunctionB.segment.undefined.state.success",
-    1,
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps set anonymous function names as per property name correctly 4`] = `
-Array [
-  Array [
-    Object {
-      "operation": "operationFunctionA",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "operationFunctionA",
-      "result": "success",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "operationFunctionB",
-    },
-  ],
-  Array [
-    Object {
-      "operation": "operationFunctionB",
-      "result": "success",
-    },
-  ],
-]
-`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps set anonymous function names as per property name correctly 5`] = `Array []`;
-
-exports[`autoMetricsOps and toMiddlewares used before autoLogOps set anonymous function names as per property name correctly 6`] = `Array []`;
-
-exports[`toMiddleware handle the thrown error correctly of async function not calling res 1`] = `
-Array [
-  Array [
-    Object {
-      "message": "Not Found",
-      "status": 404,
-    },
-  ],
-]
-`;
-
-exports[`toMiddleware handle the thrown error correctly of non-async function not calling res 1`] = `
-Array [
-  Array [
-    Object {
-      "message": "Not Found",
-      "status": 404,
-    },
-  ],
-]
-`;
+exports[`metricsOperation used before autoLogOp from n-auto-logger record correctly in operation success with enhanced sub action 4`] = `Array []`;

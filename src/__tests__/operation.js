@@ -7,14 +7,10 @@ import logger, {
 	autoLogAction,
 } from '@financial-times/n-auto-logger';
 
+import { toMiddleware } from '../index';
 import { initAutoMetrics } from '../init';
 import { autoMetricsAction } from '../action';
-import {
-	toMiddleware,
-	toMiddlewares,
-	autoMetricsOp,
-	autoMetricsOps,
-} from '../operation';
+import metricsOperation from '../operation';
 
 logger.info = jest.fn();
 logger.warn = jest.fn();
@@ -36,185 +32,7 @@ const errorOperationFunction = () => {
 	throw commonErrorInstance;
 };
 
-describe('toMiddleware', () => {
-	afterEach(() => {
-		jest.resetAllMocks();
-	});
-
-	describe('converts operation function to a valid express middleware when input', () => {
-		it('non-async function', async () => {
-			const operationFunction = (meta, req, res) => {
-				res.status(200).end();
-			};
-			const middleware = toMiddleware(operationFunction);
-			const app = express();
-			app.use('/', middleware);
-			const res = await request(app).get('/');
-			expect(res.statusCode).toBe(200);
-		});
-
-		it('async function', async () => {
-			const operationFunction = async (meta, req, res) => {
-				res.status(200).end();
-			};
-			const middleware = toMiddleware(operationFunction);
-			const app = express();
-			app.use('/', middleware);
-			const res = await request(app).get('/');
-			expect(res.statusCode).toBe(200);
-		});
-
-		it('function set res.rendered', async () => {
-			const operationFunction = (meta, req, res) => {
-				res.rendered = true;
-			};
-			const middleware = toMiddleware(operationFunction);
-			const next = jest.fn();
-			await middleware({}, {}, next);
-			expect(next.mock.calls).toHaveLength(0);
-		});
-	});
-
-	describe('handle the thrown error correctly of', () => {
-		it('non-async function not calling res', async () => {
-			const operationFunction = () => {
-				throw commonErrorInstance;
-			};
-			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
-			const res = { headersSent: false };
-			const next = jest.fn();
-			await middleware(null, res, next);
-			expect(next.mock.calls).toMatchSnapshot();
-			const app = express();
-			app.use('/', middleware, commonErrorHandler);
-			const response = await request(app).get('/');
-			expect(response.statusCode).toBe(404);
-			expect(response.body.message).toBe('Not Found');
-		});
-
-		it('non-async function calling res', async () => {
-			const operationFunction = (meta, req, res) => {
-				try {
-					throw commonErrorInstance;
-				} catch (e) {
-					res.status(500).send('internal server error');
-				}
-			};
-			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
-			const res = {
-				status: () => {},
-				send: () => {},
-				headersSent: true,
-			};
-			const next = jest.fn();
-			await middleware(null, res, next);
-			expect(next.mock.calls).toHaveLength(0);
-			const app = express();
-			app.use('/', middleware, commonErrorHandler);
-			const response = await request(app).get('/');
-			expect(response.statusCode).toBe(500);
-			expect(response.text).toBe('internal server error');
-		});
-
-		it('async function not calling res', async () => {
-			const operationFunction = async () => {
-				throw commonErrorInstance;
-			};
-			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
-			const res = { headersSent: false };
-			const next = jest.fn();
-			await middleware(null, res, next);
-			expect(next.mock.calls).toMatchSnapshot();
-			const app = express();
-			app.use('/', middleware, commonErrorHandler);
-			const response = await request(app).get('/');
-			expect(response.statusCode).toBe(404);
-			expect(response.body.message).toBe('Not Found');
-		});
-
-		it('async function calling res', async () => {
-			const operationFunction = async (meta, req, res) => {
-				try {
-					throw commonErrorInstance;
-				} catch (e) {
-					res.status(500).send('internal server error');
-				}
-			};
-			const middleware = compose(toMiddleware, autoLogOp)(operationFunction);
-			const res = {
-				status: () => {},
-				send: () => {},
-				headersSent: true,
-			};
-			const next = jest.fn();
-			await middleware(null, res, next);
-			expect(next.mock.calls).toHaveLength(0);
-			const app = express();
-			app.use('/', middleware, commonErrorHandler);
-			const response = await request(app).get('/');
-			expect(response.statusCode).toBe(500);
-			expect(response.text).toBe('internal server error');
-		});
-	});
-
-	describe('converts an autoMetricsOp enhanced', () => {
-		it('non-async operation function', async () => {
-			const content = { foo: 'bar' };
-			const operation = (meta, req, res) => {
-				res.status(200).send(content);
-			};
-			const middleware = compose(toMiddleware, autoMetricsOp)(operation);
-			const app = express();
-			app.use('/', middleware);
-			const res = await request(app).get('/');
-			expect(res.statusCode).toBe(200);
-			expect(res.body).toEqual(content);
-		});
-
-		it('async operation function', async () => {
-			const content = { foo: 'bar' };
-			const operation = async (meta, req, res) => {
-				res.status(200).send(content);
-			};
-			const middleware = compose(toMiddleware, autoMetricsOp)(operation);
-			const app = express();
-			app.use('/', middleware);
-			const res = await request(app).get('/');
-			expect(res.statusCode).toBe(200);
-			expect(res.body).toEqual(content);
-		});
-
-		it('non-async operaiton function throwing error', async () => {
-			const errorInstance = { status: 404, message: 'Not Found' };
-			const operation = () => {
-				const e = errorInstance;
-				throw e;
-			};
-			const middleware = compose(toMiddleware, autoMetricsOp)(operation);
-			const app = express();
-			app.use('/', middleware, commonErrorHandler);
-			const res = await request(app).get('/');
-			expect(res.statusCode).toBe(404);
-			expect(res.body.message).toBe('Not Found');
-		});
-
-		it('async operation function throwing error', async () => {
-			const errorInstance = { status: 404, message: 'Not Found' };
-			const operation = async () => {
-				const e = errorInstance;
-				throw e;
-			};
-			const middleware = compose(toMiddleware, autoMetricsOp)(operation);
-			const app = express();
-			app.use('/', middleware, commonErrorHandler);
-			const res = await request(app).get('/');
-			expect(res.statusCode).toBe(404);
-			expect(res.body.message).toBe('Not Found');
-		});
-	});
-});
-
-describe('autoMetricsOp', () => {
+describe('metricsOperation', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
@@ -223,7 +41,7 @@ describe('autoMetricsOp', () => {
 		initAutoMetrics(undefined);
 		const operationFunction = () => {};
 		try {
-			await autoMetricsOp(operationFunction)();
+			await metricsOperation(operationFunction)();
 		} catch (e) {
 			expect(e).toMatchSnapshot();
 		}
@@ -231,15 +49,9 @@ describe('autoMetricsOp', () => {
 	});
 
 	describe('returns a valid operation function', () => {
-		it('with the original funciton name', () => {
-			const operationFunction = () => {};
-			const enhanced = autoMetricsOp(operationFunction);
-			expect(enhanced.name).toBe(operationFunction.name);
-		});
-
 		it('the standard argument length', () => {
 			const operationFunction = () => {};
-			const enhanced = autoMetricsOp(operationFunction);
+			const enhanced = metricsOperation(operationFunction);
 			expect(enhanced).toHaveLength(3);
 		});
 
@@ -248,7 +60,7 @@ describe('autoMetricsOp', () => {
 			const operationFunction = () => {
 				callFunction();
 			};
-			const enhanced = autoMetricsOp(operationFunction);
+			const enhanced = metricsOperation(operationFunction);
 			enhanced();
 			expect(callFunction.mock.calls).toHaveLength(1);
 			enhanced();
@@ -257,7 +69,7 @@ describe('autoMetricsOp', () => {
 
 		it('throws error correctly', async () => {
 			const operationFunction = errorOperationFunction;
-			const enhanced = autoMetricsOp(operationFunction);
+			const enhanced = metricsOperation(operationFunction);
 			try {
 				await enhanced();
 			} catch (e) {
@@ -273,7 +85,7 @@ describe('autoMetricsOp', () => {
 				const operationFunction = async meta => {
 					await autoMetricsAction(callFunction)(undefined, meta);
 				};
-				await autoMetricsOp(operationFunction)();
+				await metricsOperation(operationFunction)();
 				expect(metrics.count.mock.calls).toMatchSnapshot();
 			});
 
@@ -282,7 +94,7 @@ describe('autoMetricsOp', () => {
 				const operationFunction = meta => {
 					autoMetricsAction(callFunction)(undefined, meta);
 				};
-				await autoMetricsOp(operationFunction)();
+				await metricsOperation(operationFunction)();
 				expect(metrics.count.mock.calls).toMatchSnapshot();
 			});
 
@@ -302,7 +114,7 @@ describe('autoMetricsOp', () => {
 				const operationFunction = async (meta, req, res) => {
 					res.status(200).send(content);
 				};
-				const middleware = compose(toMiddleware, autoMetricsOp)(
+				const middleware = compose(toMiddleware, metricsOperation)(
 					operationFunction,
 				);
 				const app = express();
@@ -325,7 +137,7 @@ describe('autoMetricsOp', () => {
 				const operationFunction = async (meta, req, res) => {
 					res.status(200).send(content);
 				};
-				const middleware = compose(toMiddleware, autoMetricsOp)(
+				const middleware = compose(toMiddleware, metricsOperation)(
 					operationFunction,
 				);
 				const app = express();
@@ -349,7 +161,7 @@ describe('autoMetricsOp', () => {
 					throw errorInstance;
 				};
 				try {
-					await autoMetricsOp(operation)();
+					await metricsOperation(operation)();
 				} catch (e) {
 					expect(e).toBe(errorInstance);
 					expect(metrics.count.mock.calls).toMatchSnapshot();
@@ -367,7 +179,7 @@ describe('autoMetricsOp', () => {
 					throw errorInstance;
 				};
 				try {
-					await autoMetricsOp(operation)();
+					await metricsOperation(operation)();
 				} catch (e) {
 					expect(e).toBe(errorInstance);
 					expect(metrics.count.mock.calls).toMatchSnapshot();
@@ -385,7 +197,7 @@ describe('autoMetricsOp', () => {
 			const operationFunction = meta => {
 				enhancedCallFunction(undefined, meta);
 			};
-			const enhancedOperation = compose(autoLogOp, autoMetricsOp)(
+			const enhancedOperation = compose(autoLogOp, metricsOperation)(
 				operationFunction,
 			);
 			await enhancedOperation();
@@ -412,7 +224,7 @@ describe('autoMetricsOp', () => {
 			const operationFunction = meta => {
 				enhancedCallFunction(undefined, meta);
 			};
-			const enhancedOperation = compose(autoLogOp, autoMetricsOp)(
+			const enhancedOperation = compose(autoLogOp, metricsOperation)(
 				operationFunction,
 			);
 			try {
@@ -437,7 +249,7 @@ describe('autoMetricsOp', () => {
 			const operationFunction = meta => {
 				enhancedCallFunction(undefined, meta);
 			};
-			const enhancedOperation = compose(autoMetricsOp, autoLogOp)(
+			const enhancedOperation = compose(metricsOperation, autoLogOp)(
 				operationFunction,
 			);
 			await enhancedOperation();
@@ -464,7 +276,7 @@ describe('autoMetricsOp', () => {
 			const operationFunction = meta => {
 				enhancedCallFunction(undefined, meta);
 			};
-			const enhancedOperation = compose(autoMetricsOp, autoLogOp)(
+			const enhancedOperation = compose(metricsOperation, autoLogOp)(
 				operationFunction,
 			);
 			try {
@@ -481,7 +293,7 @@ describe('autoMetricsOp', () => {
 	});
 });
 
-describe('autoMetricsOps and toMiddlewares', () => {
+describe('metricsOperation and toMiddleware', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
@@ -494,7 +306,7 @@ describe('autoMetricsOps and toMiddlewares', () => {
 		const methodB = (meta, req, res) => {
 			res.status(200).send(content);
 		};
-		const enhancedController = compose(toMiddlewares, autoMetricsOps)({
+		const enhancedController = compose(toMiddleware, metricsOperation)({
 			methodA,
 			methodB,
 		});
@@ -510,34 +322,6 @@ describe('autoMetricsOps and toMiddlewares', () => {
 		expect(metrics.count.mock.calls).toMatchSnapshot();
 	});
 
-	it('set anonymous function names as per property name correctly', async () => {
-		const createOperationFunction = () => (meta, req, res) => {
-			res.status(200).send(meta);
-		};
-		const operationFunctionA = createOperationFunction();
-		const operationFunctionB = createOperationFunction();
-		const enhancedController = compose(toMiddlewares, autoMetricsOps)({
-			operationFunctionA,
-			operationFunctionB,
-		});
-		expect(enhancedController.operationFunctionA.name).toBe(
-			'operationFunctionA',
-		);
-		expect(enhancedController.operationFunctionB.name).toBe(
-			'operationFunctionB',
-		);
-		const app = express();
-		app.use('/a', enhancedController.operationFunctionA);
-		app.use('/b', enhancedController.operationFunctionB);
-		const resA = await request(app).get('/a');
-		expect(resA.statusCode).toBe(200);
-		expect(resA.body).toMatchSnapshot();
-		const resB = await request(app).get('/b');
-		expect(resB.statusCode).toBe(200);
-		expect(resB.body).toMatchSnapshot();
-		expect(metrics.count.mock.calls).toMatchSnapshot();
-	});
-
 	describe('used after autoLogOps', () => {
 		it('set anonymous function names as per property name correctly', async () => {
 			const createOperationFunction = () => (meta, req, res) => {
@@ -546,8 +330,8 @@ describe('autoMetricsOps and toMiddlewares', () => {
 			const operationFunctionA = createOperationFunction();
 			const operationFunctionB = createOperationFunction();
 			const enhancedController = compose(
-				toMiddlewares,
-				autoMetricsOps,
+				toMiddleware,
+				metricsOperation,
 				autoLogOps,
 			)({
 				operationFunctionA,
@@ -583,8 +367,8 @@ describe('autoMetricsOps and toMiddlewares', () => {
 				res.status(200).send(content);
 			};
 			const enhancedController = compose(
-				toMiddlewares,
-				autoMetricsOps,
+				toMiddleware,
+				metricsOperation,
 				autoLogOps,
 			)({
 				methodA,
@@ -616,8 +400,8 @@ describe('autoMetricsOps and toMiddlewares', () => {
 				throw errorInstance;
 			};
 			const enhancedController = compose(
-				toMiddlewares,
-				autoMetricsOps,
+				toMiddleware,
+				metricsOperation,
 				autoLogOps,
 			)({
 				operationFunction,
@@ -642,9 +426,9 @@ describe('autoMetricsOps and toMiddlewares', () => {
 			const operationFunctionA = createOperationFunction();
 			const operationFunctionB = createOperationFunction();
 			const enhancedController = compose(
-				toMiddlewares,
+				toMiddleware,
 				autoLogOps,
-				autoMetricsOps,
+				metricsOperation,
 			)({
 				operationFunctionA,
 				operationFunctionB,
@@ -679,9 +463,9 @@ describe('autoMetricsOps and toMiddlewares', () => {
 				res.status(200).send(content);
 			};
 			const enhancedController = compose(
-				toMiddlewares,
+				toMiddleware,
 				autoLogOps,
-				autoMetricsOps,
+				metricsOperation,
 			)({
 				methodA,
 				methodB,
@@ -712,9 +496,9 @@ describe('autoMetricsOps and toMiddlewares', () => {
 				throw errorInstance;
 			};
 			const enhancedController = compose(
-				toMiddlewares,
+				toMiddleware,
 				autoLogOps,
-				autoMetricsOps,
+				metricsOperation,
 			)({
 				operationFunction,
 			});

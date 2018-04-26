@@ -3,10 +3,8 @@ import {
 	getMetricsInstance,
 	autoMetricsAction,
 	autoMetricsActions,
-	autoMetricsOp,
-	autoMetricsOps,
+	metricsOperation,
 	toMiddleware,
-	toMiddlewares,
 } from '../index';
 
 describe('n-auto-metrics exports', () => {
@@ -26,19 +24,11 @@ describe('n-auto-metrics exports', () => {
 		expect(typeof autoMetricsActions).toBe('function');
 	});
 
-	it('autoMetricsOp', () => {
-		expect(typeof autoMetricsOp).toBe('function');
-	});
-
-	it('autoMetricsOps', () => {
-		expect(typeof autoMetricsOps).toBe('function');
+	it('metricsOperation', () => {
+		expect(typeof metricsOperation).toBe('function');
 	});
 
 	it('toMiddleware', () => {
 		expect(typeof toMiddleware).toBe('function');
-	});
-
-	it('toMiddlewares', () => {
-		expect(typeof toMiddlewares).toBe('function');
 	});
 });
