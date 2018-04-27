@@ -92,16 +92,17 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@financial-times/n-auto-logger@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-2.1.0.tgz#9aa10e96254689aa201c38be5f9a38b5a940e35d"
+"@financial-times/n-auto-logger@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-3.0.0.tgz#85176e3ab59011db1e38a5504cc31da6be73b272"
   dependencies:
-    "@financial-times/n-error" "^1.0.4"
-    "@financial-times/n-logger" "^5.5.11"
+    "@financial-times/n-error" "^1.0.5"
+    "@financial-times/n-express-enhancer" "^1.2.1"
+    "@financial-times/n-logger" "^5.6.3"
     "@financial-times/n-utils" "^0.1.0"
-    node-fetch "^2.0.0"
+    node-fetch "^2.1.2"
 
-"@financial-times/n-error@^1.0.4":
+"@financial-times/n-error@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@financial-times/n-error/-/n-error-1.0.5.tgz#7ade8f97ee0d051a4c1a2a47c0b25790f0b8c18f"
   dependencies:
@@ -140,9 +141,17 @@
     stylelint-scss "^2.2.0"
     yargs "^10.0.3"
 
-"@financial-times/n-logger@^5.5.11", "@financial-times/n-logger@^5.5.3":
+"@financial-times/n-logger@^5.5.3":
   version "5.6.3"
   resolved "https://registry.yarnpkg.com/@financial-times/n-logger/-/n-logger-5.6.3.tgz#e24d54ab6bfe872a4c6fb78feff1902d62fc8103"
+  dependencies:
+    isomorphic-fetch "^2.2.1"
+    request "^2.83.0"
+    winston "^2.4.0"
+
+"@financial-times/n-logger@^5.6.3":
+  version "5.6.4"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-logger/-/n-logger-5.6.4.tgz#12a1c19273e000974eccbba9088656b129293f3e"
   dependencies:
     isomorphic-fetch "^2.2.1"
     request "^2.83.0"
@@ -3946,7 +3955,7 @@ node-fetch@^1.0.1, node-fetch@^1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-fetch@^2.0.0:
+node-fetch@^2.0.0, node-fetch@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
 

@@ -1,8 +1,5 @@
 import compose from 'compose-function';
-import logger, {
-	autoLogAction,
-	autoLogActions,
-} from '@financial-times/n-auto-logger';
+import logger, { logAction } from '@financial-times/n-auto-logger';
 
 import { initAutoMetrics } from '../init';
 import { autoMetricsAction, autoMetricsActions } from '../action';
@@ -158,12 +155,12 @@ describe('autoMetricsAction', () => {
 		});
 	});
 
-	describe('used after autoLogAction from n-auto-logger', () => {
+	describe('used after logAction from n-auto-logger', () => {
 		it('log and record metrics correctly in callFunction success', () => {
 			const callFunction = () => null;
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			const enhancedFunction = compose(autoMetricsAction, autoLogAction)(
+			const enhancedFunction = compose(autoMetricsAction, logAction)(
 				callFunction,
 			);
 			enhancedFunction(params, meta);
@@ -183,7 +180,7 @@ describe('autoMetricsAction', () => {
 			};
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			const enhancedFunction = compose(autoMetricsAction, autoLogAction)(
+			const enhancedFunction = compose(autoMetricsAction, logAction)(
 				callFunction,
 			);
 			try {
@@ -198,12 +195,12 @@ describe('autoMetricsAction', () => {
 		});
 	});
 
-	describe('used before autoLogAction from n-auto-logger', () => {
+	describe('used before logAction from n-auto-logger', () => {
 		it('log and record metrics correctly in callFunction success', () => {
 			const callFunction = () => null;
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			const enhancedFunction = compose(autoLogAction, autoMetricsAction)(
+			const enhancedFunction = compose(logAction, autoMetricsAction)(
 				callFunction,
 			);
 			enhancedFunction(params, meta);
@@ -223,7 +220,7 @@ describe('autoMetricsAction', () => {
 			};
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			const enhancedFunction = compose(autoLogAction, autoMetricsAction)(
+			const enhancedFunction = compose(logAction, autoMetricsAction)(
 				callFunction,
 			);
 			try {
@@ -267,13 +264,13 @@ describe('autoMetricsActions', () => {
 		expect(autoMetricsActions('mock service')).toThrowErrorMatchingSnapshot();
 	});
 
-	describe('used after autoLogActions', () => {
+	describe('used after logAction', () => {
 		it('log and record metrics correctly when callFunction success', async () => {
 			const callFunctionA = jest.fn();
 			const callFunctionB = jest.fn();
 			const enhancedService = compose(
 				autoMetricsActions('mock-service'),
-				autoLogActions,
+				logAction,
 			)({
 				callFunctionA,
 				callFunctionB,
@@ -303,7 +300,7 @@ describe('autoMetricsActions', () => {
 			};
 			const enhancedService = compose(
 				autoMetricsActions('mock-service'),
-				autoLogActions,
+				logAction,
 			)({
 				callFunction,
 			});
@@ -321,12 +318,12 @@ describe('autoMetricsActions', () => {
 		});
 	});
 
-	describe('used before autoLogActions', () => {
+	describe('used before logAction', () => {
 		it('log and record metrics correctly when callFunction success ', async () => {
 			const callFunctionA = jest.fn();
 			const callFunctionB = jest.fn();
 			const enhancedService = compose(
-				autoLogActions,
+				logAction,
 				autoMetricsActions('mock-service'),
 			)({
 				callFunctionA,
@@ -356,7 +353,7 @@ describe('autoMetricsActions', () => {
 				throw errorInstance;
 			};
 			const enhancedService = compose(
-				autoLogActions,
+				logAction,
 				autoMetricsActions('mock-service'),
 			)({
 				callFunction,

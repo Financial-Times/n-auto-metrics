@@ -2,9 +2,8 @@ import express from 'express';
 import request from 'supertest';
 import compose from 'compose-function';
 import logger, {
-	autoLogOp,
-	autoLogOps,
-	autoLogAction,
+	logOperation,
+	logAction,
 } from '@financial-times/n-auto-logger';
 
 import { toMiddleware } from '../index';
@@ -188,16 +187,16 @@ describe('metricsOperation', () => {
 		});
 	});
 
-	describe('used before autoLogOp from n-auto-logger', () => {
+	describe('used before logOperation from n-auto-logger', () => {
 		it('record correctly in operation success with enhanced sub action', async () => {
 			const callFunction = () => {};
-			const enhancedCallFunction = compose(autoLogAction, autoMetricsAction)(
+			const enhancedCallFunction = compose(logAction, autoMetricsAction)(
 				callFunction,
 			);
 			const operationFunction = meta => {
 				enhancedCallFunction(undefined, meta);
 			};
-			const enhancedOperation = compose(autoLogOp, metricsOperation)(
+			const enhancedOperation = compose(logOperation, metricsOperation)(
 				operationFunction,
 			);
 			await enhancedOperation();
@@ -218,13 +217,13 @@ describe('metricsOperation', () => {
 			const callFunction = () => {
 				throw errorInstance;
 			};
-			const enhancedCallFunction = compose(autoLogAction, autoMetricsAction)(
+			const enhancedCallFunction = compose(logAction, autoMetricsAction)(
 				callFunction,
 			);
 			const operationFunction = meta => {
 				enhancedCallFunction(undefined, meta);
 			};
-			const enhancedOperation = compose(autoLogOp, metricsOperation)(
+			const enhancedOperation = compose(logOperation, metricsOperation)(
 				operationFunction,
 			);
 			try {
@@ -240,16 +239,16 @@ describe('metricsOperation', () => {
 		});
 	});
 
-	describe('used after autoLogOp from n-auto-logger', () => {
+	describe('used after logOperation from n-auto-logger', () => {
 		it('record correctly in operation success with enhanced sub action', async () => {
 			const callFunction = () => {};
-			const enhancedCallFunction = compose(autoLogAction, autoMetricsAction)(
+			const enhancedCallFunction = compose(logAction, autoMetricsAction)(
 				callFunction,
 			);
 			const operationFunction = meta => {
 				enhancedCallFunction(undefined, meta);
 			};
-			const enhancedOperation = compose(metricsOperation, autoLogOp)(
+			const enhancedOperation = compose(metricsOperation, logOperation)(
 				operationFunction,
 			);
 			await enhancedOperation();
@@ -270,13 +269,13 @@ describe('metricsOperation', () => {
 			const callFunction = () => {
 				throw errorInstance;
 			};
-			const enhancedCallFunction = compose(autoLogAction, autoMetricsAction)(
+			const enhancedCallFunction = compose(logAction, autoMetricsAction)(
 				callFunction,
 			);
 			const operationFunction = meta => {
 				enhancedCallFunction(undefined, meta);
 			};
-			const enhancedOperation = compose(metricsOperation, autoLogOp)(
+			const enhancedOperation = compose(metricsOperation, logOperation)(
 				operationFunction,
 			);
 			try {
@@ -322,7 +321,7 @@ describe('metricsOperation and toMiddleware', () => {
 		expect(metrics.count.mock.calls).toMatchSnapshot();
 	});
 
-	describe('used after autoLogOps', () => {
+	describe('used after logOperation', () => {
 		it('set anonymous function names as per property name correctly', async () => {
 			const createOperationFunction = () => (meta, req, res) => {
 				res.status(200).send(meta);
@@ -332,7 +331,7 @@ describe('metricsOperation and toMiddleware', () => {
 			const enhancedController = compose(
 				toMiddleware,
 				metricsOperation,
-				autoLogOps,
+				logOperation,
 			)({
 				operationFunctionA,
 				operationFunctionB,
@@ -369,7 +368,7 @@ describe('metricsOperation and toMiddleware', () => {
 			const enhancedController = compose(
 				toMiddleware,
 				metricsOperation,
-				autoLogOps,
+				logOperation,
 			)({
 				methodA,
 				methodB,
@@ -402,7 +401,7 @@ describe('metricsOperation and toMiddleware', () => {
 			const enhancedController = compose(
 				toMiddleware,
 				metricsOperation,
-				autoLogOps,
+				logOperation,
 			)({
 				operationFunction,
 			});
@@ -418,7 +417,7 @@ describe('metricsOperation and toMiddleware', () => {
 		});
 	});
 
-	describe('used before autoLogOps', () => {
+	describe('used before logOperation', () => {
 		it('set anonymous function names as per property name correctly', async () => {
 			const createOperationFunction = () => (meta, req, res) => {
 				res.status(200).send(meta);
@@ -427,7 +426,7 @@ describe('metricsOperation and toMiddleware', () => {
 			const operationFunctionB = createOperationFunction();
 			const enhancedController = compose(
 				toMiddleware,
-				autoLogOps,
+				logOperation,
 				metricsOperation,
 			)({
 				operationFunctionA,
@@ -464,7 +463,7 @@ describe('metricsOperation and toMiddleware', () => {
 			};
 			const enhancedController = compose(
 				toMiddleware,
-				autoLogOps,
+				logOperation,
 				metricsOperation,
 			)({
 				methodA,
@@ -497,7 +496,7 @@ describe('metricsOperation and toMiddleware', () => {
 			};
 			const enhancedController = compose(
 				toMiddleware,
-				autoLogOps,
+				logOperation,
 				metricsOperation,
 			)({
 				operationFunction,
