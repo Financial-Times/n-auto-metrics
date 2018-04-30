@@ -1,6 +1,6 @@
 # n-auto-metrics
 
-auto record metrics of function calls in operation/action model with a single line of code
+an [enhancer](https://github.com/Financial-Times/n-express-enhancer) to auto record metrics of function calls in operation/action model with a single line of code
 
 [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics.svg)](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics)
 ![npm download](https://img.shields.io/npm/dm/@financial-times/n-auto-metrics.svg)
