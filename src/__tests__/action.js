@@ -2,7 +2,7 @@ import logger, { logAction, compose } from '@financial-times/n-auto-logger';
 
 import { initAutoMetrics } from '../init';
 import metricsAction from '../action';
-import addMeta from '../add-meta';
+import { addMeta } from '../index';
 
 logger.info = jest.fn();
 logger.warn = jest.fn();

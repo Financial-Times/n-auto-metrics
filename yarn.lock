@@ -117,6 +117,12 @@
   dependencies:
     compose-function "^3.0.3"
 
+"@financial-times/n-express-enhancer@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-express-enhancer/-/n-express-enhancer-1.4.0.tgz#ba2ee482d7e51b3e4d7f1b0eaed6d3f315542b86"
+  dependencies:
+    compose-function "^3.0.3"
+
 "@financial-times/n-fetch@^1.0.0-beta.4":
   version "1.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@financial-times/n-fetch/-/n-fetch-1.0.0-beta.5.tgz#444e67db560f08643add07408ac9b46f4e50c58a"
