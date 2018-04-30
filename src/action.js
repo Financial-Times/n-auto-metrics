@@ -1,7 +1,6 @@
-import { createEnhancer } from '@financial-times/n-express-enhancer';
+import { createEnhancer, isPromise } from '@financial-times/n-express-enhancer';
 
 import { metricsEvent } from './event';
-import { isPromise } from './utils';
 
 const metricsAction = actionFunction => (paramsOrArgs = {}, meta = {}) => {
 	const service = meta.service || paramsOrArgs.service || 'undefined';

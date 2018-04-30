@@ -1,12 +1,11 @@
 import express from 'express';
 import request from 'supertest';
-import compose from 'compose-function';
 import logger, {
 	logOperation,
 	logAction,
 } from '@financial-times/n-auto-logger';
 
-import { toMiddleware } from '../index';
+import { toMiddleware, compose } from '../index';
 import { initAutoMetrics } from '../init';
 import metricsAction from '../action';
 import metricsOperation from '../operation';

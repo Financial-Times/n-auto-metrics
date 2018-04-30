@@ -1,6 +1,4 @@
-import { createEnhancer } from '@financial-times/n-express-enhancer';
-
-import { isPromise } from './utils';
+import { createEnhancer, isPromise } from '@financial-times/n-express-enhancer';
 
 const addMeta = addedMeta => actionFunction => (paramsOrArgs = {}, meta) => {
 	const call = meta

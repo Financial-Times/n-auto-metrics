@@ -5,6 +5,8 @@ import {
 	metricsAction,
 	metricsOperation,
 	toMiddleware,
+	enhancedRender,
+	compose,
 } from '../index';
 
 describe('n-auto-metrics exports', () => {
@@ -30,5 +32,13 @@ describe('n-auto-metrics exports', () => {
 
 	it('toMiddleware', () => {
 		expect(typeof toMiddleware).toBe('function');
+	});
+
+	it('enhancedRender', () => {
+		expect(typeof enhancedRender).toBe('function');
+	});
+
+	it('compose', () => {
+		expect(typeof compose).toBe('function');
 	});
 });

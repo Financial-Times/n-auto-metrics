@@ -1,6 +1,7 @@
 export {
 	toMiddleware,
 	enhancedRender,
+	compose,
 } from '@financial-times/n-express-enhancer';
 
 export { initAutoMetrics, getMetricsInstance } from './init';

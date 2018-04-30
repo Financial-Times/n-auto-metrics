@@ -1,5 +1,4 @@
-import compose from 'compose-function';
-import logger, { logAction } from '@financial-times/n-auto-logger';
+import logger, { logAction, compose } from '@financial-times/n-auto-logger';
 
 import { initAutoMetrics } from '../init';
 import metricsAction from '../action';
@@ -279,8 +278,6 @@ describe('metricsAction when input operation function bundle', () => {
 			const meta = { operation: 'mock-operation' };
 			await enhancedService.callFunctionA(paramsA, meta);
 			await enhancedService.callFunctionB(paramsB, meta);
-			expect(enhancedService.callFunctionA.name).toBe('callFunctionA');
-			expect(enhancedService.callFunctionB.name).toBe('callFunctionB');
 			expect(callFunctionA.mock.calls).toMatchSnapshot();
 			expect(callFunctionB.mock.calls).toMatchSnapshot();
 			expect(metrics.count.mock.calls).toMatchSnapshot();
@@ -335,8 +332,6 @@ describe('metricsAction when input operation function bundle', () => {
 			const meta = { operation: 'mock-operation' };
 			await enhancedService.callFunctionA(paramsA, meta);
 			await enhancedService.callFunctionB(paramsB, meta);
-			expect(enhancedService.callFunctionA.name).toBe('callFunctionA');
-			expect(enhancedService.callFunctionB.name).toBe('callFunctionB');
 			expect(callFunctionA.mock.calls).toMatchSnapshot();
 			expect(callFunctionB.mock.calls).toMatchSnapshot();
 			expect(metrics.count.mock.calls).toMatchSnapshot();

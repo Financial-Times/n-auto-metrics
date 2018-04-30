@@ -92,12 +92,12 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@financial-times/n-auto-logger@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-3.0.0.tgz#85176e3ab59011db1e38a5504cc31da6be73b272"
+"@financial-times/n-auto-logger@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-auto-logger/-/n-auto-logger-3.1.0.tgz#8758b08a69d1ba2b7116141c61dee9ad2f0a9b54"
   dependencies:
     "@financial-times/n-error" "^1.0.5"
-    "@financial-times/n-express-enhancer" "^1.2.1"
+    "@financial-times/n-express-enhancer" "^1.3.0"
     "@financial-times/n-logger" "^5.6.3"
     "@financial-times/n-utils" "^0.1.0"
     node-fetch "^2.1.2"
@@ -111,9 +111,11 @@
     isomorphic-fetch "^2.2.1"
     node-fetch "^2.0.0"
 
-"@financial-times/n-express-enhancer@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@financial-times/n-express-enhancer/-/n-express-enhancer-1.2.1.tgz#c68d2f3e9a0fe2ad5e1c6aca6f62c6b71869b243"
+"@financial-times/n-express-enhancer@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@financial-times/n-express-enhancer/-/n-express-enhancer-1.3.0.tgz#2d1784e39df9df92dcc175cf9f1325f9ad333d65"
+  dependencies:
+    compose-function "^3.0.3"
 
 "@financial-times/n-fetch@^1.0.0-beta.4":
   version "1.0.0-beta.5"
