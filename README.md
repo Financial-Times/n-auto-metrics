@@ -18,57 +18,57 @@ auto record metrics of function calls in operation/action model with a single li
 - [quickstart](#quickstart)
 - [install](#install)
 - [usage](#usage)
-   * [action function signature](#action-function-signature)
-   * [operation function format](#operation-function-format)
-   * [use with other enhancers](#use-with-other-enhancers)
+   * [chain with other enhancers](#chain-with-other-enhancers)
    * [reserved fields](#reserved-fields)
    * [metrics format](#metrics-format)
 - [example](#example)
-- [development](#development)
 
 <br>
 
 ## quickstart
-```js
-import { 
-  initAutoMetrics,
-  autoMetricsAction, 
-  autoMetricsActions, 
-  autoMetricsOp,
-  autoMetricsOps,
-  toMiddleware,
-  toMiddlewares,
-} from '@financial-times/n-auto-metrics';
-```
+
+initialise metrics before using enhanced middleware
 
 ```js
 /* app.js */
 import { metrics } from 'n-express'; // or any other source has the `next-metrics` instance
+import { initAutoMetrics } from '@financial-times/n-auto-metrics';
 
 initAutoMetrics(metrics); // do this before app.use() any enhanced middleware/controller
 ```
 
+enhance action function to auto metrics
+
 ```js
+import { metricsAction } from '@financial-times/n-auto-metrics';
+
 // auto metrics function of its start, success/failure state
-const result = autoMetricsAction(someFunction)(args: Object, meta?: Object);
+const result = metricsAction(someFunction)(args: Object, meta?: Object);
 
 // auto metrics multiple functions wrapped in an object
-// `service` would need to be specified as the group namespace, passed to meta
-const APIService = autoMetricsActions('api-service-name')({ methodA, methodB, methodC });
+// use addMeta to add `service` before `metricsAction` to record the enhanced function under one namespace
+const APIService = compose(
+  addMeta({ service: 'some-service' }),
+  metricsAction
+)({ 
+  methodA, 
+  methodB, 
+  methodC 
+});
 ```
-> more details on [action function signature](#action-function-signature)
+> more details on [action function](https://github.com/financial-Times/n-express-enhancer#action-function)
 
 
 ```js
 // auto log success/failure express middleware/controller as an operation function 
 // function name would be logged as `operation`, and available in meta
 const operationFunction = (meta, req, res) => { /* try-catch-throw */ };
-export default toMiddleware(autoMetricsOp(operationFunction));
+export default toMiddleware(metricsOperation(operationFunction));
 
 // auto log multiple operation functions wrapped in an object as controller
-const someController = toMiddlewares(autoMetricsOps({ operationFunctionA, operationFuncitonB }));
+const someController = toMiddlewares(metricsOperation({ operationFunctionA, operationFuncitonB }));
 ```
-> more details on [operation function error handling](#operation-function-error-handling)
+> more details on [operation function](https://github.com/financial-Times/n-express-enhancer#operation-function)
 
 ## install
 ```shell
@@ -77,44 +77,9 @@ npm install @financial-times/n-auto-metrics
 
 ## usage
 
-### action function signature
+### chain with other enhancers
 
-`n-auto-metrics` allows two objects as the args of the autoMetricsAction function so that values can be recorded with corresponding key names. It is relatively more relaxed than `n-auto-logger`.
-```js
-// it would search for .service field in `meta` or `paramsOrArgs`
-// servie default to `undefined`
-const someFunction = (paramsOrArgs: Object, meta: ?Object) => {};
-
-autoMetricsAction(someFunction)(paramsOrArgs, meta);
-```
-
-### operation function format
-
-`(meta, req, res) => {}`
-
-```js
-// auto metrics operation and action together
-const operationFunction = async (meta, req, res) => {
-  try {
-    await autoMetricsAction(callFunction)(params, meta); // pass in the `meta`
-  } catch(e) {
-    throw e;
-  }
-};
-
-export default toMiddleware(autoMetricsOp(operationFunction));
-```
-
-### use with other enhancers
-
-`autoMetricsOp` would return an operation function, so that other enhancers can be further chained before `toMiddleware`
-
-```js
-export default compose(toMiddleware, autoMetricsOp, autoLogOp)(operationFunction);
-export default compose(toMiddlewares, autoMetricsOps, autoLogOps)(operationBundle);
-export default compose(autoMetricsAction, autoLogAction)(callFunction);
-export default compose(autoMetricsActions, autoLogActions('service-name'))(callFunctionBundle);
-```
+check [n-express-enhancer](https://github.com/Financial-Times/n-express-enhancer/blob/master/README.md#chain-a-series-of-enhancers)
 
 ### reserved fields
 
@@ -147,8 +112,3 @@ export default compose(autoMetricsActions, autoLogActions('service-name'))(callF
 [enhanced api service example](https://github.com/Financial-Times/newspaper-mma/blob/master/server/apis/newspaper-info-svc.js)
 
 [enhanced controller example](https://github.com/Financial-Times/newspaper-mma/blob/master/server/routes/delivery-address/controller.js)
-
-## development
-* `make install` or `yarn`
-* `yarn test --watch` to automatically run test on changing src
-* `yarn watch` to automatically correct code format on saving src
