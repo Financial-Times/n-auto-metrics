@@ -39,7 +39,7 @@ initAutoMetrics(metrics); // do this before app.use() any enhanced middleware/co
 enhance action function to auto metrics,  use addMeta to add `service` before `metricsAction` if you want to set metrics of one service namespace
 
 ```js
-import { metricsAction, addMeta } from '@financial-times/n-auto-metrics';
+import { metricsAction, addMeta, compose } from '@financial-times/n-auto-metrics';
 
 // auto metrics function of its start, success/failure state
 const result = metricsAction(someFunction)(args: Object, meta?: Object);
