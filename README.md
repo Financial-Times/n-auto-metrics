@@ -1,5 +1,7 @@
 # n-auto-metrics
 
+auto record metrics of function calls in operation/action model with a single line of code
+
 [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics.svg)](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics)
 ![npm download](https://img.shields.io/npm/dm/@financial-times/n-auto-metrics.svg)
 ![node version](https://img.shields.io/node/v/@financial-times/n-auto-metrics.svg)
@@ -11,20 +13,18 @@
 [![Dependencies](https://david-dm.org/Financial-Times/n-auto-metrics.svg)](https://david-dm.org/Financial-Times/n-auto-metrics)
 [![devDependencies](https://david-dm.org/Financial-Times/n-auto-metrics/dev-status.svg)](https://david-dm.org/Financial-Times/n-auto-metrics?type=dev)
 
-auto record metrics of function calls in operation/action model with a single line of code
+<br>
+
+- [Quickstart](#quickstart)
+- [Install](#install)
+- [Gotcha](#gotcha)
+  * [reserved fields](#reserved-fields)
+  * [metrics format](#metrics-format)
+- [Licence](#licence)
 
 <br>
 
-- [quickstart](#quickstart)
-- [install](#install)
-- [gotcha](#usage)
-   * [reserved fields](#reserved-fields)
-   * [metrics format](#metrics-format)
-- [example](#example)
-
-<br>
-
-## quickstart
+## Quickstart
 
 initialise metrics before using enhanced middleware
 
@@ -70,12 +70,12 @@ const someController = toMiddlewares(metricsOperation({ operationFunctionA, oper
 
 > more details on [chain with other enhancers](https://github.com/Financial-Times/n-express-enhancer/blob/master/README.md#chain-a-series-of-enhancers)
 
-## install
+## Install
 ```shell
 npm install @financial-times/n-auto-metrics
 ```
 
-## gotcha
+## Gotcha
 
 ### reserved fields
 
@@ -102,9 +102,5 @@ npm install @financial-times/n-auto-metrics
 > `service.${service}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
 > `service.${service}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
 
-
-## example
-
-[enhanced api service example](https://github.com/Financial-Times/newspaper-mma/blob/master/server/apis/newspaper-info-svc.js)
-
-[enhanced controller example](https://github.com/Financial-Times/newspaper-mma/blob/master/server/routes/delivery-address/controller.js)
+## Licence
+[MIT](/LICENSE)
