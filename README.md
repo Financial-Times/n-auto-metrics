@@ -37,16 +37,15 @@ import { initAutoMetrics } from '@financial-times/n-auto-metrics';
 initAutoMetrics(metrics); // do this before app.use() any enhanced middleware/controller
 ```
 
-enhance action function to auto metrics
+enhance action function to auto metrics,  use addMeta to add `service` before `metricsAction` if you want to set metrics of one service namespace
 
 ```js
-import { metricsAction } from '@financial-times/n-auto-metrics';
+import { metricsAction, addMeta } from '@financial-times/n-auto-metrics';
 
 // auto metrics function of its start, success/failure state
 const result = metricsAction(someFunction)(args: Object, meta?: Object);
 
 // auto metrics multiple functions wrapped in an object
-// use addMeta to add `service` before `metricsAction` to record the enhanced function under one namespace
 const APIService = compose(
   addMeta({ service: 'some-service' }),
   metricsAction
