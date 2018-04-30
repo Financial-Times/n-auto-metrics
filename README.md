@@ -17,8 +17,7 @@ auto record metrics of function calls in operation/action model with a single li
 
 - [quickstart](#quickstart)
 - [install](#install)
-- [usage](#usage)
-   * [chain with other enhancers](#chain-with-other-enhancers)
+- [gotcha](#usage)
    * [reserved fields](#reserved-fields)
    * [metrics format](#metrics-format)
 - [example](#example)
@@ -69,16 +68,14 @@ const someController = toMiddlewares(metricsOperation({ operationFunctionA, oper
 ```
 > more details on [operation function](https://github.com/financial-Times/n-express-enhancer#operation-function)
 
+> more details on [chain with other enhancers](https://github.com/Financial-Times/n-express-enhancer/blob/master/README.md#chain-a-series-of-enhancers)
+
 ## install
 ```shell
 npm install @financial-times/n-auto-metrics
 ```
 
-## usage
-
-### chain with other enhancers
-
-check [n-express-enhancer](https://github.com/Financial-Times/n-express-enhancer/blob/master/README.md#chain-a-series-of-enhancers)
+## gotcha
 
 ### reserved fields
 
