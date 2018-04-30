@@ -1,8 +1,8 @@
 import {
 	initAutoMetrics,
 	getMetricsInstance,
-	autoMetricsAction,
-	autoMetricsActions,
+	addMeta,
+	metricsAction,
 	metricsOperation,
 	toMiddleware,
 } from '../index';
@@ -16,12 +16,12 @@ describe('n-auto-metrics exports', () => {
 		expect(typeof getMetricsInstance).toBe('function');
 	});
 
-	it('autoMetricsAction', () => {
-		expect(typeof autoMetricsAction).toBe('function');
+	it('addMeta', () => {
+		expect(typeof addMeta).toBe('function');
 	});
 
-	it('autoMetricsActions', () => {
-		expect(typeof autoMetricsActions).toBe('function');
+	it('metricsAction', () => {
+		expect(typeof metricsAction).toBe('function');
 	});
 
 	it('metricsOperation', () => {

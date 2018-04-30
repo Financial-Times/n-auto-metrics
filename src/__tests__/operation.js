@@ -8,7 +8,7 @@ import logger, {
 
 import { toMiddleware } from '../index';
 import { initAutoMetrics } from '../init';
-import { autoMetricsAction } from '../action';
+import metricsAction from '../action';
 import metricsOperation from '../operation';
 
 logger.info = jest.fn();
@@ -79,19 +79,19 @@ describe('metricsOperation', () => {
 
 	describe('record metrics correctly', () => {
 		describe('operation success of', () => {
-			it('async function with autoMetricsAction sub action', async () => {
+			it('async function with metricsAction sub action', async () => {
 				const callFunction = () => {};
 				const operationFunction = async meta => {
-					await autoMetricsAction(callFunction)(undefined, meta);
+					await metricsAction(callFunction)(undefined, meta);
 				};
 				await metricsOperation(operationFunction)();
 				expect(metrics.count.mock.calls).toMatchSnapshot();
 			});
 
-			it('non-async function with autoMetricsAction sub action', async () => {
+			it('non-async function with metricsAction sub action', async () => {
 				const callFunction = () => {};
 				const operationFunction = meta => {
-					autoMetricsAction(callFunction)(undefined, meta);
+					metricsAction(callFunction)(undefined, meta);
 				};
 				await metricsOperation(operationFunction)();
 				expect(metrics.count.mock.calls).toMatchSnapshot();
@@ -190,7 +190,7 @@ describe('metricsOperation', () => {
 	describe('used before logOperation from n-auto-logger', () => {
 		it('record correctly in operation success with enhanced sub action', async () => {
 			const callFunction = () => {};
-			const enhancedCallFunction = compose(logAction, autoMetricsAction)(
+			const enhancedCallFunction = compose(logAction, metricsAction)(
 				callFunction,
 			);
 			const operationFunction = meta => {
@@ -217,7 +217,7 @@ describe('metricsOperation', () => {
 			const callFunction = () => {
 				throw errorInstance;
 			};
-			const enhancedCallFunction = compose(logAction, autoMetricsAction)(
+			const enhancedCallFunction = compose(logAction, metricsAction)(
 				callFunction,
 			);
 			const operationFunction = meta => {
@@ -242,7 +242,7 @@ describe('metricsOperation', () => {
 	describe('used after logOperation from n-auto-logger', () => {
 		it('record correctly in operation success with enhanced sub action', async () => {
 			const callFunction = () => {};
-			const enhancedCallFunction = compose(logAction, autoMetricsAction)(
+			const enhancedCallFunction = compose(logAction, metricsAction)(
 				callFunction,
 			);
 			const operationFunction = meta => {
@@ -269,7 +269,7 @@ describe('metricsOperation', () => {
 			const callFunction = () => {
 				throw errorInstance;
 			};
-			const enhancedCallFunction = compose(logAction, autoMetricsAction)(
+			const enhancedCallFunction = compose(logAction, metricsAction)(
 				callFunction,
 			);
 			const operationFunction = meta => {

@@ -2,7 +2,8 @@ import compose from 'compose-function';
 import logger, { logAction } from '@financial-times/n-auto-logger';
 
 import { initAutoMetrics } from '../init';
-import { autoMetricsAction, autoMetricsActions } from '../action';
+import metricsAction from '../action';
+import addMeta from '../add-meta';
 
 logger.info = jest.fn();
 logger.warn = jest.fn();
@@ -12,7 +13,7 @@ const metrics = {
 	count: jest.fn(),
 };
 
-describe('autoMetricsAction', () => {
+describe('metricsAction', () => {
 	beforeAll(() => {
 		initAutoMetrics(metrics);
 	});
@@ -23,13 +24,13 @@ describe('autoMetricsAction', () => {
 
 	it('record callFunction name as action name', async () => {
 		const callFunction = () => null;
-		autoMetricsAction(callFunction)();
+		metricsAction(callFunction)();
 		expect(metrics.count.mock.calls).toMatchSnapshot();
 	});
 
 	it('returns an enhanced function with a configurable .name same as callFunction', async () => {
 		const callFunction = () => null;
-		const enhancedFunction = autoMetricsAction(callFunction);
+		const enhancedFunction = metricsAction(callFunction);
 		expect(enhancedFunction.name).toEqual(callFunction.name);
 		Object.defineProperty(enhancedFunction, 'name', {
 			value: 'test',
@@ -42,21 +43,21 @@ describe('autoMetricsAction', () => {
 		it('if metrics was not initialised', async () => {
 			initAutoMetrics(undefined);
 			const callFunction = () => null;
-			const execution = autoMetricsAction(callFunction);
+			const execution = metricsAction(callFunction);
 			expect(execution).toThrowErrorMatchingSnapshot();
 			initAutoMetrics(metrics);
 		});
 
 		it('service name is not string', async () => {
 			const callFunction = () => null;
-			const execution = () => autoMetricsAction(callFunction)({ service: 1 });
+			const execution = () => metricsAction(callFunction)({ service: 1 });
 			expect(execution).toThrowErrorMatchingSnapshot();
 		});
 
 		it('service name has space', async () => {
 			const callFunction = () => null;
 			const execution = () =>
-				autoMetricsAction(callFunction)({ service: 'foo bar' });
+				metricsAction(callFunction)({ service: 'foo bar' });
 			expect(execution).toThrowErrorMatchingSnapshot();
 		});
 	});
@@ -66,7 +67,7 @@ describe('autoMetricsAction', () => {
 			const callFunction = jest.fn(() => Promise.resolve('foo'));
 			const params = { test: 'a' };
 			const meta = { meta: 'b' };
-			const result = await autoMetricsAction(callFunction)(params, meta);
+			const result = await metricsAction(callFunction)(params, meta);
 			expect(callFunction.mock.calls).toMatchSnapshot();
 			const expectedResult = await callFunction(params, meta);
 			expect(result).toBe(expectedResult);
@@ -74,7 +75,7 @@ describe('autoMetricsAction', () => {
 
 		it('should record callFunction success correctly', async () => {
 			const callFunction = () => Promise.resolve('foo');
-			await autoMetricsAction(callFunction)();
+			await metricsAction(callFunction)();
 			expect(metrics.count.mock.calls).toMatchSnapshot();
 		});
 
@@ -88,7 +89,7 @@ describe('autoMetricsAction', () => {
 				throw errorInstance;
 			};
 			try {
-				await autoMetricsAction(callFunction)();
+				await metricsAction(callFunction)();
 			} catch (e) {
 				expect(e).toBe(errorInstance);
 				expect(metrics.count.mock.calls).toMatchSnapshot();
@@ -101,7 +102,7 @@ describe('autoMetricsAction', () => {
 			const callFunction = jest.fn(() => 'foo');
 			const params = { test: 'a' };
 			const meta = { meta: 'b' };
-			const result = autoMetricsAction(callFunction)(params, meta);
+			const result = metricsAction(callFunction)(params, meta);
 			expect(callFunction.mock.calls).toMatchSnapshot();
 			const expectedResult = callFunction(params, meta);
 			expect(result).toBe(expectedResult);
@@ -109,7 +110,7 @@ describe('autoMetricsAction', () => {
 
 		it('should record callFunction success correctly', () => {
 			const callFunction = () => 'foo';
-			autoMetricsAction(callFunction)();
+			metricsAction(callFunction)();
 			expect(metrics.count.mock.calls).toMatchSnapshot();
 		});
 
@@ -123,7 +124,7 @@ describe('autoMetricsAction', () => {
 				throw errorInstance;
 			};
 			try {
-				autoMetricsAction(callFunction)();
+				metricsAction(callFunction)();
 			} catch (e) {
 				expect(e).toBe(errorInstance);
 				expect(metrics.count.mock.calls).toMatchSnapshot();
@@ -136,21 +137,21 @@ describe('autoMetricsAction', () => {
 			const callFunction = () => null;
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			autoMetricsAction(callFunction)(params, meta);
+			metricsAction(callFunction)(params, meta);
 			expect(metrics.count.mock.calls).toMatchSnapshot();
 		});
 
 		it('takes the service name/operation value in paramsOrArgs if not available in meta', () => {
 			const callFunction = () => null;
 			const args = { a: 'test', service: 'foo', operation: 'bar' };
-			autoMetricsAction(callFunction)(args);
+			metricsAction(callFunction)(args);
 			expect(metrics.count.mock.calls).toMatchSnapshot();
 		});
 
 		it('uses default service name "undefined" and undefined operation if not available in args', () => {
 			const callFunction = () => null;
 			const args = { a: 'test' };
-			autoMetricsAction(callFunction)(args);
+			metricsAction(callFunction)(args);
 			expect(metrics.count.mock.calls).toMatchSnapshot();
 		});
 	});
@@ -160,9 +161,7 @@ describe('autoMetricsAction', () => {
 			const callFunction = () => null;
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			const enhancedFunction = compose(autoMetricsAction, logAction)(
-				callFunction,
-			);
+			const enhancedFunction = compose(metricsAction, logAction)(callFunction);
 			enhancedFunction(params, meta);
 			expect(metrics.count.mock.calls).toMatchSnapshot();
 			expect(logger.info.mock.calls).toMatchSnapshot();
@@ -180,9 +179,7 @@ describe('autoMetricsAction', () => {
 			};
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			const enhancedFunction = compose(autoMetricsAction, logAction)(
-				callFunction,
-			);
+			const enhancedFunction = compose(metricsAction, logAction)(callFunction);
 			try {
 				enhancedFunction(params, meta);
 			} catch (e) {
@@ -200,9 +197,7 @@ describe('autoMetricsAction', () => {
 			const callFunction = () => null;
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			const enhancedFunction = compose(logAction, autoMetricsAction)(
-				callFunction,
-			);
+			const enhancedFunction = compose(logAction, metricsAction)(callFunction);
 			enhancedFunction(params, meta);
 			expect(metrics.count.mock.calls).toMatchSnapshot();
 			expect(logger.info.mock.calls).toMatchSnapshot();
@@ -220,9 +215,7 @@ describe('autoMetricsAction', () => {
 			};
 			const params = { a: 'test' };
 			const meta = { service: 'foo', operation: 'bar' };
-			const enhancedFunction = compose(logAction, autoMetricsAction)(
-				callFunction,
-			);
+			const enhancedFunction = compose(logAction, metricsAction)(callFunction);
 			try {
 				enhancedFunction(params, meta);
 			} catch (e) {
@@ -236,7 +229,11 @@ describe('autoMetricsAction', () => {
 	});
 });
 
-describe('autoMetricsActions', () => {
+describe('metricsAction when input operation function bundle', () => {
+	beforeAll(() => {
+		initAutoMetrics(metrics);
+	});
+
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
@@ -244,24 +241,25 @@ describe('autoMetricsActions', () => {
 	it('decorate each method correctly', async () => {
 		const callFunctionA = jest.fn();
 		const callFunctionB = jest.fn();
-		const enhancedService = autoMetricsActions('mock-service')({
+		const enhancedService = metricsAction({
 			callFunctionA,
 			callFunctionB,
 		});
 		const paramsA = { test: 'a' };
 		const paramsB = { test: 'b' };
-		const meta = { operation: 'mock-operation' };
+		const meta = { operation: 'mock-operation', service: 'mock-service' };
 		await enhancedService.callFunctionA(paramsA, meta);
 		await enhancedService.callFunctionB(paramsB, meta);
-		expect(enhancedService.callFunctionA.name).toBe('callFunctionA');
-		expect(enhancedService.callFunctionB.name).toBe('callFunctionB');
 		expect(callFunctionA.mock.calls).toMatchSnapshot();
 		expect(callFunctionB.mock.calls).toMatchSnapshot();
 		expect(metrics.count.mock.calls).toMatchSnapshot();
 	});
 
 	it('throw Error if service name has space', async () => {
-		expect(autoMetricsActions('mock service')).toThrowErrorMatchingSnapshot();
+		const actionFunction = () => {};
+		const enhanced = metricsAction(actionFunction);
+		const meta = { service: 'mock service' };
+		expect(() => enhanced({}, meta)).toThrowErrorMatchingSnapshot();
 	});
 
 	describe('used after logAction', () => {
@@ -269,7 +267,8 @@ describe('autoMetricsActions', () => {
 			const callFunctionA = jest.fn();
 			const callFunctionB = jest.fn();
 			const enhancedService = compose(
-				autoMetricsActions('mock-service'),
+				addMeta({ service: 'mock-service' }),
+				metricsAction,
 				logAction,
 			)({
 				callFunctionA,
@@ -299,7 +298,8 @@ describe('autoMetricsActions', () => {
 				throw errorInstance;
 			};
 			const enhancedService = compose(
-				autoMetricsActions('mock-service'),
+				addMeta({ service: 'mock-service' }),
+				metricsAction,
 				logAction,
 			)({
 				callFunction,
@@ -323,8 +323,9 @@ describe('autoMetricsActions', () => {
 			const callFunctionA = jest.fn();
 			const callFunctionB = jest.fn();
 			const enhancedService = compose(
+				addMeta({ service: 'mock-service' }),
 				logAction,
-				autoMetricsActions('mock-service'),
+				metricsAction,
 			)({
 				callFunctionA,
 				callFunctionB,
@@ -353,8 +354,9 @@ describe('autoMetricsActions', () => {
 				throw errorInstance;
 			};
 			const enhancedService = compose(
+				addMeta({ service: 'mock-service' }),
 				logAction,
-				autoMetricsActions('mock-service'),
+				metricsAction,
 			)({
 				callFunction,
 			});

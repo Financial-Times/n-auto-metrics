@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addMeta throws error if input of addMeta is not an object, e.g. in case the meta is forgotten 1`] = `"input of addMeta needs to be an object"`;
+
+exports[`addMeta throws error if input of addMeta is not an object, e.g. in case the meta is forgotten 2`] = `"input of addMeta needs to be an object"`;

@@ -359,7 +359,7 @@ Array [
 ]
 `;
 
-exports[`metricsOperation record metrics correctly operation success of async function with autoMetricsAction sub action 1`] = `
+exports[`metricsOperation record metrics correctly operation success of async function with metricsAction sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
@@ -388,7 +388,7 @@ Array [
 ]
 `;
 
-exports[`metricsOperation record metrics correctly operation success of non-async function with autoMetricsAction sub action 1`] = `
+exports[`metricsOperation record metrics correctly operation success of non-async function with metricsAction sub action 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",

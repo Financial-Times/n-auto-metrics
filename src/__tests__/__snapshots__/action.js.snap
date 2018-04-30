@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`autoMetricsAction args format (paramsOrArgs, meta) takes the service name/operation value in meta first if available 1`] = `
+exports[`metricsAction args format (paramsOrArgs, meta) takes the service name/operation value in meta first if available 1`] = `
 Array [
   Array [
     "service.foo.action.callFunction.state.start",
@@ -21,7 +21,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction args format (paramsOrArgs, meta) takes the service name/operation value in paramsOrArgs if not available in meta 1`] = `
+exports[`metricsAction args format (paramsOrArgs, meta) takes the service name/operation value in paramsOrArgs if not available in meta 1`] = `
 Array [
   Array [
     "service.foo.action.callFunction.state.start",
@@ -42,7 +42,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction args format (paramsOrArgs, meta) uses default service name "undefined" and undefined operation if not available in args 1`] = `
+exports[`metricsAction args format (paramsOrArgs, meta) uses default service name "undefined" and undefined operation if not available in args 1`] = `
 Array [
   Array [
     "service.undefined.action.callFunction.state.start",
@@ -63,7 +63,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction enhance async function should invoke callFunction correctly 1`] = `
+exports[`metricsAction enhance async function should invoke callFunction correctly 1`] = `
 Array [
   Array [
     Object {
@@ -76,7 +76,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction enhance async function should record callFunction failure correctly and throw the original exception 1`] = `
+exports[`metricsAction enhance async function should record callFunction failure correctly and throw the original exception 1`] = `
 Array [
   Array [
     "service.undefined.action.callFunction.state.start",
@@ -105,7 +105,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction enhance async function should record callFunction success correctly 1`] = `
+exports[`metricsAction enhance async function should record callFunction success correctly 1`] = `
 Array [
   Array [
     "service.undefined.action.callFunction.state.start",
@@ -126,7 +126,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction enhance non-async function should invoke callFunction correctly 1`] = `
+exports[`metricsAction enhance non-async function should invoke callFunction correctly 1`] = `
 Array [
   Array [
     Object {
@@ -139,7 +139,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction enhance non-async function should record callFunction failure correctly and throw the original exception 1`] = `
+exports[`metricsAction enhance non-async function should record callFunction failure correctly and throw the original exception 1`] = `
 Array [
   Array [
     "service.undefined.action.callFunction.state.start",
@@ -168,7 +168,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction enhance non-async function should record callFunction success correctly 1`] = `
+exports[`metricsAction enhance non-async function should record callFunction success correctly 1`] = `
 Array [
   Array [
     "service.undefined.action.callFunction.state.start",
@@ -189,7 +189,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction record callFunction name as action name 1`] = `
+exports[`metricsAction record callFunction name as action name 1`] = `
 Array [
   Array [
     "service.undefined.action.callFunction.state.start",
@@ -210,13 +210,13 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction should throw error if metrics was not initialised 1`] = `"auto metrics instance needs to be initialised first"`;
+exports[`metricsAction should throw error if metrics was not initialised 1`] = `"auto metrics instance needs to be initialised first"`;
 
-exports[`autoMetricsAction should throw error service name has space 1`] = `"action metrics service name needs to be string without spaces, at function callFunction"`;
+exports[`metricsAction should throw error service name has space 1`] = `"action metrics service name needs to be string without spaces, at function callFunction"`;
 
-exports[`autoMetricsAction should throw error service name is not string 1`] = `"action metrics service name needs to be string without spaces, at function callFunction"`;
+exports[`metricsAction should throw error service name is not string 1`] = `"action metrics service name needs to be string without spaces, at function callFunction"`;
 
-exports[`autoMetricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction failure 1`] = `
+exports[`metricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction failure 1`] = `
 Array [
   Array [
     "service.foo.action.callFunction.state.start",
@@ -245,7 +245,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction failure 2`] = `
+exports[`metricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction failure 2`] = `
 Array [
   Array [
     Object {
@@ -258,7 +258,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction failure 3`] = `
+exports[`metricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction failure 3`] = `
 Array [
   Array [
     Object {
@@ -276,9 +276,9 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction failure 4`] = `Array []`;
+exports[`metricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction failure 4`] = `Array []`;
 
-exports[`autoMetricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction success 1`] = `
+exports[`metricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction success 1`] = `
 Array [
   Array [
     "service.foo.action.callFunction.state.start",
@@ -299,7 +299,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction success 2`] = `
+exports[`metricsAction used after logAction from n-auto-logger log and record metrics correctly in callFunction success 2`] = `
 Array [
   Array [
     Object {
@@ -321,7 +321,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction failure 1`] = `
+exports[`metricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction failure 1`] = `
 Array [
   Array [
     "service.foo.action.callFunction.state.start",
@@ -350,7 +350,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction failure 2`] = `
+exports[`metricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction failure 2`] = `
 Array [
   Array [
     Object {
@@ -363,7 +363,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction failure 3`] = `
+exports[`metricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction failure 3`] = `
 Array [
   Array [
     Object {
@@ -381,9 +381,9 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction failure 4`] = `Array []`;
+exports[`metricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction failure 4`] = `Array []`;
 
-exports[`autoMetricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction success 1`] = `
+exports[`metricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction success 1`] = `
 Array [
   Array [
     "service.foo.action.callFunction.state.start",
@@ -404,7 +404,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction success 2`] = `
+exports[`metricsAction used before logAction from n-auto-logger log and record metrics correctly in callFunction success 2`] = `
 Array [
   Array [
     Object {
@@ -426,7 +426,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions decorate each method correctly 1`] = `
+exports[`metricsAction when input operation function bundle decorate each method correctly 1`] = `
 Array [
   Array [
     Object {
@@ -440,7 +440,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions decorate each method correctly 2`] = `
+exports[`metricsAction when input operation function bundle decorate each method correctly 2`] = `
 Array [
   Array [
     Object {
@@ -454,7 +454,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions decorate each method correctly 3`] = `
+exports[`metricsAction when input operation function bundle decorate each method correctly 3`] = `
 Array [
   Array [
     "service.mock-service.action.callFunctionA.state.start",
@@ -491,9 +491,9 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions throw Error if service name has space 1`] = `"service name for metrics needs to be string without spaces"`;
+exports[`metricsAction when input operation function bundle throw Error if service name has space 1`] = `"action metrics service name needs to be string without spaces, at function actionFunction"`;
 
-exports[`autoMetricsActions used after logAction log and record metrics correctly when callFunction failure 1`] = `
+exports[`metricsAction when input operation function bundle used after logAction log and record metrics correctly when callFunction failure 1`] = `
 Array [
   Array [
     "service.mock-service.action.callFunction.state.start",
@@ -522,7 +522,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used after logAction log and record metrics correctly when callFunction failure 2`] = `
+exports[`metricsAction when input operation function bundle used after logAction log and record metrics correctly when callFunction failure 2`] = `
 Array [
   Array [
     Object {
@@ -535,7 +535,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used after logAction log and record metrics correctly when callFunction failure 3`] = `
+exports[`metricsAction when input operation function bundle used after logAction log and record metrics correctly when callFunction failure 3`] = `
 Array [
   Array [
     Object {
@@ -553,9 +553,9 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used after logAction log and record metrics correctly when callFunction failure 4`] = `Array []`;
+exports[`metricsAction when input operation function bundle used after logAction log and record metrics correctly when callFunction failure 4`] = `Array []`;
 
-exports[`autoMetricsActions used after logAction log and record metrics correctly when callFunction success 1`] = `
+exports[`metricsAction when input operation function bundle used after logAction log and record metrics correctly when callFunction success 1`] = `
 Array [
   Array [
     Object {
@@ -569,7 +569,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used after logAction log and record metrics correctly when callFunction success 2`] = `
+exports[`metricsAction when input operation function bundle used after logAction log and record metrics correctly when callFunction success 2`] = `
 Array [
   Array [
     Object {
@@ -583,7 +583,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used after logAction log and record metrics correctly when callFunction success 3`] = `
+exports[`metricsAction when input operation function bundle used after logAction log and record metrics correctly when callFunction success 3`] = `
 Array [
   Array [
     "service.mock-service.action.callFunctionA.state.start",
@@ -620,7 +620,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used after logAction log and record metrics correctly when callFunction success 4`] = `
+exports[`metricsAction when input operation function bundle used after logAction log and record metrics correctly when callFunction success 4`] = `
 Array [
   Array [
     Object {
@@ -659,7 +659,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used before logAction log and record metrics correctly when callFunction failure 1`] = `
+exports[`metricsAction when input operation function bundle used before logAction log and record metrics correctly when callFunction failure 1`] = `
 Array [
   Array [
     "service.mock-service.action.callFunction.state.start",
@@ -688,19 +688,20 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used before logAction log and record metrics correctly when callFunction failure 2`] = `
+exports[`metricsAction when input operation function bundle used before logAction log and record metrics correctly when callFunction failure 2`] = `
 Array [
   Array [
     Object {
       "action": "callFunction",
       "operation": "mock-operation",
+      "service": "mock-service",
       "test": "a",
     },
   ],
 ]
 `;
 
-exports[`autoMetricsActions used before logAction log and record metrics correctly when callFunction failure 3`] = `
+exports[`metricsAction when input operation function bundle used before logAction log and record metrics correctly when callFunction failure 3`] = `
 Array [
   Array [
     Object {
@@ -709,6 +710,7 @@ Array [
       "message": "bar",
       "operation": "mock-operation",
       "result": "failure",
+      "service": "mock-service",
       "status": 404,
       "test": "a",
       "type": "SESSION_NOT_FOUND",
@@ -717,9 +719,9 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used before logAction log and record metrics correctly when callFunction failure 4`] = `Array []`;
+exports[`metricsAction when input operation function bundle used before logAction log and record metrics correctly when callFunction failure 4`] = `Array []`;
 
-exports[`autoMetricsActions used before logAction log and record metrics correctly when callFunction success  1`] = `
+exports[`metricsAction when input operation function bundle used before logAction log and record metrics correctly when callFunction success  1`] = `
 Array [
   Array [
     Object {
@@ -733,7 +735,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used before logAction log and record metrics correctly when callFunction success  2`] = `
+exports[`metricsAction when input operation function bundle used before logAction log and record metrics correctly when callFunction success  2`] = `
 Array [
   Array [
     Object {
@@ -747,7 +749,7 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used before logAction log and record metrics correctly when callFunction success  3`] = `
+exports[`metricsAction when input operation function bundle used before logAction log and record metrics correctly when callFunction success  3`] = `
 Array [
   Array [
     "service.mock-service.action.callFunctionA.state.start",
@@ -784,12 +786,13 @@ Array [
 ]
 `;
 
-exports[`autoMetricsActions used before logAction log and record metrics correctly when callFunction success  4`] = `
+exports[`metricsAction when input operation function bundle used before logAction log and record metrics correctly when callFunction success  4`] = `
 Array [
   Array [
     Object {
       "action": "callFunctionA",
       "operation": "mock-operation",
+      "service": "mock-service",
       "test": "a",
     },
   ],
@@ -798,6 +801,7 @@ Array [
       "action": "callFunctionA",
       "operation": "mock-operation",
       "result": "success",
+      "service": "mock-service",
       "test": "a",
     },
   ],
@@ -805,6 +809,7 @@ Array [
     Object {
       "action": "callFunctionB",
       "operation": "mock-operation",
+      "service": "mock-service",
       "test": "b",
     },
   ],
@@ -813,6 +818,7 @@ Array [
       "action": "callFunctionB",
       "operation": "mock-operation",
       "result": "success",
+      "service": "mock-service",
       "test": "b",
     },
   ],
