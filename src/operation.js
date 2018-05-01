@@ -8,10 +8,7 @@ const metricsOperation = operationFunction => async (meta, req, res) => {
 		throw Error('auto metrics instance needs to be initialised');
 	}
 	const operation = operationFunction.name;
-	const { segment } = {
-		...(req && req.meta ? req.meta : {}),
-		...(req && req.metrics ? req.metrics : {}),
-	};
+	const { segment } = req && req.meta ? req.meta : {};
 	const operationRoot = `operation.${operation}.segment.${segment}`;
 	metrics.count(`${operationRoot}.state.start`, 1);
 

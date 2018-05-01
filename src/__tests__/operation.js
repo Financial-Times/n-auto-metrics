@@ -96,34 +96,7 @@ describe('metricsOperation', () => {
 				expect(metrics.count.mock.calls).toMatchSnapshot();
 			});
 
-			it('req.metrics.segment from previous middlewares', async () => {
-				const metaMiddleware = (req, res, next) => {
-					req.meta = {
-						...req.meta,
-						segment: 'IGNORED_USER_TYPE',
-					};
-					req.metrics = {
-						...req.metrics,
-						segment: 'MOCK_USER_TYPE',
-					};
-					next();
-				};
-				const content = { foo: 'bar' };
-				const operationFunction = async (meta, req, res) => {
-					res.status(200).send(content);
-				};
-				const middleware = compose(toMiddleware, metricsOperation)(
-					operationFunction,
-				);
-				const app = express();
-				app.use('/', metaMiddleware, middleware);
-				const res = await request(app).get('/');
-				expect(res.statusCode).toBe(200);
-				expect(res.body).toEqual(content);
-				expect(metrics.count.mock.calls).toMatchSnapshot();
-			});
-
-			it('req.meta.segment from previous middlewares if not set req.metrics', async () => {
+			it('req.meta.segment from previous middlewares if available', async () => {
 				const metaMiddleware = (req, res, next) => {
 					req.meta = {
 						...req.meta,
@@ -296,66 +269,7 @@ describe('metricsOperation and toMiddleware', () => {
 		jest.resetAllMocks();
 	});
 
-	it('enhance and convert each method correctly', async () => {
-		const content = { foo: 'bar' };
-		const methodA = (meta, req, res) => {
-			res.status(200).send(content);
-		};
-		const methodB = (meta, req, res) => {
-			res.status(200).send(content);
-		};
-		const enhancedController = compose(toMiddleware, metricsOperation)({
-			methodA,
-			methodB,
-		});
-		const app = express();
-		app.use('/a', enhancedController.methodA);
-		app.use('/b', enhancedController.methodB);
-		const resA = await request(app).get('/a');
-		expect(resA.statusCode).toBe(200);
-		expect(resA.body).toEqual(content);
-		const resB = await request(app).get('/b');
-		expect(resB.statusCode).toBe(200);
-		expect(resB.body).toEqual(content);
-		expect(metrics.count.mock.calls).toMatchSnapshot();
-	});
-
 	describe('used after logOperation', () => {
-		it('set anonymous function names as per property name correctly', async () => {
-			const createOperationFunction = () => (meta, req, res) => {
-				res.status(200).send(meta);
-			};
-			const operationFunctionA = createOperationFunction();
-			const operationFunctionB = createOperationFunction();
-			const enhancedController = compose(
-				toMiddleware,
-				metricsOperation,
-				logOperation,
-			)({
-				operationFunctionA,
-				operationFunctionB,
-			});
-			expect(enhancedController.operationFunctionA.name).toBe(
-				'operationFunctionA',
-			);
-			expect(enhancedController.operationFunctionB.name).toBe(
-				'operationFunctionB',
-			);
-			const app = express();
-			app.use('/a', enhancedController.operationFunctionA);
-			app.use('/b', enhancedController.operationFunctionB);
-			const resA = await request(app).get('/a');
-			expect(resA.statusCode).toBe(200);
-			expect(resA.body).toMatchSnapshot();
-			const resB = await request(app).get('/b');
-			expect(resB.statusCode).toBe(200);
-			expect(resB.body).toMatchSnapshot();
-			expect(metrics.count.mock.calls).toMatchSnapshot();
-			expect(logger.info.mock.calls).toMatchSnapshot();
-			expect(logger.warn.mock.calls).toMatchSnapshot();
-			expect(logger.error.mock.calls).toMatchSnapshot();
-		});
-
 		it('log and record metrics correctly when callFunction success', async () => {
 			const content = { foo: 'bar' };
 			const methodA = (meta, req, res) => {
