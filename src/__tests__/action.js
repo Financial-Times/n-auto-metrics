@@ -2,7 +2,7 @@ import logger, { logAction, compose } from '@financial-times/n-auto-logger';
 
 import { initAutoMetrics } from '../init';
 import metricsAction from '../action';
-import { addMeta } from '../index';
+import { tagService } from '../index';
 
 logger.info = jest.fn();
 logger.warn = jest.fn();
@@ -266,7 +266,7 @@ describe('metricsAction when input operation function bundle', () => {
 			const callFunctionA = jest.fn();
 			const callFunctionB = jest.fn();
 			const enhancedService = compose(
-				addMeta({ service: 'mock-service' }),
+				tagService('mock-service'),
 				metricsAction,
 				logAction,
 			)({
@@ -295,7 +295,7 @@ describe('metricsAction when input operation function bundle', () => {
 				throw errorInstance;
 			};
 			const enhancedService = compose(
-				addMeta({ service: 'mock-service' }),
+				tagService('mock-service'),
 				metricsAction,
 				logAction,
 			)({
@@ -320,7 +320,7 @@ describe('metricsAction when input operation function bundle', () => {
 			const callFunctionA = jest.fn();
 			const callFunctionB = jest.fn();
 			const enhancedService = compose(
-				addMeta({ service: 'mock-service' }),
+				tagService('mock-service'),
 				logAction,
 				metricsAction,
 			)({
@@ -349,7 +349,7 @@ describe('metricsAction when input operation function bundle', () => {
 				throw errorInstance;
 			};
 			const enhancedService = compose(
-				addMeta({ service: 'mock-service' }),
+				tagService('mock-service'),
 				logAction,
 				metricsAction,
 			)({

@@ -15,10 +15,10 @@
     "prepush": "make lint unit-test && make verify -j3"
   },
   "dependencies": {
-    "@financial-times/n-express-enhancer": "^1.4.0"
+    "@financial-times/n-express-enhancer": "^1.5.0"
   },
   "devDependencies": {
-    "@financial-times/n-auto-logger": "^3.1.0",
+    "@financial-times/n-auto-logger": "^3.3.0",
     "@financial-times/n-gage": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",

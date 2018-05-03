@@ -1,6 +1,6 @@
 export {
 	toMiddleware,
-	addMeta,
+	tagService,
 	enhancedRender,
 	compose,
 } from '@financial-times/n-express-enhancer';
