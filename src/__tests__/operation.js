@@ -100,9 +100,10 @@ describe('metricsOperation', () => {
 				const operationFunction = async (meta, req, res) => {
 					res.status(200).send(content);
 				};
-				const middleware = compose(toMiddleware, metricsOperation)(
-					operationFunction,
-				);
+				const middleware = compose(
+					toMiddleware,
+					metricsOperation,
+				)(operationFunction);
 				const app = express();
 				app.use('/', metaMiddleware, middleware);
 				const res = await request(app).get('/');
