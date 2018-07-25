@@ -10,23 +10,19 @@ test/
 # src
 src/
 
-# demo
-example/
-
-# dot files
+# dev dot files
 .circleci
 .babelrc
 .editorconfig
 .eslintrc.yml
 .gitattributes
 .gitignore
-.npmignore
-nodemon.json
 ft.yml
-Makefile
 secret-squirrel.js
-yarn.lock
+Makefile
 README.md
+nodemon.json
+yarn.lock
 
 # hidden dot file
 .idea/
