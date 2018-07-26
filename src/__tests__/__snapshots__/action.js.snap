@@ -21,7 +21,28 @@ Array [
 ]
 `;
 
-exports[`metricsAction args format (paramsOrArgs, meta) takes the service name/operation value in paramsOrArgs if not available in meta 1`] = `
+exports[`metricsAction args format (paramsOrArgs, meta) takes the service name/operation value in paramsOrArgs if not available in meta or paramsOrArgs.meta 1`] = `
+Array [
+  Array [
+    "service.foo.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.start",
+    1,
+  ],
+  Array [
+    "service.foo.action.callFunction.state.success",
+    1,
+  ],
+  Array [
+    "operation.bar.action.callFunction.state.success",
+    1,
+  ],
+]
+`;
+
+exports[`metricsAction args format (paramsOrArgs, meta) takes the service name/operation value in paramsOrArgs.meta if not available in meta 1`] = `
 Array [
   Array [
     "service.foo.action.callFunction.state.start",

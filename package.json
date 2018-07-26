@@ -15,7 +15,7 @@
     "prepush": "make lint unit-test && make verify -j3"
   },
   "dependencies": {
-    "@financial-times/n-express-enhancer": "^1.5.0"
+    "@financial-times/n-express-enhancer": "^1.6.0"
   },
   "devDependencies": {
     "@financial-times/n-gage": "^2.0.2",

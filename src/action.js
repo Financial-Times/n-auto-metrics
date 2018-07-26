@@ -3,14 +3,15 @@ import { createEnhancer, isPromise } from '@financial-times/n-express-enhancer';
 import { metricsEvent } from './event';
 
 const metricsAction = actionFunction => (paramsOrArgs = {}, meta = {}) => {
-	const service = meta.service || paramsOrArgs.service || 'undefined';
+	const m = { ...meta, ...paramsOrArgs.meta };
+	const service = m.service || paramsOrArgs.service || 'undefined';
 	const action = actionFunction.name;
 	if (typeof service !== 'string' || service.includes(' ')) {
 		throw Error(
 			`action metrics service name needs to be string without spaces, at function ${action}`,
 		);
 	}
-	const operation = meta.operation || paramsOrArgs.operation;
+	const operation = m.operation || paramsOrArgs.operation;
 
 	const event = metricsEvent({ service, operation, action });
 

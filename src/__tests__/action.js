@@ -133,7 +133,15 @@ describe('metricsAction', () => {
 			expect(metrics.count.mock.calls).toMatchSnapshot();
 		});
 
-		it('takes the service name/operation value in paramsOrArgs if not available in meta', () => {
+		it('takes the service name/operation value in paramsOrArgs.meta if not available in meta', () => {
+			const callFunction = () => null;
+			const meta = { service: 'foo', operation: 'bar' };
+			const args = { a: 'test', meta };
+			metricsAction(callFunction)(args);
+			expect(metrics.count.mock.calls).toMatchSnapshot();
+		});
+
+		it('takes the service name/operation value in paramsOrArgs if not available in meta or paramsOrArgs.meta', () => {
 			const callFunction = () => null;
 			const args = { a: 'test', service: 'foo', operation: 'bar' };
 			metricsAction(callFunction)(args);
