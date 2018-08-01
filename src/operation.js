@@ -1,5 +1,3 @@
-import { createEnhancer } from '@financial-times/n-express-enhancer';
-
 import { getMetricsInstance } from './init';
 
 const metricsOperation = operationFunction => async (meta, req, res) => {
@@ -30,4 +28,4 @@ const metricsOperation = operationFunction => async (meta, req, res) => {
 	}
 };
 
-export default createEnhancer(metricsOperation);
+export default metricsOperation;

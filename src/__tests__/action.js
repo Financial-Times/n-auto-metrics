@@ -20,17 +20,6 @@ describe('metricsAction', () => {
 		expect(metrics.count.mock.calls).toMatchSnapshot();
 	});
 
-	it('returns an enhanced function with a configurable .name same as callFunction', async () => {
-		const callFunction = () => null;
-		const enhancedFunction = metricsAction(callFunction);
-		expect(enhancedFunction.name).toEqual(callFunction.name);
-		Object.defineProperty(enhancedFunction, 'name', {
-			value: 'test',
-			configurable: true,
-		});
-		expect(enhancedFunction.name).toBe('test');
-	});
-
 	describe('should throw error', () => {
 		it('if metrics was not initialised', async () => {
 			initAutoMetrics(undefined);
@@ -164,23 +153,6 @@ describe('metricsAction when input operation function bundle', () => {
 
 	afterEach(() => {
 		jest.resetAllMocks();
-	});
-
-	it('decorate each method correctly', async () => {
-		const callFunctionA = jest.fn();
-		const callFunctionB = jest.fn();
-		const enhancedService = metricsAction({
-			callFunctionA,
-			callFunctionB,
-		});
-		const paramsA = { test: 'a' };
-		const paramsB = { test: 'b' };
-		const meta = { operation: 'mock-operation', service: 'mock-service' };
-		await enhancedService.callFunctionA(paramsA, meta);
-		await enhancedService.callFunctionB(paramsB, meta);
-		expect(callFunctionA.mock.calls).toMatchSnapshot();
-		expect(callFunctionB.mock.calls).toMatchSnapshot();
-		expect(metrics.count.mock.calls).toMatchSnapshot();
 	});
 
 	it('throw Error if service name has space', async () => {
