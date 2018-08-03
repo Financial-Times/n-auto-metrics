@@ -1,16 +1,11 @@
-import {
-	createEnhancer,
-	actionOperationAdaptor,
-} from '@financial-times/n-express-enhancer';
+import { createAdaptableEnhancer } from '@financial-times/n-express-enhancer';
 
 import metricsAction from './action';
 import metricsOperation from './operation';
 
-const autoMetrics = createEnhancer(
-	actionOperationAdaptor({
-		actionEnhancer: metricsAction,
-		operationEnhancer: metricsOperation,
-	}),
-);
+const autoMetrics = createAdaptableEnhancer({
+	actionEnhancement: metricsAction,
+	operationEnhancement: metricsOperation,
+});
 
 export default autoMetrics;
