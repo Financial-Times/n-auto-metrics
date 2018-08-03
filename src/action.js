@@ -2,7 +2,7 @@ import { isPromise } from '@financial-times/n-express-enhancer';
 
 import { metricsEvent } from './event';
 
-const metricsAction = actionFunction => (paramsOrArgs = {}, meta = {}) => {
+const metricsAction = actionFunction => (paramsOrArgs = {}, meta) => {
 	const m = { ...meta, ...paramsOrArgs.meta };
 	const service = m.service || paramsOrArgs.service || 'undefined';
 	const action = actionFunction.name;
@@ -16,7 +16,9 @@ const metricsAction = actionFunction => (paramsOrArgs = {}, meta = {}) => {
 	const event = metricsEvent({ service, operation, action });
 
 	try {
-		const call = actionFunction(paramsOrArgs, meta);
+		const call = meta
+			? actionFunction(paramsOrArgs, meta)
+			: actionFunction(paramsOrArgs);
 		if (isPromise(call)) {
 			return call
 				.then(data => {
