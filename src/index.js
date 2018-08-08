@@ -8,4 +8,3 @@ export {
 export { initAutoMetrics, getMetricsInstance } from './init';
 export { default as metricsAction } from './action';
 export { default as metricsOperation } from './operation';
-export { default as autoMetrics } from './enhancer';

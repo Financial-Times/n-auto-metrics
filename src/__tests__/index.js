@@ -4,7 +4,6 @@ import {
 	tagService,
 	metricsAction,
 	metricsOperation,
-	autoMetrics,
 	toMiddleware,
 	enhancedRender,
 	compose,
@@ -29,10 +28,6 @@ describe('n-auto-metrics exports', () => {
 
 	it('metricsOperation', () => {
 		expect(typeof metricsOperation).toBe('function');
-	});
-
-	it('autoMetrics', () => {
-		expect(typeof autoMetrics).toBe('function');
 	});
 
 	it('toMiddleware', () => {

@@ -1,4 +1,4 @@
-import { isPromise } from '@financial-times/n-express-enhancer';
+import { createEnhancer, isPromise } from '@financial-times/n-express-enhancer';
 
 import { metricsEvent } from './event';
 
@@ -19,6 +19,7 @@ const metricsAction = actionFunction => (paramsOrArgs = {}, meta) => {
 		const call = meta
 			? actionFunction(paramsOrArgs, meta)
 			: actionFunction(paramsOrArgs);
+
 		if (isPromise(call)) {
 			return call
 				.then(data => {
@@ -30,6 +31,7 @@ const metricsAction = actionFunction => (paramsOrArgs = {}, meta) => {
 					throw e;
 				});
 		}
+
 		const data = call;
 		event.success();
 		return data;
@@ -39,4 +41,4 @@ const metricsAction = actionFunction => (paramsOrArgs = {}, meta) => {
 	}
 };
 
-export default metricsAction;
+export default createEnhancer(metricsAction);
