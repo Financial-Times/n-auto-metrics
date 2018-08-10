@@ -1,5 +1,5 @@
 export {
-	toMiddleware,
+	errorToHandler,
 	tagService,
 	enhancedRender,
 	compose,

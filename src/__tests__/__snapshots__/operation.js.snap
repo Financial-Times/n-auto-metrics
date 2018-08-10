@@ -1,51 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`metricsOperation record metrics correctly operation failure of async function 1`] = `
+exports[`metricsOperation can enhance async operationFunction inherit meta.segment passed to req.meta from previous middleware and metrics them 1`] = `
 Array [
   Array [
-    "operation.operation.segment.undefined.state.start",
+    "operation.operationFunction.segment.mock-segment.state.start",
     1,
   ],
   Array [
-    "operation.operation.segment.undefined.state.failure.category.CUSTOM_ERROR.type.MOCK_ERROR_TYPE",
+    "operation.operationFunction.segment.mock-segment.state.success",
     1,
   ],
 ]
 `;
 
-exports[`metricsOperation record metrics correctly operation failure of non-async function 1`] = `
+exports[`metricsOperation can enhance async operationFunction to invoke operationFunction with operationFunction name in req.meta.operation 1`] = `
 Array [
   Array [
-    "operation.operation.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "operation.operation.segment.undefined.state.failure.category.CUSTOM_ERROR.type.MOCK_ERROR_TYPE",
-    1,
+    Object {
+      "operation": "operationFunction",
+    },
   ],
 ]
 `;
 
-exports[`metricsOperation record metrics correctly operation success of async function with metricsAction sub action 1`] = `
+exports[`metricsOperation can enhance async operationFunction to metrics operaitonFunction on success 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "service.undefined.action.callFunction.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunction.action.callFunction.state.start",
-    1,
-  ],
-  Array [
-    "service.undefined.action.callFunction.state.success",
-    1,
-  ],
-  Array [
-    "operation.operationFunction.action.callFunction.state.success",
     1,
   ],
   Array [
@@ -55,26 +36,10 @@ Array [
 ]
 `;
 
-exports[`metricsOperation record metrics correctly operation success of non-async function with metricsAction sub action 1`] = `
+exports[`metricsOperation can enhance async operationFunction to metrics operationFunction name as operation name 1`] = `
 Array [
   Array [
     "operation.operationFunction.segment.undefined.state.start",
-    1,
-  ],
-  Array [
-    "service.undefined.action.callFunction.state.start",
-    1,
-  ],
-  Array [
-    "operation.operationFunction.action.callFunction.state.start",
-    1,
-  ],
-  Array [
-    "service.undefined.action.callFunction.state.success",
-    1,
-  ],
-  Array [
-    "operation.operationFunction.action.callFunction.state.success",
     1,
   ],
   Array [
@@ -84,14 +49,64 @@ Array [
 ]
 `;
 
-exports[`metricsOperation record metrics correctly operation success of req.meta.segment from previous middlewares if available 1`] = `
+exports[`metricsOperation can enhance async operationFunction to metrics operationFunction on failure and throw the caught error 1`] = `
 Array [
   Array [
-    "operation.operationFunction.segment.MOCK_USER_TYPE.state.start",
+    "operation.operationFunction.segment.undefined.state.start",
     1,
   ],
   Array [
-    "operation.operationFunction.segment.MOCK_USER_TYPE.state.success",
+    "operation.operationFunction.segment.undefined.state.failure.category.undefined.type.undefined",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation can enhance sync operationFunction inherit meta.segment passed to req.meta from previous middleware and metrics them 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.mock-segment.state.start",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation can enhance sync operationFunction to invoke operationFunction with operationFunction name in req.meta.operation 1`] = `
+Array [
+  Array [
+    Object {
+      "operation": "operationFunction",
+    },
+  ],
+]
+`;
+
+exports[`metricsOperation can enhance sync operationFunction to metrics operaitonFunction on success 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation can enhance sync operationFunction to metrics operationFunction name as operation name 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+]
+`;
+
+exports[`metricsOperation can enhance sync operationFunction to metrics operationFunction on failure and throw the caught error 1`] = `
+Array [
+  Array [
+    "operation.operationFunction.segment.undefined.state.start",
+    1,
+  ],
+  Array [
+    "operation.operationFunction.segment.undefined.state.failure.category.undefined.type.undefined",
     1,
   ],
 ]
