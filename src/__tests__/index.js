@@ -4,7 +4,7 @@ import {
 	tagService,
 	metricsAction,
 	metricsOperation,
-	errorToHandler,
+	autoNext,
 	enhancedRender,
 	compose,
 } from '../index';
@@ -30,8 +30,8 @@ describe('n-auto-metrics exports', () => {
 		expect(typeof metricsOperation).toBe('function');
 	});
 
-	it('errorToHandler', () => {
-		expect(typeof errorToHandler).toBe('function');
+	it('autoNext', () => {
+		expect(typeof autoNext).toBe('function');
 	});
 
 	it('enhancedRender', () => {

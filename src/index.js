@@ -1,5 +1,5 @@
 export {
-	errorToHandler,
+	autoNext,
 	tagService,
 	enhancedRender,
 	compose,
