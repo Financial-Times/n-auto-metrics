@@ -17,11 +17,13 @@ a metrics [decorator](https://github.com/Financial-Times/n-express-enhancer) to 
 
 <br>
 
-- [Quickstart](#quickstart)
 - [Install](#install)
+- [Usage](#usage)
+  * [setup](#setup)
+  * [decorate functions](#decorate-functions)
 - [Gotcha](#gotcha)
-  * [reserved fields](#reserved-fields)
-  * [metrics format](#metrics-format)
+  * [the Metrics](#the-metrics)
+  * [the Meta](#the-meta)
 - [Licence](#licence)
 
 <br>
