@@ -1,6 +1,8 @@
 # n-auto-metrics
 
-an [enhancer](https://github.com/Financial-Times/n-express-enhancer) to auto record metrics of function calls in operation/action model with a single line of code
+a metrics [decorator](https://github.com/Financial-Times/n-express-enhancer) to automate function metrics in operation/action model to monitor system and upstream services as well as business metrics
+
+> It has been consolidated into [n-express-monitor](https://github.com/financial-Times/n-express-monitor), please use that instead unless you're curious about things under the hood or want to customise your own tool chain
 
 [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics.svg)](https://badge.fury.io/js/%40financial-times%2Fn-auto-metrics)
 ![npm download](https://img.shields.io/npm/dm/@financial-times/n-auto-metrics.svg)
@@ -24,9 +26,14 @@ an [enhancer](https://github.com/Financial-Times/n-express-enhancer) to auto rec
 
 <br>
 
-## Quickstart
+## Install
+```shell
+npm i @financial-times/n-auto-metrics --save
+```
 
-initialise metrics before using enhanced middleware
+## Usage
+
+### setup
 
 ```js
 /* app.js */
@@ -36,73 +43,67 @@ import { initAutoMetrics } from '@financial-times/n-auto-metrics';
 initAutoMetrics(metrics); // do this before app.use() any enhanced middleware/controller
 ```
 
-enhance action function to auto metrics,  use `tagService` to add `service` before `metricsAction` if you want to set metrics of one service namespace
+### decorate functions
+
+A top level execution is categorised as an Operation, this can be an express middleware or controller function. Any lower level execution is categorised as an Action, and a two-level model of operation-action is encouraged.
+
+With different log level settings, it would log the start, success/failure `status` of the function execution, function names to `scope` the operation/action, description of the `error` and params you need to `recreate` the error.
 
 ```js
-import { metricsAction, tagService, compose } from '@financial-times/n-auto-metrics';
+import { compose, autoNext, metricsOperation } from '@financial-times/n-auto-metrics';
 
-// auto metrics function of its start, success/failure state
-const result = metricsAction(someFunction)(args: Object, meta?: Object);
+const operation = (req, res) => {
+  //let the error to be thrown
+};
 
-// auto metrics multiple functions wrapped in an object
-const APIService = compose(
-  tagService('some-service'),
-  metricsAction
-)({ 
-  methodA, 
-  methodB, 
-  methodC 
-});
+export default compose(
+  autoNext,
+  metricsOperation,
+)(operation);
 ```
-> more details on [action function](https://github.com/financial-Times/n-express-enhancer#action-function)
-
 
 ```js
-// auto log success/failure express middleware/controller as an operation function 
-// function name would be logged as `operation`, and available in meta
-const operationFunction = (meta, req, res) => { /* try-catch-throw */ };
-export default toMiddleware(metricsOperation(operationFunction));
+import { metricsAction } from '@financial-times/n-auto-metrics';
 
-// auto log multiple operation functions wrapped in an object as controller
-const someController = toMiddlewares(metricsOperation({ operationFunctionA, operationFuncitonB }));
+const action = (params: Object, meta: Object) => {}; // the function signature needs to follow the convention
+
+export default metricsAction(action);
 ```
-> check [use res.render](https://github.com/Financial-Times/n-express-enhancer#use-resrender)
-
-> more details on [operation function](https://github.com/financial-Times/n-express-enhancer#operation-function)
-
-> more details on [chain with other enhancers](https://github.com/Financial-Times/n-express-enhancer/blob/master/README.md#chain-a-series-of-enhancers)
-
-## Install
-```shell
-npm install @financial-times/n-auto-metrics
+```js
+const operation = ({ meta }, res, next) => {
+  action(param, meta); // pass the meta object from req.meta to thread operation/action
+  //...
+};
 ```
+
+> [want even less lines of code?](https://github.com/Financial-Times/n-express-enhancer#enhance-a-set-of-functions)
 
 ## Gotcha
 
-### reserved fields
+### the Metrics
 
-* `operation` default to `operationFunction.name`
-* `service` default to `undefined`, can be specified in `paramsOrArgs` or `meta`(`autoLogActions('service-name')`)
-* `action` default to `callFunction.name`
-* `category` [NError](https://github.com/financial-times/n-error) category would be recorded in metrics
-* `type` is used by convention to record custom error type names for monitoring and debugging
-* `status` in error object would be recorded for service action call failure
-* `stack` used in Error or NError to store the stack trace
-* `result` default to `success/failure`
-
-### metrics format
-
+for business metrics:
 > `operation.${operation}.segment.${segment}.state.start`
+> `operation.${operation}.segment.${segment}.state.success`
+> `operation.${operation}.segment.${segment}.state.failure.category.${e.category}.type.${e.type}`
+
+for system reliability:
 > `operation.${operation}.action.${action}.state.start`
 > `operation.${operation}.action.${action}.state.success`
 > `operation.${operation}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
 > `operation.${operation}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
-> `operation.${operation}.segment.${segment}.state.success`
-> `operation.${operation}.segment.${segment}.state.failure.category.${e.category}.type.${e.type}`
+
+for upstream service reliability:
 > `service.${service}.action.${action}.state.start`
 > `service.${service}.action.${action}.state.success`
 > `service.${service}.action.${action}.state.failure.category.${e.category}.type.${e.type}`
 > `service.${service}.action.${action}.state.failure.category.${e.category}.status.${e.status}`
+
+### the Meta
+
+check the common meta used by [n-auto-logger](https://github.com/Financial-Times/n-auto-logger/blob/master/README.md#the-meta)
+
+`meta.segment` would be picked up in the metrics to help measure business metrics with user segment breakdown.
 
 ## Licence
 [MIT](/LICENSE)
