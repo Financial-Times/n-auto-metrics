@@ -18,7 +18,7 @@
     "@financial-times/n-express-enhancer": "^1.8.1"
   },
   "devDependencies": {
-    "@financial-times/n-gage": "3.4.0",
+    "@financial-times/n-gage": "^3.6.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
