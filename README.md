@@ -9,9 +9,9 @@ a metrics [decorator](https://github.com/Financial-Times/n-express-enhancer) to 
 ![node version](https://img.shields.io/node/v/@financial-times/n-auto-metrics.svg)
 
 [![CircleCI](https://circleci.com/gh/Financial-Times/n-auto-metrics.svg?style=shield)](https://circleci.com/gh/Financial-Times/n-auto-metrics)
-[![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-auto-metrics/badge.svg?branch=master)](https://coveralls.io/github/Financial-Times/n-auto-metrics?branch=master) 
+[![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-auto-metrics/badge.svg?branch=main)](https://coveralls.io/github/Financial-Times/n-auto-metrics?branch=main) 
 [![Known Vulnerabilities](https://snyk.io/test/github/Financial-Times/n-auto-metrics/badge.svg)](https://snyk.io/test/github/Financial-Times/n-auto-metrics)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Financial-Times/n-auto-metrics/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Financial-Times/n-auto-metrics/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Financial-Times/n-auto-metrics/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/Financial-Times/n-auto-metrics/?branch=main)
 [![Dependencies](https://david-dm.org/Financial-Times/n-auto-metrics.svg)](https://david-dm.org/Financial-Times/n-auto-metrics)
 [![devDependencies](https://david-dm.org/Financial-Times/n-auto-metrics/dev-status.svg)](https://david-dm.org/Financial-Times/n-auto-metrics?type=dev)
 
@@ -103,7 +103,7 @@ for upstream service reliability:
 
 ### the Meta
 
-check the common meta used by [n-auto-logger](https://github.com/Financial-Times/n-auto-logger/blob/master/README.md#the-meta)
+check the common meta used by [n-auto-logger](https://github.com/Financial-Times/n-auto-logger/blob/main/README.md#the-meta)
 
 `meta.segment` would be picked up in the metrics to help measure business metrics with user segment breakdown.
 
